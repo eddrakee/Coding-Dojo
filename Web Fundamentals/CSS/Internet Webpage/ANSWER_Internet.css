@@ -1,0 +1,261 @@
+*{
+    margin: 0 auto;
+    font-family: Helvetica;
+}
+
+a{
+    text-decoration: none;
+    color: #0297ad;
+}
+
+.blue{
+    color: #26669c;
+}
+
+.red{
+    color: #d72626;
+}
+
+#container{
+    /*border: 1px solid black;*/
+    width: 960px;
+    height: 850px;
+}
+
+#header{
+    /*border: 1px dotted red;*/
+    height: 150px;
+    width: 100%;
+}
+
+    #headerTop{
+        /*border: 1px dotted green;*/
+        height: 100px;
+        width: 100%;
+    }
+
+
+        #titleText{
+            display: inline-block;
+            vertical-align: top;
+            font-weight: normal;
+            font-size: 3em;
+            margin-top: 25px;
+            color: #474747;
+        }
+
+
+    #headerBottom{
+        height: 50px;
+        width: 100%;
+        background: linear-gradient(#26669c, #5585ab, #26669c);
+        padding-top: 10px;
+        margin-top: -18px;
+    }
+
+        #headerBottom h1{
+            color: white;
+            font-weight: normal;
+            margin-left: 20px;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#navbar{
+    /*border: 1px dotted red;*/
+    width: 200px;
+    height: 600px;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 5px;
+}
+
+    #navbar h4{
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    #button1, #button2{
+        margin-top: 20px;
+        width: 95%;
+        height: 35px;
+        background: linear-gradient(#679bc3, #26669c);
+        border: 0;
+        border-radius: 5px;
+        color: white;
+        font-size: 1em;
+        margin-left: 2px;
+        box-shadow: 2px 2px 1px #8e8e8e;
+    }
+
+    #button2{
+        margin-top: 4px;
+        background: linear-gradient(#e9ae60, #ee7200);
+        margin-bottom: 25px;
+    }
+
+#adSpot{
+    padding-top: 20px;
+    margin-top: 25px;
+    background-image: url("images/ad_background.png");
+    height: 280px;
+    text-align: center;
+    color: white;
+    box-shadow: 2px 2px 1px #7c7c7c;
+}
+
+    #adSpot h2{
+        font-weight: normal;
+    }
+
+    #adButton{
+        margin-top: 10px;
+        width: 85%;
+        height: 30px;
+        background: linear-gradient(#81d1de, #00c0dd);
+        border: 1px;
+        border-radius: 5px;
+        color: white;
+        box-shadow: 2px 2px 1px #282828;
+        font-size: 1em;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#mainContent{
+    /*border: 1px dotted green;*/
+    width: 700px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 40px;
+}
+
+    #mainTop{
+        width: 100%;
+        height: 65px;
+    }
+
+        #mainTopLeft, #mainTopRight{
+            /*border: 1px dotted blue;*/
+            width: 340px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #mainTopLeft h4, #mainTopLeft img{
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 10px;
+        }
+
+        #mainTopLeft h4{
+            margin-top: 14px;
+            font-weight: normal;
+        }
+
+        #mainTopRight{
+            text-align: right;
+            margin-left: 10px;
+        }
+
+        #phoneInfo{
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        #phoneInfo h2{
+            color: #00c0dd;
+        }
+
+        #phoneInfo p{
+            font-size: .65em;
+            color: rgb(87, 87, 87);
+        }
+
+
+
+    #mainCenter{
+        /*border: 1px dotted red;*/
+        margin-top: 5px;
+    }
+
+        #mainCenter p{
+            font-size: .9em;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #mainCenter img{
+            margin-left: 200px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+
+
+
+    #mainBottom{
+        border: 5px solid #0087dd;
+        width: 680px;
+        height: 125px;
+        margin-top: 20px;
+        box-shadow: 2px 2px 1px #7c7c7c;
+    }
+
+        #mainBottomLeft, #mainBottomRight{
+            /*border: 1px dotted red;*/
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 12px;
+            margin-left: 12px;
+        }
+        #mainBottomRight{
+            margin-left: 15px;
+            width: 530px;
+        }
+
+        #mainBottomRight p{
+            font-size: .9em;
+            margin-top: 5px;
+        }
+
+
+
+#containerMid{
+    /*border: 1px dotted red;*/
+    margin-top: -8px;
+    background: linear-gradient(#e3e3e3, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff);
+}

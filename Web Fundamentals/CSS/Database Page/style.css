@@ -1,0 +1,133 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+#wrapper{
+	height:1200px;
+	width:1000px;
+}
+
+#header{
+	width:100%;
+	height:15%;
+	background-color: white;
+}
+	#top{
+		height:63%;
+		width:100%;
+		text-align: right;
+		background: linear-gradient(#D0D1CE, white);
+	}
+		#top h2{
+			display: inline-block;
+			margin-left:306px;
+			padding-right:85px;
+
+		}
+		#top img{
+			height:100%;
+			width: 100%s;
+		display: inline-block;
+		}
+	#navBar{
+		color:navy;
+		height:30%;
+		width:100%;
+	}
+		#navBar ul{
+			border: 1px solid black;
+			width: 100%;
+			margin-top:7px;
+		}
+		#navBar li{
+			
+			display: inline-block;
+			font-size:20px;
+			padding:7px 25px;
+		/*	padding-right:20px;*/
+			text-decoration: underline;
+			text-align:center;
+			border-right:1px solid black;
+			}
+#mainContent{
+	width:100%;
+	height:85%;
+	/*padding: 20px 40px 20px 20px;*/
+	background:radial-gradient(#705C61, #545172, #1A0E12);
+}
+	#dataPic{
+		width:425px;
+		height:28%;
+		border: 10px solid silver;
+		display: inline-block;
+		margin-left:20px;
+		margin-top:20px;
+
+	}
+	#dataPic img{
+		width:100%;
+		height:100%;
+	}
+	#upperRight{
+		width:450px;
+		height:30%;
+		background-color:white;
+		display: inline-block;
+		vertical-align: top;
+		margin-top:20px;
+		margin-left:20px;
+	}
+		#upperHead{
+			width: 100%;
+			height:17%;
+			background:linear-gradient(#CBC9CC, #878592, #CBC9CC);
+		}
+			#upperHead h2{
+				margin-left:10px;
+
+			}
+		#upperText{
+			padding:10px;
+			background:linear-gradient(#F5FCFE, #DAD0DB);
+			height:77%;
+		}
+
+	.boxInfo{
+		width:20%;
+		height:650px;
+		border:2px solid #C1C1C2;
+		margin-top:20px;
+		margin-left:20px;
+		background:linear-gradient(#9CA7BF, #FCFDFD);
+		display:inline-block;
+		vertical-align: top;
+
+	}
+		.boxHead{
+			width:100%;
+			height:50px;
+			background:linear-gradient(#CBC9CC, #878592, #CBC9CC);
+		}
+
+	.boxInfo img{
+		width:100%;
+		height:100%;
+		/*display: inline-block;*/
+
+	}
+	.text{
+		background: linear-gradient (#9DA8BF,#FBFBFC);
+		padding:15px;
+	}
+	.boxInfo button{
+		width:100px;
+		background-color: #607198;
+		color:white;
+		padding:8px;
+		border-radius:5px;
+		border: 3px solid black;
+		margin-left:80px;
+		vertical-align: bottom;
+	}
+
+
