@@ -1,0 +1,177 @@
+*{
+	margin:0px;
+	padding:0px;
+	font-family: monaco;
+}
+
+#wrapper{
+	height:1000px;
+	width:960px;
+	background-color:#DDDFD4;
+	padding:20px;
+}
+
+#header{
+	height:10%;
+	background-color: #3FB0AC
+	/*padding:15px;*/
+}
+
+#leftHeader{
+	display: inline-block;
+	width:251px;
+}
+	#leftHeader img{
+		height:60px;
+		width:60px;
+		display: inline-block;
+		margin:19px 0px 19px 19px;
+
+	}
+	#leftHeader h1{
+		display: inline-block;
+		vertical-align: top;
+		margin-top:34px;
+		font-size:1.5em;
+	}
+#rightHeader{
+	width:680px;
+	display: inline-block;
+	vertical-align: top;
+	margin-top:41px;
+	margin-right:19px;
+	text-align:right;
+}
+	#rightHeader ul{
+		display: inline-block;
+	}
+	#rightHeader li{
+		display: inline-block;
+		margin-left:5px;
+	}
+
+	#rightHeader a{
+		color:white;
+		text-decoration: underline;
+		font-size:15px;
+	}
+
+
+
+
+
+.content{
+	background-color: #173F43;
+	color:white;
+	vertical-align: top;
+	padding:20px;
+}
+	.content h2 {
+		margin-bottom:15px;
+		font-size:1.25em;
+	}
+
+	.content p{
+		font-size: 15px;
+		margin-bottom:15px;	}
+
+#mainContent{
+	height:70%;
+
+	background-color: #FAE696;
+	margin-top:20px;
+	padding:20px;
+	display: inline-block;
+}
+	#leftBox{
+		width:25%;
+		/*height:100%;*/
+		display: inline-block;
+	}
+#top{
+	display: inline-block;
+}
+
+	.smallSquare{
+		height:165px;
+		width: 150px;
+		background-color: #173F43;
+		color:white;
+		display: inline-block;
+		vertical-align: top;
+		padding:20px;
+		margin:0px 8px;
+	}
+		.smallSquare h3{
+			font-size:20px;
+		}
+		.smallSquare p{
+			font-size: 15px;
+		}
+	.blueText{
+		color:#54D9C9;
+	}
+
+#middle{
+	display: inline-block;
+	vertical-align: top;
+	margin-top:20px;
+}
+	.midBox{
+		height:150px;
+		width:275px;
+		background-color: #173F43;
+		color:white;
+		display: inline-block;
+		/*vertical-align: top;*/
+		padding:20px;
+	}
+		.midBox h3{
+			font-size:20px;
+		}
+		.midBoxp{
+			font-size: 15px;
+		}
+#bottom{
+	height:150px;
+	width:500px;
+	background-color: #173F43;
+	color:white;
+	margin-top:20px;
+	padding:20px;
+	vertical-align: top;
+	display: inline-block;
+}
+	#bottom h3{
+		font-size:20px;
+	}
+	#bottom p{
+		font-size:15px;
+	}
+
+
+
+
+
+
+
+
+#footer{
+	height:10%;
+	background-color: #3FB0AC;
+	margin-top:20px;
+	color:black;
+	text-align:center;
+	/*display: inline-block;*/
+}
+
+	#footer a{
+		text-decoration: underline;
+		color:#53248E;
+		margin-top:40px;
+		display: inline-block;
+	}
+
+
+
+

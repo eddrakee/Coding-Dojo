@@ -1,0 +1,88 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+p {
+  margin: 15px;
+}
+h2{
+  margin-top: 5px;
+  padding: 5px;
+}
+.container{
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #dddfd4;
+}
+.navbar {
+  height: 50px;
+  background-color: #3fb0ac;
+  padding: 15px;
+}
+.navbar img {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+.navbar h1 {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 5px;
+}
+.navbar ul, .navbar li{
+  display: inline-block;
+  margin: 5px;
+}
+.navbar ul {
+  margin-left: 150px;
+  vertical-align: top;
+  margin-top: 10px;
+}
+.navbar a {
+  color: white;
+}
+.bold{
+  font-weight: bold;
+  color: #55DBCB;
+}
+.main_content{
+  background-color: #fae596;
+  margin-top: 20px;
+  display: inline-block;
+  width: 1200px;
+}
+.aside, .lil_boxes, .boxes, .big_box{
+  background-color: #173f43;
+  margin: 20px;
+  color: #dddfd4;
+  padding: 10px;
+  display: inline-block;
+  vertical-align: top;
+}
+.aside {
+  width: 300px;
+  height: 653px;
+}
+.lil_boxes{
+  width: 200px;
+  height: 200px;
+}
+.boxes{
+  width: 335px;
+}
+.big_box{
+  width: 740px;
+}
+.content{
+  width: 800px;
+  display: inline-block;
+}
+.footer {
+  background-color: #3fb0ac;
+  margin-top: 10px;
+  padding: 20px;
+  text-align: center;
+}
+Privacy Policy
