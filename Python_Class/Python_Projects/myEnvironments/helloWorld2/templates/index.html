@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Index</title>
+        <link rel='stylesheet' type='text/css' href="{{url_for('static', filename='stylesheet.css')}}">
+        <script type = 'text/javascript' src="{{url_for('static', filename='script.js')}}"></script>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        <h2>This is my first template with embedded python</h2>
+        <p>Phrase: {{ phrase }}</p>
+        <p>Times: {{ times }}</p>
+        {% for x in range (0, times): %}
+        <p>{{ phrase }}</p>
+        {% endfor %}
+    </body>
+</html>
+

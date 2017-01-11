@@ -1,0 +1,15 @@
+<html>
+    <head>
+       <title>I'm a Counter</title>
+    </head>
+    <body>
+    <h1>Visit Counter</h1>
+    <p>You have visited this page: {{session['count']}} times</p>
+     <form action='/ninja'>
+        <button>Add 2</button>
+    </form>
+    <form action='/clear'>
+        <button>Clear Counter</button>
+    </form>
+</body>
+</html>
