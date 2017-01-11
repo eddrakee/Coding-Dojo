@@ -10,20 +10,22 @@
 
 }
 form{
-    display: inline-block;
     color: darkslategray;
     margin-top:50px;
 }
 
 #box{
+    padding:20px;
+    margin-left: 50px;
     height: 500px;
     width:500px;
-    text-align: right;
-    display: inline-block;
+    text-align: center;
+    /*display: inline-block;*/
     margin-top:50px;
     border: 2px solid black;
     background-color:lightskyblue
 }
+
 
 button{
     height:50px;
