@@ -5,21 +5,24 @@ app.secret_key = "a1b2c3thiskeyissecret"
 
 
 @app.route('/')
-def displayNum():
-  if "randomNum" not in session:
-    session["randomNum"] = randrange(0,101) #since we said from random import randrange, we don't need to used random.randrange...
-  #the line above guarantees that a new random number will not be generated everytime the page is refreshed. If it was a variable instead of a session, it would be
+def index():
+  if "gold" not in session:
+    session["gold"] = 0
+
+  if "activities" not in session:
+    session["activities"] = []
   return render_template("index.html")
 
-@app.route('/guess', methods=["POST"])
-def guessNum():
-  session["myGuess"] = int(request.form["myGuess"])
-  return redirect('/')
+@app.route('/process', methods=["POST"])
+def process():
+  buildings = {
+    "Farm": randrange(10,21),
+    "Cave": randrange(5,11),
+    "House": randrange(2,6),
+    "Casino": randrange(0,51)
+  }
+  return redirect("index.html")
 
-@app.route('/reset', methods=["POST"])
-def playAgain():
-  session["randomNum"] = randrange(0,101)
-  return redirect('/')
 
 
 app.run(debug=True)

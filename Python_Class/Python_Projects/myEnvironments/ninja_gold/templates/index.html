@@ -1,49 +1,18 @@
 <html>
 
 <head>
-    <title>Great Number Game</title>
+    <title>Ninja Gold</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css')}}">
 </head>
 
 <body>
     <div id=wrapper>
-        <h1>Welcome to the Great Number Game!</h1>
-        <p>I am thinking of a number between 1 and 100</p>
-        <p>Take a guess!</p>
-        <form action="/guess" method="POST">
-            <input type="text" name="myGuess" value="">
-            <button>Submit</button>
-        </form>
-        <!--<p>{{session["myGuess"]}}</p>
-        <p>{{session["randomNum"]}}</p>-->
-
-        {% if session["randomNum"] == session["myGuess"] %}
-        <div class="green">
-            <p>You're a winner!</p>
-        </div>
-        {% endif %} 
-
-         {% if session["randomNum"] > session["myGuess"] %}
-        <div class="red">
-            <p>You're too low!</p>
-        </div>
-        {% endif %} 
-
-         {% if session["randomNum"] < session["myGuess"] %}
-        <div class="red">
-            <p>You're too high!</p>
-        </div>
-        {% endif %} 
-
-      
-
-
-   
-
-    <form action="/reset" method="POST">
-        <button>Clear Number</button>
-    </form>
-
+         <form action="/process" method="POST">
+            Your Gold:<input type="text" name="___NAME__" value="">
+         </form>
+         <form action="/process" method="POST">
+            Your Gold:<input type="submit" name="" value="">
+         </form>
     </div><!-- end of wrapper-->
 </body>
 
