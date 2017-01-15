@@ -1,0 +1,26 @@
+<html>
+    <head>
+       <meta charset="utf-8">
+        <title>Add a Country</title>
+        <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dojo_stylesheet.css')}}">
+        <script type="text/javascript" src="{{ url_for('static', filename='dojo_script.js') }}"> </script>-->
+    </head>
+    <body>
+      <div id=wrapper>
+        <div id="box">
+        <form  method='post'>
+            Add a new city: <input type='text' name='myCity'>
+            Add a country code: <input type='text' name='country_code'>
+            Add a district: <input type='text' name='district'>
+            Add a population: <input type='text' name='population'>
+            <button>Create</button>
+        </form>
+
+        <!--<p>{{session['newCountry']}}</p>-->
+        <p>{{zebra['id']}}</p>
+        </div>
+      </div>
+  
+      
+    </body>
+</html>

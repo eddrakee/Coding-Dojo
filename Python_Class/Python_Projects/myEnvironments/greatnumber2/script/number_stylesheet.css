@@ -1,0 +1,43 @@
+/**{
+    margin: 0px;
+    padding: 0px;
+}
+
+#wrapper{
+    height:500px;
+    width: 900px;
+    background-color:lightcyan;
+}
+
+.red{
+    height:100px;
+    width:200px;
+    background-color:tomato;
+}
+
+.green{
+    height:100px;
+    width:200px;
+    background-color:seagreen;
+}*/
+
+.green {
+    background-color: seagreen;
+    width: 25%;
+    height: 25%;
+    display: inline-block;
+}
+
+.red {
+    background-color: tomato;
+    width: 25%;
+    height: 25%;
+    display: inline-block;
+}
+
+.white {
+    background-color: lightcyan;
+    width: 25%;
+    height: 25%;
+    display: inline-block;
+}
