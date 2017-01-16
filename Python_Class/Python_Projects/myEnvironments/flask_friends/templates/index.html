@@ -15,11 +15,15 @@
     <p>First Name: {{ friend['first_name'] }}</p>
     <p>Last Name: {{ friend['last_name'] }}</p>
     <p>Occupation: {{ friend['occupation'] }}</p>
-    <hr> {% endfor %}
+    <a href= {{'/show_update/' + friend['id']|string}}>Update Friend</a>
+    <!--We have to use | since it is the html version for python to say str()-->
+    <hr> 
+    {% endfor %}
 
     <p>{{ one_friend }}</p>
 
     <h2>Add a Friend</h2>
+    <p>{{ one_friend }}</p>
     <form action='/friends' method='POST'>
         <label for="first_name">First Name:<input type="text" name="first_name" id="first_name"></label>
         <label for="last_name">Last Name:<input type="text" name="last_name" id="last_name"></label>
@@ -27,17 +31,6 @@
         <input type="submit" value="Add">
     </form>
 
-    <h2>Find a Friend</h2>
-    <form action='/friends/<friend_id>'>
-        <label for="friend_id">Friend ID:<input type="text" name="friend_id" id="friend_id"></label>
-        <input type="submit" value="Search">
-    </form>
-
-    <h2>Delete a Friend</h2>
-    <form action='/remove_friend/<friend_id>' method='POST'>
-        <label for="friend_id">Friend ID:<input type="text" name="friend_id" id="friend_id"></label>
-        <input type="submit" value="Delete">
-    </form>
 </body>
 
 </html>

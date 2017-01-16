@@ -3,6 +3,7 @@ from mysqlconnection import MySQLConnector
 app = Flask(__name__)
 mysql = MySQLConnector(app,'friendsdb')
 
+#def index will render our main page and displays our index.html
 @app.route('/')
 def index():
     print "a"
@@ -11,19 +12,8 @@ def index():
     return render_template('index.html', all_friends=friends) # pass data to our template
 
 
+#this will create a friend
 @app.route('/friends', methods=['POST'])
-# def create():
-#     print "b"
-#     STEP ONE: add a friend to the database!
-#     return redirect('/friends/<friend_id>')
-
-
-    # STEP TWO:
-    # print request.form['first_name']
-    # print request.form['last_name']
-    # print request.form['occupation']
-    # # add a friend to the database!
-    # return redirect('/')
     
     #STEP THREE:
 def create():
@@ -42,9 +32,10 @@ def create():
     mysql.query_db(query, data)
     return redirect('/')
 
+
+#this function will display one friend at a time
 @app.route('/friends/<friend_id>')
 def show(friend_id):
-    index()
     print "c"
     
     # Write query to select specific user by id. At every point where
@@ -58,10 +49,11 @@ def show(friend_id):
     # so we pass the value at [0] to our template under alias one_friend.
 
     # return render_template('index.html', one_friend=friends[0])
-    return render_template('display.html', one_friend=friends[0])
+    return render_template('index.html', one_friend=friends[0])
     # return redirect("/update_friend/<friend_id>")
 
 
+#this will update our friend's info
 @app.route('/update_friend/<friend_id>', methods=['POST'])
 def update(friend_id):
     print "d"
@@ -72,23 +64,26 @@ def update(friend_id):
              'occupation': request.form['occupation'],
              'id': friend_id
            }
-    friends=mysql.query_db(query, data)
+    mysql.query_db(query, data)
     # return redirect('/')
-    return render_template('updated_friend.html', one_friend=friends[0])
+    return redirect('/show_update/'+friend_id) #redirects to the different function, not a different page
+
+@app.route('/show_update/<friend_id>')
+def display_update(friend_id):
+    print "e"
+    query = "SELECT * FROM friends WHERE id = :specific_id"
+    data = {'specific_id': friend_id}
+    friends = mysql.query_db(query, data)
+    return render_template ('updated_friend.html', update_friend = friends[0], friend_id=friend_id)
+
 
 
 @app.route('/remove_friend/<friend_id>', methods=['POST'])
 def delete(friend_id):
-    print "e"
+    print "f"
     query = "DELETE FROM friends WHERE id = :id"
     data = {'id': friend_id}
     mysql.query_db(query, data)
     return redirect('/')
-
-# @app.route('/display_friend/<friend_id>', methods=['POST'])
-# def display(friend_id):
-#     print "f"
-
-
 
 app.run(debug=True)
