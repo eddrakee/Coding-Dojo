@@ -44,7 +44,9 @@ def create():
 
 @app.route('/friends/<friend_id>')
 def show(friend_id):
+    index()
     print "c"
+    
     # Write query to select specific user by id. At every point where
     # we want to insert data, we write ":" and variable name.
     query = "SELECT * FROM friends WHERE id = :specific_id"
@@ -54,7 +56,10 @@ def show(friend_id):
     friends = mysql.query_db(query, data)
     # Friends should be a list with a single object,
     # so we pass the value at [0] to our template under alias one_friend.
-    return render_template('index.html', one_friend=friends[0])
+
+    # return render_template('index.html', one_friend=friends[0])
+    return render_template('display.html', one_friend=friends[0])
+    # return redirect("/update_friend/<friend_id>")
 
 
 @app.route('/update_friend/<friend_id>', methods=['POST'])
@@ -67,8 +72,9 @@ def update(friend_id):
              'occupation': request.form['occupation'],
              'id': friend_id
            }
-    mysql.query_db(query, data)
-    return redirect('/')
+    friends=mysql.query_db(query, data)
+    # return redirect('/')
+    return render_template('updated_friend.html', one_friend=friends[0])
 
 
 @app.route('/remove_friend/<friend_id>', methods=['POST'])
@@ -78,6 +84,11 @@ def delete(friend_id):
     data = {'id': friend_id}
     mysql.query_db(query, data)
     return redirect('/')
+
+# @app.route('/display_friend/<friend_id>', methods=['POST'])
+# def display(friend_id):
+#     print "f"
+
 
 
 app.run(debug=True)
