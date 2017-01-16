@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Email with Validation</title>
+    </head>
+    <body>
+        <h1>Check yo Email!</h1>
+        <form action= '/new_user' method='POST'>
+            <label for="name">Username:<input type ="text" name= "name" id= "name"></label>
+            <label for="email">Email:<input type ="text" name= "email" id= "email"></label>
+
+            <input type="submit" value="Add">
+        </form>
+        
+        {{display_all}}
+        <h1>All Emails</h1>
+        {%for name in display_all%}
+        <p>ID: {{name['id']}}</p>
+        <p>Username: {{name['name']}}</p>
+        <p>Email: {{name['email']}}</p>
+        <p>Created: {{name['created_at']}}</p>
+        <p>Updated: {{name['updated_at']}}</p>
+        <hr>
+        {% endfor%}
+
+    </body>
+
+
+
+
+</html>
