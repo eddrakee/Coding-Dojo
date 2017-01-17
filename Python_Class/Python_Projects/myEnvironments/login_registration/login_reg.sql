@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `login_reg`.`users` (
   `first_name` VARCHAR(100) NULL,
   `last_name` VARCHAR(100) NULL,
   `email` VARCHAR(100) NULL,
-  `pw_has` VARCHAR(255) NULL,
+  `pw_hash` VARCHAR(255) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
   PRIMARY KEY (`id`))
