@@ -3,19 +3,23 @@
         <title>Email with Validation</title>
     </head>
     <body>
-        <h1>Check yo Email!</h1>
+        <h1>Check yo Email!</h1> 
+        <p>~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~</p>
+        <h3>Add an Email - </h3>
         <form action= '/new_user' method='POST'>
-            <label for="name">Username:<input type ="text" name= "name" id= "name"></label>
             <label for="email">Email:<input type ="text" name= "email" id= "email"></label>
-
             <input type="submit" value="Add">
-        </form>
+        <!--</form>
+        <h3>Delete an Email - </h3>
+        <form action= '/remove_email' method='POST'>
+            <label for="email">ID:<input type ="text" name= "id" id= "id"></label>
+            <input type="submit" value="Delete">
+        </form>-->
         
-        {{display_all}}
+        <!--{{display_all}}-->
         <h1>All Emails</h1>
         {%for name in display_all%}
         <p>ID: {{name['id']}}</p>
-        <p>Username: {{name['name']}}</p>
         <p>Email: {{name['email']}}</p>
         <p>Created: {{name['created_at']}}</p>
         <p>Updated: {{name['updated_at']}}</p>

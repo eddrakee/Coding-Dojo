@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from mysqlconnection import MySQLConnector
+
+
 app = Flask(__name__)
 mysql = MySQLConnector(app,'email_validation')
 
@@ -13,34 +15,36 @@ def index(): #display the local host
 @app.route('/new_user', methods = ['POST'])
 def create_user():
     print "b"
-    query = "INSERT users (name, email, created_at, updated_at) VALUES (:name, :email, NOW(), NOW())"
+    query = "INSERT users (email, created_at, updated_at) VALUES (:email, NOW(), NOW())"
     data = {
-        'name': request.form['name'],
         'email': request.form['email']
     }
-    mysql.query_db(query,data)
-    return redirect('/')
-
-@app.route('/validate')
-def check_email():
-    data = {
-            'name': request.form['name'],
-            'email': request.form['email']
-        }
-    
+   
     at_counter = 0
     dot_counter = 0
-    email = request.form['email']
-    for i in email:
-        if email[i] == "@":
-            at_counter = at_counter+1
-        if email[i] == ".":
-            dot_counter = dot_counter+1
-    if at_counter != 1 or dot_counter != 1:
-        print"This email is invalid"
+
+    for key in data.items(): #.items() allow us to look at our values in the data dictionary
+        for i in key[1]:
+            print i
+            if i == "@":
+                at_counter = at_counter + 1
+                print "at_counter",at_counter
+            if i == ".":
+                dot_counter = dot_counter + 1
+
+                print "dot_counter", dot_counter
+    if dot_counter != 1 or at_counter !=1:
+        print "error!"
+        return invalid_email()
     else:
-        return redirect('/')
-    
-mysql.query_db(data)
+        mysql.query_db(query, data)
+
+    return redirect("/")
+
+@app.route('/invalid')
+def invalid_email():
+    return render_template('bademail.html')
+
+
 
 app.run(debug=True)
