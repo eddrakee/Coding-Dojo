@@ -73,5 +73,27 @@ def login_info():
     print "c"
     return render_template ('login_info.html')
 
+@app.route('/login', methods = ['POST'])
+def login():
+    error = 0
+
+    query = "SELECT id, password FROM users WHERE email = '{}'".format(request.form["email"])
+    user = mysql.query_db(query)
+    print user
+
+
+    if len(user) < 1:
+        flash("Email doesn't exist!")
+        error += 1
+    elif bcrypt.check_password_hash(user[0]['password'], request.form['password']):
+        flash('Password is incorrect')
+        error +=1
+    elif error == 0:  
+        session['id'] = user[0]['id']  
+        return redirect('/login_info')
+
+
+
+    return redirect('/')
 
 app.run(debug=True)
