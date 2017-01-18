@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>The Wall</title>
+</head>
+
+<body>
+    <div class="main-content">
+        <h2>Welcome to the forum {{ session['name']}}</h2>
+        <form class="logout" action="/logout" method='POST'>
+            <button type="submit" name="button">Logout</button>
+        </form>
+    </div>
+    <form class="logout" action="/message" method='POST'>
+        <textarea name="content" rows="4" cols="80"></textarea>
+        <br> <input type="submit" name="" value="Create Message">
+    </form>
+    <hr>
+    {% for message in messages %}
+        <blockquote>
+            <h2>Convo Thread # {{ message.id }}</h2>
+           <h3> Message Text: {{ message['message'] }} </h3>
+        </blockquote>
+        
+            {% for comment in comments %}
+            <ul>
+                {% if message.id == comment.message_id%}
+                    <li>{{comment.first_name}} says {{comment['comment']}} on {{comment.created_at}}</li>
+                {% endif %}
+            </ul>
+            {% endfor %}
+        <form class="logout" action="/comment/{{ message['id']}}" method='POST'>
+            <textarea name="content" rows="8" cols="80"></textarea>
+        <br> <input type="submit" name="" value="Create Comment">
+    </form>
+    <hr>
+
+<!--This endfor closes the messages loop-->
+    {% endfor %} 
+
+</body>
+
+</html>
