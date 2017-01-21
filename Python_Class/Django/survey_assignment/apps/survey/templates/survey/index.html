@@ -9,26 +9,28 @@
 <body>
     <div class="wrapper">
         <div class="loginBox">
-        
+            <h1>Please Fill Out The Survey!</h1>
             <form action="/surveys/process" method="POST">
             {% csrf_token %}
-            Your Name: <input type="text" name="name">
+            Your Name: <input class="input" type="text" name="name">
             <br>
-            Dojo Loction: <select name="location">
+            Dojo Loction: <select class="input" name="location">
                 <option value="Seattle">Seattle</option>
                 <option value="San Jose">San Jose</option>
                 <option value="Los Angeles">Los Angeles</option>
                 <option value="Chicago">Chicago</option>
             </select>
             <br>
-             Favorite Snack: <select name="snacks">
+             Favorite Snack: <select class="input" name="snacks">
                 <option value="Gummies">Fruit Gummies</option>
                 <option value="Chips">Chips</option>
                 <option value="Fruit">Fresh Fruit</option>
                 <option value="Bagels">Bagles</option>
             </select>
             <br>
-            Comment (optional):<textarea name="comment" rows="8" cols="40"></textarea>
+            Comment (optional):
+            <br>
+            <textarea class="input" name="comment" rows="8" cols="40"></textarea>
             <br>
             <input type="submit" value="Submit">
             </form>

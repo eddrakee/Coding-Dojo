@@ -19,3 +19,20 @@
     padding: 50px;
 }
 
+.loginBox h1{
+    margin-bottom:20px;
+    text-align:center;
+    color: lightgray
+}
+
+.loginBox h3{
+    margin-bottom:10px;
+}
+.loginBox input{
+    text-align: center;
+    width: 80px;
+}
+.input{
+    margin-bottom: 10px;
+    
+}
