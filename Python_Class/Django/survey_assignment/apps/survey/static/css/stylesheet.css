@@ -1,0 +1,21 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.wrapper{
+    height: 900px;
+    width: 900px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 100px;
+    background-color:lightblue;
+    color: white;
+}
+
+.loginBox{
+    height: 300px;
+    width: 500px;
+    border: solid 1px black;
+    background-color:hotpink;
+    padding: 50px;
+}
+

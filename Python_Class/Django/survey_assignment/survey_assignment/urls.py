@@ -1,4 +1,4 @@
-"""main URL Configuration
+"""survey_assignment URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -13,11 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include #we added include. it will let us include stuff from the apps folder
-from django.contrib import admin
+from django.conf.urls import url, include
+
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
-      url(r'^', include('apps.first_app.urls')) # And now we use include to pull in our first_app.urls...
-  ]
-
+    url(r'^', include('apps.survey.urls')),
+]

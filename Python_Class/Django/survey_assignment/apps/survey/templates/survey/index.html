@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>Survey From</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="loginBox">
+        
+            <form action="/surveys/process" method="POST">
+            {% csrf_token %}
+            Your Name: <input type="text" name="name">
+            <br>
+            Dojo Loction: <select name="location">
+                <option value="Seattle">Seattle</option>
+                <option value="San Jose">San Jose</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="Chicago">Chicago</option>
+            </select>
+            <br>
+             Favorite Snack: <select name="snacks">
+                <option value="Gummies">Fruit Gummies</option>
+                <option value="Chips">Chips</option>
+                <option value="Fruit">Fresh Fruit</option>
+                <option value="Bagels">Bagles</option>
+            </select>
+            <br>
+            Comment (optional):<textarea name="comment" rows="8" cols="40"></textarea>
+            <br>
+            <input type="submit" value="Submit">
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
+
+<!--
+
+	<div id="container">
+		<h2>Random Word (attempt #{{ request.session.attempt }})</h2>
+		<div id="random_word">
+			<h1>{{ request.session.word }}</h1>
+		</div>
+		<form action="/generate" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Generate">
+		</form>
+		<form action="/clear" method="post">
+			{% csrf_token %}
+			<input type="submit" value="RESET">
+		</form>
+	</div>
+</body>
+</html>-->
