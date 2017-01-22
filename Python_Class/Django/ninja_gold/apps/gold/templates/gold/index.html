@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <title>ninjagold</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/disappearNinjas/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <h1>Play Ninja Gold!</h1>
+    <div>
+        Farm
+        <form action="/process_money" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="place" value="farm" />
+        <input type="submit" value="Find Gold!" />
+    </form>
+    </div>
+    <div>
+        Casino
+        <form action="/process_money" method="POST">
+         {% csrf_token %}
+        <input type="hidden" name="place" value="casino" />
+        <input type="submit" value="Find Gold!"/>
+    </form>
+    </div>
+        
+        <div>
+            Cave
+            <form action="/process_money" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="cave" />
+            <input type="submit" value="Find Gold!" />
+        </form>
+        </div>
+        <div>
+            House
+            <form action="/process_money" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="place" value="house" />
+            <input type="submit" value="Find Gold!" />
+        </form>
+        </div>
+        <div>
+            <form action='/clear' method = 'POST'>
+                {% csrf_token %}
+                <button type="submit">Play again</button>
+                
+            </form>
+        </div>
+    <div>
+        {% for idx in request.session.activity %}
+            {{ idx.outcome }}
+        {% endfor %}
+    </div>
+    
+</body>
+
+</html>
