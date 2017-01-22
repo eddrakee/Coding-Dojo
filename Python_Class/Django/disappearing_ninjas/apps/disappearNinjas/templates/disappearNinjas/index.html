@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<title>TMNT</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/disappearNinjas/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+<body>
+    <div class="wrapper">
+        <div id="ninjas">
+            <h1>Teenage Mutant Ninja Turtles!</h1>
+    
+            {% if image %}
+                <!--<img src="{% static image %}" alt="" />-->
+                <img src="{% static image %}" alt="TMNT">
+            {% else %}
+                <img src="{% static 'disappearNinjas/images/tmnt_blue.jpeg' %}" alt="Leonardo" />
+                <img src="{% static 'disappearNinjas/images/tmnt_red.jpg' %}" alt="Raphael" />
+                <img src="{% static 'disappearNinjas/images/tmnt_orange.jpg' %}" alt="Michelangelo" />
+                <img src="{% static 'disappearNinjas/images/tmnt_purple.jpg' %}" alt="Donatello" />
+            {% endif %}
+
+                {{image}}
+
+                {# <img src="{% static 'disappearNinjas/images/pizza_time.jpg' %}" alt="" /> #}
+        </div>
+
+    </div>
+</body>
+</html>

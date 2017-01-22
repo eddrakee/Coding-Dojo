@@ -15,7 +15,10 @@
                 <h3>Favorite Snack: {{ request.session.snacks }}</h3>
                 <h3>Comment: {{ request.session.comment }}</h3>
                 
-                <input type="return" value="Go Back">
+                <form action="/" method="POST">
+                {% csrf_token %}
+                    <input type="submit" value="Go Back">
+                </form>
             </div>
         </div>
     </body>

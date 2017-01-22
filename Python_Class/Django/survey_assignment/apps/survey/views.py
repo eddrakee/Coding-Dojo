@@ -26,6 +26,9 @@ def showResults(request):
 
     return render(request, "survey/userAnswer.html")
 
+def reset(request):
+    return redirect (request, "survey/index.html")
+
 #if we do 
 #   if not request.session ["name"] = request.POST["name"] 
 # 

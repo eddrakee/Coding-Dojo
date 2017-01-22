@@ -1,0 +1,28 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.wrapper{
+    height: 900px;
+    width: 900px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    padding: 100px;
+    color: black;
+    text-align: center;
+}
+#ninjas{
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+#ninjas h1{
+    text-align: center;
+}
+
+#ninjas img{
+    display: inline-block;
+    height:44%;
+    width: 44%;
+    margin: 20px;
+}
