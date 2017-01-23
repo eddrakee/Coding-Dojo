@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>PhaseBook</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/wall/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome to PhaseBook</h1>
+        </div>
+        
+        <div class="login">
+                <form class="boxes" action= '/register' method='POST'>
+                    {% csrf_token %}
+                    <h1>Register</h1>
+                    First Name:<input type="text" name="first_name">
+                    Last Name:<input type="text" name="last_name">
+                    E-mail:<input type="text" name="email">
+                    Password:<input type="text" name="password">
+                    Confirm Password:<input type="text" name="confirm_pw">
+                    <input type="submit" value="Submit">
+                </form>
+                
+        </div>
+        <div class="login">
+                <form action="/login" method='POST'>
+                {% csrf_token %}
+                    <h1>Login</h1>
+                    <label for="email">E-mail:<input type="email" name="email" id="email"></label>
+                    <label for="password">Password:<input type="password" name="password" id="password"></label>
+                    <input type="submit" value="Login">
+                </form>
+                {% for user in users %}
+                <h1>{{ user.first_name }}
+                {{ user.last_name }}
+                {{ user.email }}
+                {{ user.password }}
+                {{ user.created_at}}
+                {{ user.updated_at }}</h1>
+                {% endfor %}
+        </div>
+        
+   </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>PhaseBook</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/wall/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome to PhaseBook</h1>
+        </div>
+        <div class="login">
+            <h1>Welcome {{request.session.user_name}}</h1>
+            <form class="boxes" action= '/logout' method='POST'>
+                {% csrf_token %}
+                <input type="submit" name="button" value="Logout">
+            </form>
+        </div>
+        <div class="login">
+            <form class="boxes" action= '/message' method='POST'>
+                {% csrf_token %}
+                <h3>Message</h3>
+                <textarea name="message" rows="8" cols="88"></textarea>
+                <input type="submit" name="button" value="Post">
+            </form>
+        </div>
+        <div class="login">
+            {% for post in all_posts %}
+            {{ post.content }}
+            {% for comment in post.comment_set.all %}
+                {{ comment.comment }}
+            {% endfor %}
+                <form action= "/comments/{{post.id}}" method='POST'>
+                    {% csrf_token %}
+                    comment: <textarea name ="comment" rows="8" cols="88"></textarea>
+                    <input type="submit" value="Post">
+                    </form>
+        {% endfor %}
+
+        </div>
+        
+   </div>
+    
+</body>
+
+</html>
