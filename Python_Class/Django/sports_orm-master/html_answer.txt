@@ -1,0 +1,151 @@
+PROMPT FOR SPORTS I -
+
+1. Find all baseball leagues
+2. Find all womens' leagues
+3. Find all leagues where sport is any type of hockey
+4. Find all leagues where sport is something OTHER THAN football
+5. Find all leagues that call themselves "conferences"
+6. Find all leagues in the Atlantic region
+7. Find all teams based in Dallas 
+8. Find all teams named the Raptors 
+9. Find all teams whose location includes "City" 
+10. Find all teams whose names begin with "T" 
+11. Return all teams, ordered alphabetically by location 
+12. Return all teams, ordered by team name in reverse alphabetical order 
+13. Find every player with last name "Cooper" 
+14. Find every player with first name "Joshua" 
+15. Find every player with last name "Cooper" EXCEPT FOR Joshua 
+16. Find all players with first name "Alexander" OR first name "Wyatt"
+
+
+VIEWS.PY ANSWER KEY FOR SPORTS I -
+
+(insert this into your view.py file)
+
+def index(request):
+	context = {
+		"leagues": League.objects.all(),
+		"teams": Team.objects.all(),
+		"players": Player.objects.all(),
+		#answers for Level 1
+		"baseball": League.objects.filter(name__contains="baseball"),
+		"women": League.objects.filter(name__contains="women"),
+		"hockey": League.objects.filter(name__contains="hockey"),
+		"football": League.objects.exclude(name__contains="football"),
+		"conference": League.objects.filter(name__contains="conference"),
+		"atlantic": League.objects.filter(name__contains="atlantic"),
+		"dallas": Team.objects.filter(location__contains="Dallas"),
+		"raptors": Team.objects.filter(team_name__contains="raptors"),
+		"city": Team.objects.filter(location__contains="city"),
+		"T": Team.objects.filter(team_name__startswith="T"),
+		"OrderedByLocation": Team.objects.order_by("location"),
+		"ReverseTeam": Team.objects.order_by("-team_name"),
+		#this one can also be done with Team.objects.order_by("team_name").reverse()
+		"Cooper": Player.objects.filter(last_name__contains="Cooper"),
+		"Joshua": Player.objects.filter(first_name__contains="Joshua"),
+		"CooperNoJoshua": Player.objects.filter(last_name__contains="Cooper").exclude(first_name="Joshua"),
+		"AlexORWyatt": Player.objects.filter(Q(first_name="Alexander")| Q(first_name="Wyatt"))
+
+	}
+	return render(request, "leagues/index.html", context)
+
+
+HTML ANSWER KEY FOR SPORTS I -
+
+1.  {% for idx in baseball %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+2.  {% for idx in women %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+3.  {% for idx in hockey %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+4.  {% for idx in atlantic %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+5.  {% for idx in conference %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+6.  {% for idx in football %} 
+    <li>{{ idx.name }} </li>
+    {% endfor %}
+
+7.  {% for idx in dallas %} 
+    <li>{{ idx.team_name }} </li>
+    {% endfor %}
+    
+8.  {% for idx in raptors %} 
+    <li>{{ idx.location }} {{ idx.team_name }} </li>
+    {% endfor %}
+
+9.  {% for idx in city %} 
+    <li>{{ idx.location }} {{ idx.team_name }} </li>
+    {% endfor %}
+
+10. {% for idx in ReverseByLocation %} 
+    <li>{{ idx.location }} {{ idx.team_name }} </li>
+    {% endfor %}
+
+11. {% for idx in ReverseTeam %} 
+    <li>{{ idx.location }} {{ idx.team_name }} </li>
+    {% endfor %}
+
+12. {% for idx in Cooper %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} </li>
+    {% endfor %}
+
+13. {% for idx in Joshua %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} </li>
+    {% endfor %}
+
+14. {% for idx in CooperNoJoshua %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} </li>
+    {% endfor %}
+
+15. {% for idx in AlexORWyatt %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} </li>
+    {% endfor %}
+    NOTE: You must import Q in the views.py in order for the OR to work. 
+    (from django.db.models import Q)
+
+PROMPT FOR LEVEL II - 
+1. Find all teams in the Atlantic Soccer Conference
+2. Find all (current) players on the Boston Penguins
+3. Find all (current) players in the International Collegiate Baseball Conference
+4. Find all (current) players in the American Conference of Amateur Football with last name "Lopez"
+5. Find all football players
+6. Find all teams with a (current) player named "Sophia"
+7. Find all leagues with a (current) player named "Sophia"
+8. Find everyone with the last name "Flores" who DOESN'T (currently) play for the Washington Roughriders
+
+HTML ANSWER KEY FOR SPORTS II -
+
+1.  {% for idx in TeamsInAtlantic %} 
+    <li>{{ idx.location }} {{ idx.team_name }}</li>
+    {% endfor %}
+
+2.  {% for idx in Penguins %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }}</li>
+    {% endfor %}
+
+3.  {% for idx in IntlCollegiate %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }}</li>
+    {% endfor %}
+
+4.  {% for idx in Lopez2 %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} {{ idx.name }}    </li>
+    {% endfor %}
+
+5.  {% for idx in Football2 %} 
+    <li>{{ idx.first_name }} {{ idx.last_name }} </li>
+    {% endfor %}
+
+6.  {% for idx in Sophia1 %} 
+    <li>{{ idx.team_name }} </li>
+    {% endfor %}

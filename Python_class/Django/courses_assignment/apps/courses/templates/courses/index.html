@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Courses</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/courses/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Current Courses</h1>
+        </div>
+        
+        <div class="input">
+                <form class="boxes" action= '/courses' method='POST'>
+                    {% csrf_token %}
+                    <h1>Add a Course</h1>
+                    <hr>
+                    <h4>Name:</h4><input type="text" name="course_name">
+                   
+                    <br>
+                    <h4>Description:</h4>
+                    <br>
+                    <textarea rows="8"cols="80" name="description"></textarea>
+                    <br>
+                    <input type="submit" value="Add">
+                </form>
+                
+                <!--<h2>{{idx.course_name}} {{ idx.id}}</h2>
+                {{idx.description.content}} {{idx.description.id}}-->
+                
+                {% for idx in all_courses %}
+                <table>
+                    
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Course ID</th>
+                        <th>Course Description</th>
+                        <th>Description ID</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr>
+                        <td>{{idx.course_name}} </td>
+                        <td>{{idx.id}} </td>
+                        <td>{{idx.description.content}} </td>
+                        <td>{{idx.description.id}} </td>
+                        <td><form action= "remove/{{idx.id}}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Remove">
+                        </form></td>
+                    </tr>
+                </table>
+                {% endfor %}
+
+        </div>
+  
+        
+   </div>
+    
+</body>
+
+</html>
