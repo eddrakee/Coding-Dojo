@@ -7,19 +7,33 @@
         <link href="css/style.css" rel="stylesheet">-->
     </head>
     <body>
-        {% for user in all_users %}
-        {{ user.first_name }}
-        {{ user.last_name }}
-        {{ user.password }}
-        {% endfor %}
+       
+        <h1>Create an Account</h1>
         <form action='/register' method='POST'>
         {% csrf_token %}
-        <input type="text" name="first_name">
-        <input type="text" name="last_name" value="">
-        <input type="text" name="password" value="">
+        First Name: <input type="text" name="first_name">
+        <br>
+        Last Name: <input type="text" name="last_name" value="">
+        <br>
+        Password: <input type="password" name="password" value="">
         <input type="submit" name="" value="Register">
-            
         </form>
-    
+        <table>
+           
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Password Name</th>
+            </tr>
+            {% for user in all_users %}
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.password }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </body>
 </html>
