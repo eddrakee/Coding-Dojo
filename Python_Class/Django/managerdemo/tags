@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ALLOWED_HOSTS	managerdemo/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
+AUTH_PASSWORD_VALIDATORS	managerdemo/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:87
+AppConfig	apps/user_manager/apps.py	/^from django.apps import AppConfig$/;"	kind:namespace	line:3
+BASE_DIR	managerdemo/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+DATABASES	managerdemo/settings.py	/^DATABASES = {$/;"	kind:variable	line:76
+DEBUG	managerdemo/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+INSTALLED_APPS	managerdemo/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
+LANGUAGE_CODE	managerdemo/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:106
+MIDDLEWARE	managerdemo/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:42
+ROOT_URLCONF	managerdemo/settings.py	/^ROOT_URLCONF = 'managerdemo.urls'$/;"	kind:variable	line:52
+STATIC_URL	managerdemo/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:120
+TEMPLATES	managerdemo/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:54
+TIME_ZONE	managerdemo/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:108
+TestCase	apps/user_manager/tests.py	/^from django.test import TestCase$/;"	kind:namespace	line:1
+USE_I18N	managerdemo/settings.py	/^USE_I18N = True$/;"	kind:variable	line:110
+USE_L10N	managerdemo/settings.py	/^USE_L10N = True$/;"	kind:variable	line:112
+USE_TZ	managerdemo/settings.py	/^USE_TZ = True$/;"	kind:variable	line:114
+UserManagerConfig	apps/user_manager/apps.py	/^class UserManagerConfig(AppConfig):$/;"	kind:class	line:6
+WSGI_APPLICATION	managerdemo/settings.py	/^WSGI_APPLICATION = 'managerdemo.wsgi.application'$/;"	kind:variable	line:70
+__init__.py	apps/__init__.py	1;"	kind:file	line:1
+__init__.py	apps/user_manager/__init__.py	1;"	kind:file	line:1
+__init__.py	apps/user_manager/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	managerdemo/__init__.py	1;"	kind:file	line:1
+admin	apps/user_manager/admin.py	/^from django.contrib import admin$/;"	kind:namespace	line:1
+admin	managerdemo/urls.py	/^from django.contrib import admin$/;"	kind:namespace	line:17
+admin.py	apps/user_manager/admin.py	1;"	kind:file	line:1
+application	managerdemo/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	apps/user_manager/apps.py	1;"	kind:file	line:1
+django	manage.py	/^            import django$/;"	kind:namespace	line:14
+execute_from_command_line	manage.py	/^        from django.core.management import execute_from_command_line$/;"	kind:namespace	line:8
+get_wsgi_application	managerdemo/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	kind:namespace	line:12
+manage.py	manage.py	1;"	kind:file	line:1
+models	apps/user_manager/models.py	/^from django.db import models$/;"	kind:namespace	line:3
+models.py	apps/user_manager/models.py	1;"	kind:file	line:1
+name	apps/user_manager/apps.py	/^    name = 'user_manager'$/;"	kind:variable	line:7
+os	manage.py	/^import os$/;"	kind:namespace	line:2
+os	managerdemo/settings.py	/^import os$/;"	kind:namespace	line:13
+os	managerdemo/wsgi.py	/^import os$/;"	kind:namespace	line:10
+render	apps/user_manager/views.py	/^from django.shortcuts import render$/;"	kind:namespace	line:1
+settings.py	managerdemo/settings.py	1;"	kind:file	line:1
+sys	manage.py	/^import sys$/;"	kind:namespace	line:3
+tests.py	apps/user_manager/tests.py	1;"	kind:file	line:1
+unicode_literals	apps/user_manager/apps.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:1
+unicode_literals	apps/user_manager/models.py	/^from __future__ import unicode_literals$/;"	kind:namespace	line:1
+url	managerdemo/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:16
+urlpatterns	managerdemo/urls.py	/^urlpatterns = [$/;"	kind:variable	line:19
+urls.py	managerdemo/urls.py	1;"	kind:file	line:1
+views.py	apps/user_manager/views.py	1;"	kind:file	line:1
+wsgi.py	managerdemo/wsgi.py	1;"	kind:file	line:1

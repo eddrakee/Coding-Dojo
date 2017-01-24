@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">-->
+    </head>
+    <body>
+        {% for user in all_users %}
+        {{ user.first_name }}
+        {{ user.last_name }}
+        {{ user.password }}
+        {% endfor %}
+        <form action='/register' method='POST'>
+        {% csrf_token %}
+        <input type="text" name="first_name">
+        <input type="text" name="last_name" value="">
+        <input type="text" name="password" value="">
+        <input type="submit" name="" value="Register">
+            
+        </form>
+    
+    </body>
+</html>
