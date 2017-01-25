@@ -20,7 +20,7 @@ class UserManager(models.Manager): # This is exclusive to User class
             error_arr.append("Please enter a valid email!")
         if not postData1['password'] == postData1['confirm']: #if these don't match up
             error_arr.append("Your passwords do not match!")
-        if self.emailExist(postData1): #take postData1 and pass it to the emailExist method
+        if self.email_exist(postData1): #take postData1 and pass it to the emailExist method
             error_arr.append("You have already registered with this email!")
 
         return error_arr #this will be passed to the register method in views.py

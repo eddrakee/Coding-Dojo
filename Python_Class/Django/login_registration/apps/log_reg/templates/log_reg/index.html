@@ -34,7 +34,7 @@
                 </form>
                 
                 <h1>Current Users:</h1>
-                {% for idx in all_users %}
+                
                 <table>
                     
                     <tr>
@@ -44,6 +44,7 @@
                         <th>Email</th>
                         <th>Password</th>
                     </tr>
+                    {% for idx in all_users %}
                     <tr>
                         <td>{{idx.first_name}} </td>
                         <td>{{idx.last_name}} </td>
@@ -56,8 +57,9 @@
                         <input type="submit" value="Remove">
                         </form></td>-->
                     </tr>
+                    {% endfor %}
                 </table>
-                {% endfor %}
+                
         </div>
         <div class="contentBox">
             <form class="boxes" action= '/login' method='POST'>

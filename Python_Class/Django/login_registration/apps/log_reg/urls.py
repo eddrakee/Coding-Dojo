@@ -7,5 +7,6 @@ urlpatterns = [
     # we will use "name" later on when we are going between apps
     url(r'^register$', views.register),
     url(r'^login$', views.login),
-    url(r'^success$', views.)
+    url(r'^success$', views.success),
+    url(r'^logout$', views.logout),
 ]
