@@ -12,6 +12,14 @@
             <h1>Welcome!</h1>
         </div>
 
+        <div class="error">
+            <ul>
+            {% for idx in messages %}
+                <li>{{ idx}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        
         <div class="contentBox">
                 <form class="boxes" action= '/logout' method='POST'>
                     {% csrf_token %} 

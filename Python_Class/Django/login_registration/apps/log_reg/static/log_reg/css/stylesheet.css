@@ -61,13 +61,13 @@ td, th {
     padding: 8px;
 }
 
-#error{
+.error{
     color: white;
     background-color:tomato;
     margin-top: 10px;
 }
 
-#error li{
+.error li{
     margin-top:5px;
     text-align:center;
 }
