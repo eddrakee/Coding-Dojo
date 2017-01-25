@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 #Our new manager!
-#No methods in our new manager should ever catch the whole request object with a parameter!!! (just parts, like request.POST)
+#No methods in our new manager should ever catch the whole request object with a parameter!!! (just parts, like request.POST) otherwise it will be too large
 class UserManager(models.Manager):
     def login(self, postData):
         pass

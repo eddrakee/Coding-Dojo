@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <title>Login & Registration</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/log_reg/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome!</h1>
+        </div>
+
+        <div class="error">
+            <ul>
+            {% for idx in messages %}
+                <li>{{ idx}}</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <div class="contentBox">
+                <form class="boxes" action= '{% url "login_namesp:registered" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Please Register</h2>
+                    <hr>
+                    <h4>First Name: </h4><input type="text" name="first_name">
+                    <h4>Last Name: </h4><input type="text" name="last_name">
+                    <h4>Email: </h4><input type="text" name="email">
+                    <h4>Password: </h4><input type="text" name="password">
+                    <h4>Confirm Password: </h4><input type="text" name="confirm">
+             
+                    <input type="submit" value="Register!">
+                </form>
+                
+                <h1>Current Users:</h1>
+                
+                <table>
+                    
+                    <tr>
+                        <th>User First Name</th>
+                        <th>User Last Name</th>
+                        <th>User ID</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                    </tr>
+                    {% for idx in all_users %}
+                    <tr>
+                        <td>{{idx.first_name}} </td>
+                        <td>{{idx.last_name}} </td>
+                        <td>{{idx.id}} </td>
+                        <td>{{idx.email}} </td>
+                        <td>{{idx.password}} </td>
+                        <!--Code below is hte start to let us remove users-->
+                        <!--<td><form action= "remove/{{idx.id}}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Remove">
+                        </form></td>-->
+                    </tr>
+                    {% endfor %}
+                </table>
+                
+        </div>
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "login_namesp:log_in" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Login</h2>
+                    <hr>
+                    <h4>Email: </h4><input type="text" name="email">
+                    <h4>Password: </h4><input type="text" name="password">
+                    <input type="submit" value="Login!">
+                </form>
+        </div>
+        
+   </div>
+    
+</body>
+
+</html>
