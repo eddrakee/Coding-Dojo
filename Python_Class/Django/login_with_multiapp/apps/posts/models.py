@@ -6,7 +6,8 @@ from ..log_reg.models import User #don't forget to import our first app's model!
 
 # Create your models here.
 class PostManager(models.Manager):
-    pass
+    def post_post(self):
+        pass
 
 
 

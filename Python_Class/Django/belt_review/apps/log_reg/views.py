@@ -7,7 +7,7 @@ def index(request):
     #to make sure a logged in user can't log in again
     if "user_id" in request.session: #this says is the user_id key (from the login method when we set the session) in session?
         messages.add_message(request, messages.ERROR, "You are already logged in!")
-        return redirect('login_namesp:login_success') #send them back to success method  so they can't log in again
+        return redirect('/success') #send them back to the success page so they can't log in again
     
     context = {
         'all_users': User.objects.all()
@@ -18,7 +18,7 @@ def register(request):
     #to make sure a logged in user can't log in again
     if "user_id" in request.session: #this says is the user_id key (from the login method when we set the session) in session?
         messages.add_message(request, messages.ERROR, "You are already logged in!")
-        return redirect('login_namesp:login_success') #send them back to the success page so they can't log in again
+        return redirect('/success') #send them back to the success page so they can't log in again
 
     error_arr_message = User.objects.validate(request.POST)
     #this is going to use the validate method in UserManager to make the request.POST above our postData1
@@ -31,17 +31,17 @@ def register(request):
     User.objects.register(request.POST) #pass the POST dictionary to the UserManager register method
     request.session['user_id'] = User.objects.set_session(request.POST) #this will log in the user without making go through the login form
     print (request.session['user_id']) 
-    return redirect ('login_namesp:login_success') #reroute to my success page
+    return redirect ('/success') #reroute to my success page
 
 def login(request):
     if "user_id" in request.session: #this says is the user_id key (from the login method when we set the session) in session?
         messages.add_message(request, messages.ERROR, "You are already logged in!")
-        return redirect('login_namesp:login_success') #send them back to the success page so they can't log in again
+        return redirect('/success') #send them back to the success page so they can't log in again
 
     login_attempt = User.objects.login_user(request.POST) #this says go to User, then it's objects, then the method login_user
     if not User.objects.email_exist(request.POST): #did they input an email that's in the database?
         messages.add_message(request, messages.ERROR, "Email is incorrect!")
-        return redirect('login_namesp') #we could also do ('/')
+        return redirect('/')
         #now we check to see if the password matches the email with the code below!
     if not login_attempt: #aka if login_attempt == False
         messages.add_message(request, messages.ERROR, "Password is incorrect!")
@@ -49,7 +49,7 @@ def login(request):
     #now let's set the session!
     request.session['user_id'] = User.objects.set_session(request.POST) #this sets the session so we can access this user's info as long as they are logged in
     print (request.session['user_id']) #user_id is a key that we just created
-    return redirect('login_namesp:login_success') #reroute to my success page
+    return redirect('/success') #reroute to my success page
 
 def success(request):
     #if someone goes to /success without logging in first
@@ -62,11 +62,8 @@ def success(request):
     print (user_data)
     print ('- The users database object ID -')
     print (user_data.id)
-    # return redirect('posts_namesp:the_wall') 
-    return redirect('/')
-    #this will bring us to our second app (messages) and start "the wall " method
+    return render(request, 'log_reg/logged_in.html')
 
-#LOG OUT METHOD - 
 def logout(request):
     request.session.flush() #this clears all the sessions!
     return redirect('/')

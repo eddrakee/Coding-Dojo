@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.contrib import messages
 
 # Create your views here.
-def create_post(request):
-  
-    return render(request, 'log_reg/logged_in.html')
+def wall(request):
+   #will add context
+   print ("hello")*50
+   return render(request, 'posts/wall.html')
+    

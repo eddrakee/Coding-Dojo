@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^make$', views.create_post, name='create_post'), 
+    url(r'^$', views.wall, name='the_wall'),
 ]
