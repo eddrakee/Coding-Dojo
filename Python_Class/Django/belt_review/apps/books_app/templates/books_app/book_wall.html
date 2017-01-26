@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>Books Home</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome! {{ request.session.user_id}} </h1>
+            <a href= "{% url 'books_ns:add_book' %}"></a>
+
+        </div>
+
+          <div class="contentBox">
+                <form class="boxes" action= "{% url 'books_ns:book_index' %}" method='POST'>
+                    {% csrf_token %} 
+                    <input type="submit" value="Logout!">
+                </form>
+        </div>
+
+        <div class="review_box">
+            <h4>Recent Book Reviews:</h4>
+           
+
+            <h4>Other Books With Reviews:</h4>
+             {% for idx in total_books %}
+                <li><a href= "{% url 'books_ns:show_book' book_id=book.id %}">{{ idx.name }}</a></li>
+             {% endfor %}
+
+        </div>
+        
+      
+       
+   </div>
+    
+</body>
+
+</html>

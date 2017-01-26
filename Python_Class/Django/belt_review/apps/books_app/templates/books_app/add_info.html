@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>Add Book and Review</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+           <a href="{% books_ns:book_index %}">Home</a>
+           <form class="boxes" action= "{% url 'books_ns:book_index' %}" method='POST'>
+                    {% csrf_token %} 
+                    <input type="submit" value="Logout">
+            </form>
+        </div>
+
+        <div class="contentBox">
+            <h2>Add a New Book Title and a Review</h2>
+
+            <h4>Book Title:</h4>
+            <form class="boxes" action= "{% 'books_ns:create_book'%}" method='POST'>
+                    {% csrf_token %} 
+                    <input type="text" name="title" value="">
+                    <input type="text" name="author" value="">
+                    <input type="submit" name="" value="Add Book">
+
+                </form>
+
+        </div>
+          
+
+      
+       
+   </div>
+    
+</body>
+
+</html>
