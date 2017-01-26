@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <title>Welcome</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome NAME !</h1>
+        </div>
+
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "books_ns:books_add" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Add a New Book Title and a Review</h2>
+                    <hr>
+                    <h4>Book Title: </h4><input type="text" name="title">
+                    <h4>Author: </h4><input type="text" name="author">
+                    <h4>Choose from a List: </h4><input type="select" name="choose_book">
+                    <h4>Or add a new author: </h4><input type="text" name="new_author">
+                   
+                    <input type="submit" value="Add!">
+                </form>
+        </div>
+
+        
+   </div>
+    
+</body>
+
+</html>

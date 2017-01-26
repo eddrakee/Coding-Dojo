@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>Welcome</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/login_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome!</h1>
+        </div>
+
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "login_ns:register" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Please Register</h2>
+                    <hr>
+                    <h4>First Name: </h4><input type="text" name="first_name">
+                    <h4>Last Name: </h4><input type="text" name="last_name">
+                    <h4>Email: </h4><input type="text" name="email">
+                    <h4>Password: </h4><input type="text" name="password">
+                    <h4>Confirm Password: </h4><input type="text" name="confirm">
+             
+                    <input type="submit" value="Register!">
+                </form>
+        </div>
+
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "login_ns:login" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Login</h2>
+                    <hr>
+                    <h4>Email: </h4><input type="text" name="email">
+                    <h4>Password: </h4><input type="text" name="password">
+                    <input type="submit" value="Login!">
+            </form>
+        </div>
+
+     
+        
+   </div>
+    
+</body>
+
+</html>
