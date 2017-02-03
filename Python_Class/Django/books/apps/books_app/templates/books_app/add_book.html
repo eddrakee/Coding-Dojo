@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <title>Welcome</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome {{request.session.user_name}}!</h1>
+            <div class="upperRight">
+                <a href= '{% url "login_ns:user_index" %}'>Home</a>
+            </div>
+        </div>
+
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "books_ns:books_add" user_id=request.session.user_id %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Add a New Book Title and a Review</h2>
+                    <hr>
+                    <h4>Book Title: </h4><input type="text" name="title">
+                    <h4>Author: </h4>
+                        <h5>Add an Author - </h5>
+                        <input type="text" name="author">
+                        <!--<h5>Select an Author - </h5>
+                        <select>
+                            <option value="Author Name 1">1</option>
+                            <option value="Author Name 2">2</option>
+                            <option value="Author Name 3">3</option>
+                        </select>-->
+                    <!--<h4>Choose from a List: </h4><input type="select" name="choose_book">-->
+
+                    <h2>Add a Review</h2>
+                    <hr>
+                    <h4>Review: </h4><textarea rows="10" cols="50" name="content"></textarea>
+                    <h4>Rating: </h4>
+                        <h5>Rate it - </h5>
+                        <select name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+
+                    <input type="submit" value="Add Book!">
+
+                </form>
+        </div>
+        
+        
+     <div class="contentBox">
+         <h1>Current Books:</h1>
+                
+                <table>
+                    <tr>
+                        <th>Author</th>
+                        <th>Title</th>
+                        <th>Created At</th>
+                   
+                    </tr>
+                    {% for idx in all_books %}
+
+                    <tr>
+                        <td>{{idx.author}} </td>
+                        <td>{{idx.title}} </td>
+                        <td>{{idx.created_at}} </td>
+                      
+            
+                    </tr>
+                    {% endfor %}
+                </table>
+
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                    </tr>
+                     {% for idx in all_reviews %}
+                     <tr>
+                        <td>{{idx.user.first_name }}</td>
+                        <td>{{idx.content}}</td>
+                        <td>{{idx.rating}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        
+   </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<html>
+
+<head>
+    <title>Welcome</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Welcome NAME !</h1>
+        </div>
+
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "books_ns:books_index" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Recent Book Reviews:</h2>
+                
+                </form>
+        </div>
+        
+        <div class="contentBox">
+            <form class="boxes" action= '{% url "books_ns:books_index" %}' method='POST'>
+                    {% csrf_token %} 
+                    <h2>Other Books with Reviews:</h2>
+                
+                </form>
+        </div>
+
+   </div>
+    
+</body>
+
+</html>

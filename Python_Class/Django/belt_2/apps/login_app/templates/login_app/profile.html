@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>Add Book and Review</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="upperRight">
+                <a href= '{% url "login_ns:user_index" %}' id="link">Home</a>
+            </div>
+        </div>
+            <div class="contentBox">
+            
+            <h1>Hello!</h1>
+       
+            <h4>Name:</h4> <p>{{user_info.first_name}}</p>
+            <h4>Email:</h4> <p>{{user_info.email}}</p>
+            <h4>Total Reviews:</h4> <p>{{user_info.last_name}}</p>
+           
+            <h1>Posted Reviews on the following books:</h1>
+           
+        </div>
+        
+            
+          
+    
+        
+   
+    
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>Add Book and Review</title>
+    {% load staticfiles %}
+	<link rel="stylesheet" href="{% static '/books_app/css/stylesheet.css' %}" media="screen" charset="utf-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="upperRight">
+                <a href= '{% url "login_ns:user_index" %}' id="link">Home</a>
+            </div>
+            <h1>{{book_data.title}}!</h1>
+            <h4>Author: {{book_data.author}}!</h4>
+        </div>
+
+        <div class="contentBox">
+            <h1>Reviews:</h1>
+            <hr>
+
+            <h4>Rating:</h4>
+            {% for review in review_data %}
+                {% if review.book == book_data %}
+            <p>{{review.rating}}</p>
+            <a href='{% url "login_ns:profile" user_id=user_data.id %}'>{{user_data.first_name}}</a>
+            <p>says:{{review.content}} </p>
+                {% endif %}
+            {% endfor %}
+            
+          
+        </div>
+        
+   </div>
+    
+</body>
+
+</html>
