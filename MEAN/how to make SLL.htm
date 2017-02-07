@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://learn.codingdojo.com/m/4/3690/24840 -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title> | Object Oriented Programming</title>
+    <link href="http://learn.codingdojo.com/assets/black_ninja-db2fe4f1051012ab89c235cc9bf3cd5a.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="./how to make SLL_files/chapter_modules_layout-867a511783496772c93b18a75d8c64a7.css" media="all" rel="stylesheet">
+    <link href="./how to make SLL_files/modules_layout-ef87594cab6118a723a5e6b7b9608237.css" media="all" rel="stylesheet">
+
+
+    <script src="./how to make SLL_files/chapter_modules_scripts-0836fe567df30fb38a4f5c3e2d12d89e.js"></script><style></style><script src="./how to make SLL_files/clipboard.min.js"></script>
+    <script src="./how to make SLL_files/modules_scripts-4dabdc4725f0e0f3e80412f4cdbc0693.js"></script>
+
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=" name="csrf-token">
+    <script>
+//<![CDATA[
+var AUTH_TOKEN = 'XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=';
+//]]>
+</script>
+    
+      <script src="./how to make SLL_files/socket.io.js" type="text/javascript"></script>
+
+<style type="text/css">.fancybox-margin{margin-right:0px;}</style></head>
+<body>
+<input type="checkbox" id="activate_menu_checkbox" class="hidden" checked="checked">
+
+
+<div id="menu_button">
+		<label for="activate_menu_checkbox" class="glyphicon glyphicon-menu-hamburger"></label>
+		<a href="http://learn.codingdojo.com/dashboard#tracks_container" class="button_text unload_link">
+			<div class="track_button">
+				Back to Tracks
+			</div>
+		</a>
+	<!-- <label label for="activate_menu_checkbox" class="glyphicon menu_indicator"></label> -->
+</div>  
+
+<div class="hidden_chapter_title hidden"><a class="chapter_title" href="javascript:void(0)">
+					<h3><span class="chapter-title">Object Oriented Programming</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								59%
+							</span>
+						</div>
+				</a></div>
+<div id="sidebar" class="nano " style="height: 100px;">
+	
+	<ul id="chapter_list" class="nano-content  chapter-list" data-course-id="1214" tabindex="0">
+			<li class="">
+
+
+
+				<a class="chapter_title unload_link" href="http://learn.codingdojo.com/m/4/3784">
+					<h3><span class="chapter-title">Overview</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								100%
+							</span>
+						</div>
+				</a>
+				<ul class="tab_list  module-list" id="module_list_3784" data-chapter-id="3690">
+
+
+
+				</ul>
+			</li>
+			<li class="">
+
+
+
+				<a class="chapter_title unload_link" href="http://learn.codingdojo.com/m/4/3692">
+					<h3><span class="chapter-title">Introduction to Node</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								100%
+							</span>
+						</div>
+				</a>
+				<ul class="tab_list  module-list" id="module_list_3692" data-chapter-id="3690">
+
+
+
+				</ul>
+			</li>
+			<li class="">
+
+
+
+				<a class="chapter_title unload_link" href="http://learn.codingdojo.com/m/4/3689">
+					<h3><span class="chapter-title">Fundamentals</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								90%
+							</span>
+						</div>
+				</a>
+				<ul class="tab_list  module-list" id="module_list_3689" data-chapter-id="3690">
+
+
+
+				</ul>
+			</li>
+			<li class="active">
+
+
+
+				<a class="chapter_title unload_link" href="http://learn.codingdojo.com/m/4/3690">
+					<h3><span class="chapter-title">Object Oriented Programming</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								59%
+							</span>
+						</div>
+				</a>
+				<ul class="tab_list  module-list" id="module_list_3690" data-chapter-id="3690">
+
+
+
+
+
+									<li class="text has_video completed_tab " data-module-id="24793">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24793">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24793">
+												<h4>OOP From 30,000 Feet​​</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24838">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24838">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24838">
+												<h4>Tip: Object Organization</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24794">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24794">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24794">
+												<h4>Object Constructors</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do completed_tab " data-module-id="24797">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24797">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24797">
+												<h4>Creating Objects I</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24795">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24795">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24795">
+												<h4>this &amp; new</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24800">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24800">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24800">
+												<h4>Private Variables</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24839">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24839">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24839">
+												<h4>Scoping this</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do completed_tab " data-module-id="24801">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24801">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24801">
+												<h4>Creating Objects II</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="quiz completed_tab " data-module-id="24796">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24796">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24796">
+												<h4>Quiz I</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text completed_tab " data-module-id="24798">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24798">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24798">
+												<h4>Prototype</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text  current" data-module-id="24840">
+										<a class="tab_title unload_link" href="http://learn.codingdojo.com/m/4/3690/24840">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24840">
+												<h4>Returning this</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text  " data-module-id="24841">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24841">
+												<h4>Tip: Good OOP Practice</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do  " data-module-id="24851">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24851">
+												<h4>Creating Objects III</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do  " data-module-id="24804">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24804">
+												<h4>Deck of Cards</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do  " data-module-id="24842">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24842">
+												<h4>Bind, Call, and Apply</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="to_do  " data-module-id="24799">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24799">
+												<h4>JS Circles</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+
+
+									<li class="text  " data-module-id="24852">
+										<a class="tab_title unload_link" href="javascript:void(0)">
+											<div class="tab_label"><span class="tab_icon"></span></div>
+											<span class="tab_details" id="quiz_id_24852">
+												<h4>Summary</h4> <!-- % if contents["type"] == QUIZ_MODULE % -->
+											</span>
+										</a>
+									</li>
+				</ul>
+			</li>
+			<li class="">
+
+
+
+				<a class="chapter_title unload_link" href="http://learn.codingdojo.com/m/4/3691">
+					<h3><span class="chapter-title">Advanced Topics</span></h3>
+					<!--  -->
+					
+						<div class="progress_container">
+							<span class="chapter_item_progress">
+								0%
+							</span>
+						</div>
+				</a>
+				<ul class="tab_list  module-list" id="module_list_3691" data-chapter-id="3690">
+
+
+
+				</ul>
+			</li>
+	</ul>
+<div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 870px; transform: translate(0px, 25.3469px);"></div></div></div>
+<nav id="main_navigation">
+	<div id="navbar">
+		<ul id="breadcrumbs" class="left_align">
+			<li>MEAN</li>
+			<li>CS 300 - JavaScript v2</li>
+			<li id="chapter_title">Object Oriented Programming</li>
+			<li class="module_title">Returning this</li>
+		</ul>
+		<div id="profile_block" class="pull-right">
+			<img src="./how to make SLL_files/profile_pic.png" alt="Elise" class="profile_image">
+			<div class="dropdown">
+				<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					<div id="user_name_block">
+						<div>
+							<span class="decor_text">Hello,  </span> 
+							<span class="user_name">Elise D</span>
+						</div>
+					</div>
+					<span class="caret"></span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" role="menu">
+					<div class="dropdown_content">	
+						<ul>
+							<li>
+								<a href="http://learn.codingdojo.com/dashboard">Dashboard</a>
+								<span class="glyphicon glyphicon-home pull-right" aria-hidden="true"></span>
+							</li>
+							<li>
+								<a href="http://learn.codingdojo.com/dashboard#tracks_container">Tracks</a>
+								<span class="glyphicon glyphicon-book pull-right" aria-hidden="true"></span>
+							</li>
+							<li data-target="#my_account_modal" data-toggle="modal">
+								<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="view_user_info">My Account</a>
+								<span class="glyphicon glyphicon-user pull-right" aria-hidden="true"></span>
+							</li>
+							<li class="dropdown_buttons">
+								<a id="signout_button" class="btn btn-primary btn-lg btn-block unload_link" href="http://learn.codingdojo.com/signout">Log Out</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<section id="main_content">
+    	<div id="content_navigation">
+
+		<div id="return_button" class="right_align">
+			<a href="http://learn.codingdojo.com/dashboard" class="unload_link">
+				<span class="glyphicon glyphicon-th-large"></span><span>Home</span> 
+			</a>
+			<input type="hidden" name="authenticity_token" value="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=" current-module="24840"> 
+		</div>
+	</div>
+	<div id="section_content">
+		<div class="content_block">
+			<div id="module_container">
+				<div class="module_content module_content_block">
+
+								<div class="module_description active_lesson active_lesson_with_video ">
+									<h1>Returning this</h1><p>
+ Functions, if they are left to themselves, return <strong>undefined</strong>. Since methods are just functions set to keys of an object, if they are not told explicitly to return something, they too return <strong>undefined</strong>.</p><p>
+ Let’s make a <strong>singly linked list</strong> where we call a bunch of methods in one line!</p><blockquote>
+(Before taking a look at the code below, this is a great opportunity for you to test your skills by attempting to build a linked-list from scratch.)
+</blockquote>
+<pre data-language="javascript" class=" code-toolbar  language-javascript"><code class="  language-javascript"><span class="token comment" spellcheck="true">/* ********** Our Node Class **********
+Generates a node for a singly linked list
+parameters:
+  val: a numerical value
+private variables/functions:
+  none:
+public properties/methods:
+  val: val;
+  next: // another Node or null
+  passThis: a function that passes a console log of this and self.
+************** END **********   */</span>
+<span class="token keyword">var</span> Node <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+Node<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>passThis <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>custom_return<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token string">"this"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>self<span class="token punctuation">,</span> <span class="token string">"self"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>custom_return<span class="token punctuation">,</span> <span class="token string">"My Return"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> custom_return<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// ****************** END OF NODE ******************</span>
+<span class="token comment" spellcheck="true">/* ************* Singly Linked List Class (SingleList) *****************
+Creates a simple singly linked list class with not too many methods yet!
+parameters: none
+private: none
+public properties:
+  head: first node in the List
+public methods:
+  add: adds a new node based on a value passed in. returns this
+  dequeue: removes the head, and gives it to a callback, if a callback is passed. returns this
+  remove_tail: removes the tail, and gives it to a callback as an argument, only if a callback is passed. returns this.
+************** END **********   */</span>
+<span class="token keyword">var</span> SingleList<span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+SingleList<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>add <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">var</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">;</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span>current<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    current <span class="token operator">=</span> current<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  current<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+SingleList<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>dequeue <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> eliminatedNode <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+  eliminatedNode<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token operator">==</span><span class="token string">'function'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">callback</span><span class="token punctuation">(</span>eliminatedNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">//console.log(this.head); optional</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// Write a remove tail! :)</span>
+<span class="token comment" spellcheck="true">// ************************ END OF LIST ************************</span>
+sList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SingleList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sList<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">.</span>head<span class="token punctuation">.</span>next<span class="token punctuation">.</span><span class="token function">passThis</span><span class="token punctuation">(</span>sList<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">dequeue</span><span class="token punctuation">(</span>
+  <span class="token keyword">function</span> <span class="token function">callback</span><span class="token punctuation">(</span>myNode<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myNode<span class="token punctuation">.</span>val<span class="token punctuation">,</span> <span class="token string">"CHAINING INSANITY!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">dequeue</span><span class="token punctuation">(</span>
+    <span class="token keyword">function</span> <span class="token function">anotherCallback</span><span class="token punctuation">(</span>myNode<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"******************************"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Seriously, Stop!'</span><span class="token punctuation">,</span> myNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></pre><p>
+ Here's an idea:<br>
+ <br>
+ Pretend you're in a technical interview and someone presented you with the above code. Talk through what's happening (feel free to draw it out on the whiteboard!).</p><p>
+ A lot of typing was saved with <strong>sList.add().add()</strong>… Hopefully, you can see how useful it is to return the instance of an object.</p>
+								</div>
+						
+
+					
+					
+					<!-- Modal Inactivity Notice Modal -->
+					<div class="modal fade info_modal" id="inactivity_notice_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+						<div class="modal-dialog" style="margin-top: 288px;">
+							<div class="modal-content">
+								<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+								<div class="modal_header">
+									<h4>Inactivity Notice</h4>
+									<span class="glyphicon glyphicon-question-sign notice_tooltip pull-right" data-toggle="tooltip" data-placement="right" title="The system keeps track if you are active or not. We are saving the total time you spent on each topic for course improvement and student support purposes."></span>
+								</div>
+								<div class="modal_body">
+									<p>You have been idle for a long time, click the button below if you are you are still there.</p>
+									<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-primary continue_btn" data-dismiss="modal">CLICK TO CONTINUE</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end of Modal Inactivity Notice Modal -->
+
+					<!-- Log out from another device modal --> <!-- end of Log out from another device modal -->
+				</div>
+			</div>
+
+		</div>	
+
+		<div class="content_footer_block">
+			<a class="site_terms_link" data-target=".privacy_policy_modal" data-toggle="modal">Privacy Policy</a>
+			<div id="report_mistake_label_container" class="pull-right">
+				<span>To report a mistake, highlight the selection you believe is in error.</span>
+			</div>
+		</div>
+
+		<!-- cts warning modal -->
+		<div class="modal fade info_modal cts_warning_modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog" style="margin-top: 288px;">
+				<div class="modal-content">
+					<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+					<form action="http://learn.codingdojo.com/m/4/3690/24840" id="cts_warning_form">
+						<div class="modal_header"><h4>Confirm Action</h4></div>
+						<div class="modal_body">
+							<p>Only <span class="time_passed"></span> had passed since you started this assignment. Are you sure you want to view the Answersheet? The more you code on your own, the more you become a self-sufficient software engineer</p>
+							<a href="javascript:void(0);" class="btn btn-default cancel_btn" data-dismiss="modal">CANCEL</a>
+							<!-- <a href="javascript:void(0);" class="btn btn-primary submit_btn continue_btn" data-dismiss="modal">CONTINUE</a> -->
+							<input type="submit" class="btn btn-primary submit_btn continue_btn" id="view_answersheets" data-dismiss="modal" value="CONTINUE">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div> 
+
+	<!-- Reported a mistake popover -->
+	<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="hidden" id="report_mistake_popover" data-placement="bottom"></a>
+	<div class="hidden" id="report_mistake_popover_clone">
+		<span class="report_mistake_label">Report a mistake</span>
+		<form id="report_mistake_container" action="http://learn.codingdojo.com/report_mistake">
+			<h5>Report a mistake</h5>
+			<input type="hidden" name="chapter_module_id" value="24840">
+			<input type="hidden" name="authenticity_token" value="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=">
+			<input type="hidden" name="course_id" value="1214">
+			<input type="hidden" name="track_id" value="4">
+			<textarea name="report_mistake_textarea" id="report_mistake_textarea" rows="5" placeholder="Tell us what&#39;s wrong"></textarea>
+			<input type="submit" value="SUBMIT" class="btn btn-primary btn-block">
+		</form>
+	</div>
+	<!-- END of Reported a mistake popover -->
+
+	<ul class="create_message_container">
+		<!-- Append the Chat here -->
+		<li class="chat_counter hidden"> 
+			<span class="glyphicon glyphicon-comment"></span> 
+			<span id="number_of_hidden_chat"></span>
+		</li>
+	</ul>
+	<div id="content_footer" style="width: 1646px;">	
+		<div class="prev_button">  
+			<a href="http://learn.codingdojo.com/m/4/3690/24798" class="btn btn-primary previous_button_link unload_link">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				Previous
+			</a>
+			<!-- <span class="glyphicon glyphicon-chevron-left"></span>
+			<a href="/m/4/3690/24798" class="previous_button_link unload_link">Prev</a> -->
+		</div>
+		<a href="javascript:void(0);" class="back_button">Back to Track</a>
+		<div class="next_button pull-right">
+				<a href="http://learn.codingdojo.com/m/4/3690/24841" class="btn btn-primary next_button_link unload_link">
+					Next
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+				<!-- <a href="/m/4/3690/24841" class="next_button_link unload_link">Next</a> -->
+				<a href="http://learn.codingdojo.com/m/4/3690/24841" class="real_next_link hidden"></a>
+				<!-- <span class="glyphicon glyphicon-chevron-right"></span> -->
+		</div>
+
+		<input type="hidden" id="current_module_id" name="authenticity_token" value="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=" current-module="24840" course-percentage="58"> 
+		<div id="linkage" data-target="#inactivity_notice_modal" data-toggle="modal" style="display:none;"></div>
+	</div>
+	<!-- My Account Modal -->
+	  <div id="my_account_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+	    <div class="modal-dialog modal-lg">
+	      <div class="modal-content">
+	      	<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+	        <div class="user_information_block">
+	          <form action="http://learn.codingdojo.com/upload_profile_pic" class="profile_pic" enctype="multipart/form-data" method="post">
+	            <input type="hidden" name="authenticity_token" value="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=">
+	            <input id="browse_pic" class="browse_profile_pic hidden" type="file">
+	              <label for="browse_pic">
+	                <span class="profile_preview">
+	                  <img src="./how to make SLL_files/profile_pic.png" alt="Elise"> 
+	              </span>
+	              </label>
+	          </form>
+	          <ul class="list-unstyled">
+	            <li>Name: Elise Drake</li>
+	            <li>Email: edrake09@gmail.com</li>
+	            <li>Password: <span class="password">************</span> <span class="change_password">change password</span></li>
+	            <li>Program Type: Onsite Flex</li>
+	            <li>Location: Seattle</li>
+	            <li>Start Date: December 12, 2016</li>
+	          </ul>
+	        </div>
+	        <form class="change_password_block">
+	          <ul class="list-unstyled">
+	            <li>
+	              <span>Old Password:</span>
+	              <input type="password" class="old_password_input match">
+	            </li>
+	            <li>
+	              <span>New Password:</span>
+	              <input type="password" class="new_password_input match">
+	            </li>
+	            <li>
+	              <span>Confirm New Password:</span>
+	              <input type="password" class="confirm_new_password_input match">
+	            </li>
+	            <li>
+	              <button type="button" class="btn btn-primary save_new_password_button">SAVE</button>
+	            </li>
+	          </ul>
+	        </form>
+	        <p class="modal-messages"></p>
+	      </div>
+	    </div>
+	  </div>    
+	<!-- end of My Account Modal  -->
+
+	<!-- Privacy Policy Modal -->
+	<div class="modal fade privacy_policy_modal" tabindex="-1" role="dialog" data-keyboard="">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+				
+				<div id="terms_of_service">
+					<div class="greetings">
+						<p id="thank_you_greeting">Thank you for taking the time to learn about our legal policies.</p>
+						<p id="greeting">Your privacy is important to us.</p>
+					</div>
+					<div class="links">
+						<p id="privacy_policy">
+							<a href="http://www.codingdojo.com/files/Privacy_Policy.pdf" target="_blank">Privacy Policy</a>
+						</p>
+						<p id="acceptable_use">
+							<a href="http://www.codingdojo.com/files/Acceptable_Use_Policy.pdf" target="_blank">Acceptable Use</a>
+						</p>
+						<p id="site_terms">
+							<a href="http://www.codingdojo.com/files/Site_Terms.pdf" target="_blank">Site Terms</a>
+						</p>
+					</div>
+					<a href="javascript:void(0)" class="btn btn-primary" id="close_button" data-dismiss="modal">CLOSE</a>
+				</div>
+			</div>
+		</div>
+	</div> 
+
+</section>
+
+<!-- Clone Template -->
+<div id="clone_template_container" class="hidden">
+	<ul id="chat_item">
+		<li data-chat-id="" data-module-id="" class="active_chat chat"> 
+		    <input type="checkbox" class="chat_checkbox" id="" checked="checked"> 
+		    <div class="chat_container"> 	
+		        <div class="chat_header"> 
+		            <label for="chat_checkbox_" class="hide_chat"> 
+		                <span class="glyphicon glyphicon-comment"></span> 
+		                <span class="name"></span> 
+		                <span class="glyphicon glyphicon-triangle-bottom"></span> 
+		                <span class="glyphicon glyphicon-remove remove_chat"></span> 
+		            </label> 
+		        </div>  
+		        <div class="chat_body"> 
+		            <div class="settings"> 
+		                <span class="start_this_call glyphicon glyphicon-facetime-video" title="Video call. Click to start a video call."></span>
+		            </div> 
+		            <div class="conversation_container nano"> 
+		                <ul class="nano-content" tabindex="0"> 
+		                </ul> 
+		            <div class="nano-pane" style="display: none;"><div class="nano-slider" style="transform: translate(0px, 0px);"></div></div></div> 
+		            <div class="hidden_div"></div> 
+		        </div> 
+		        <form class="input_container"> 
+		            <textarea name="" class="form-control enter_message" placeholder="Send a message"></textarea> 
+		            <input type="hidden"> 
+		        </form> 
+		    </div> 
+		</li>
+	</ul>
+
+	<div id="video_walk_through">
+		<a class="how_we_did_video"> 
+	    	<div class="how_we_did_block">
+	        	<div id="video_logo"><img src="./how to make SLL_files/play_button.png" alt=""></div> 
+	        	<div class="how_we_did_info"> 
+	            	<span class="title">Wanna see how we did it?</span> 
+	            	<span class="video_time_to_unlock"></span> 
+	        	</div> 
+	    	</div> 
+	     </a>
+	</div>
+
+	<ul id="question_clone">
+		<li class="question"> 
+            <img src="http://learn.codingdojo.com/m/4/3690/24840" alt="profile_picture" class="profile_image"> 
+            <div class="right_question_content"> 
+                <div class="question_block">
+                    <span class="name"></span> 
+                    <span class="date"></span> 
+                    <span class="glyphicon glyphicon-remove pull-right remove_question" id=""></span> 
+                    <p class="main_question"></p> 
+                    <a href="http://learn.codingdojo.com/m/4/3690/24840#" class="add_question_answer" id="">Add answer</a> 
+                    <span class="middle_dot">·</span>
+                    <a href="http://learn.codingdojo.com/m/4/3690/24840#" class="number_of_vote" data-value=""></a> 
+                    <button id="" class="vote_up vote_button" value="1"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button> 
+                    <button id="" class="vote_down vote_button" value="-1"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button> 
+                </div>
+                <form class="list-unstyled create_answer_container" id="post_answer" action="http://learn.codingdojo.com/helps/post_answer" method="post"> 
+                    <img src="http://learn.codingdojo.com/m/4/3690/24840" alt="profile_picture" class="profile_image"> 
+                    <div class="create_answer_form"> 
+                        <input type="hidden" name="authenticity_token" value="XnaDF37esvKIoJ7XevLNjRwlp2As/6j7AH1kntCYsQ0=">
+                        <input class="answer_id_input" type="hidden" name="answer[question_id]" value="">
+                        <textarea class="form-control answer_value" name="answer[text_answer]" rows="2" placeholder=""></textarea>
+                        <div class="post_answer_buttons">
+                            <button class="btn btn-default cancel_post_answer">CANCEL</button>
+                            <button class="btn btn-primary post_reply_answer">ANSWER</button>
+                        </div>
+                    </div>
+                </form>
+                <ul class="list-unstyled answers_container">
+                </ul> 
+            </div>
+        </li>
+	</ul>
+
+	<ul id="answer_clone">
+		<li> 
+		    <div class="left_answers_block"> 
+		        <img src="http://learn.codingdojo.com/m/4/3690/24840" alt="profile_picture" class="profile_image"> 
+		    </div> 
+		    <div class="right_answers_block"> 
+		        <span class="name"></span> 
+		        <span class="date"></span> 
+		        <span class="glyphicon glyphicon-remove pull-right remove_answer" id=""></span> 
+		        <p></p> 
+		        <a href="http://learn.codingdojo.com/m/4/3690/24840#" class="number_of_vote" data-value=""></a> 
+		        <button id="" class="vote_up vote_button answer_vote" value="1"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></button> 
+		        <button id="" class="vote_down vote_button answer_vote" value="-1"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></button> 
+		    </div> 
+		</li>
+	</ul>
+</div>
+
+<!-- Html5 Videos speed Clone -->
+<div class="hidden html5_video_speed_clone">
+	<div class="btn-group" role="group" aria-label="..."> 
+		<button type="button" class="btn btn-default reduce_video_speed"> <span class="glyphicon glyphicon-minus"></span> </button> 
+		<button type="button" class="btn btn-default current_speed">1.0</button>
+		<button type="button" class="btn btn-default add_video_speed"> <span class="glyphicon glyphicon-plus"></span> </button>
+	</div>
+</div>
+
+<div id="page_info">
+	<input type="hidden" value="http://learn.codingdojo.com/m/4/3690/24840">
+	<input type="hidden" value="4">
+	<input type="hidden" value="1214">
+	<input type="hidden" value="3690">
+	<input type="hidden" id="module_id_current" value="24840">
+	<input type="hidden" value="73.83.210.249">
+	<input type="hidden" value="14718" id="page_current_user" user="Elise Drake">
+</div>
+
+
+
+
+
+<div class="quiz_result_details_block" id="quiz_result_details" style="display: none;">
+	<div class="quiz_result_user_image">
+		<img src="./how to make SLL_files/profile_pic.png" alt="Elise" class="profile_image">
+	</div>
+	<div class="quiz_result_info">
+		<h3 id="user_name"></h3>
+		<p id="quiz_date"></p>
+	</div>
+	<div class="clear"></div>
+	<p class="quiz_result_score"></p>
+	<div class="quiz_result_content">
+	</div>
+</div>
+		
+
+
+<script>
+	/* for showing of checklist details in chapter module page */
+
+    var checklist_details = JSON.parse('null');
+
+    if(checklist_details != null){
+    	
+        if(Object.keys(checklist_details).length > 0){
+            var days = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+            var level = ["", "Basic", "Intermediate", "Advanced", "Hacker"];
+            var details_to_append = '<ul class="list-inline information_checklist_list">';
+
+            $.each(checklist_details, function(index, value){
+                switch(index){
+                    case 'is_optional':
+                        status = (value == 1) ? "Optional" : "Mandatory";
+                        details_to_append += '<li>'+status+'</li>';
+                        break;
+                    case 'day':
+                        if(value && checklist_details.week != 0){
+                            details_to_append += "<li>Deadline: "+days[value]+" of Week "+checklist_details.week+"</li>"
+                        }
+                        break;
+                    case 'difficulty_level':
+                        if(value != 0 && value != null)
+                        details_to_append += "<li>Difficulty Level: "+level[value]+"</li>";
+                        break;
+                    case 'estimated_time':
+                        if(value != "" && value != null){
+                            details_to_append += "<li>Estimated Time: "+value+"</li>";
+                        }
+                        break;
+                }
+            });
+
+            details_to_append += "</ul>";
+            $(details_to_append).insertAfter("h2:first");  
+        }
+    }
+</script>
+<script type="text/javascript" src="http://learn.codingdojo.com/m/4/3690/24840"></script>
+
+
+
+	<!-- Modals -->
+	<!-- Delete Chapter Modal -->
+	<div class="modal fade info_modal delete_chapter_modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" style="margin-top: 288px;">
+			<div class="modal-content">
+				<input type="hidden" name="chapter_id" value="">
+
+				<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+				<div class="modal_header"><h4>Delete Chapter?</h4></div>
+				<div class="modal_body">
+					<p>Chapter will be permanently deleted. Are you sure?</p>
+					<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-default cancel_btn" data-dismiss="modal">CANCEL</a>
+					<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-primary confirm_delete_chapter" data-dismiss="modal">DELETE CHAPTER</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Delete Module Modal -->
+	<div class="modal fade info_modal delete_module_modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" style="margin-top: 288px;">
+			<div class="modal-content">
+				<input type="hidden" name="module_id" value="">
+
+				<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+				<div class="modal_header"><h4>Delete Module?</h4></div>
+				<div class="modal_body">
+					<p>Module will be permanently deleted. Are you sure?</p>
+					<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-default cancel_btn" data-dismiss="modal">CANCEL</a>
+					<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-primary confirm_delete_module" data-dismiss="modal">DELETE MODULE</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- chapter_module_modal -->
+	<div class="modal fade info_modal chapter_module_modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" style="margin-top: 288px;">
+			<div class="modal-content">
+				<input type="hidden" name="chapter_id" value="">
+
+				<span class="hide_modal glyphicon glyphicon-remove" data-dismiss="modal" aria-label="Close"></span>
+				<div class="modal_header"><h4>New Chapter</h4></div>
+				<div class="modal_body">
+					<input id="" type="text" placeholder="Chapter Title" value="">
+					<a href="http://learn.codingdojo.com/m/4/3690/24840#" class="btn btn-primary">SAVE</a>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+    <script type="text/javascript">
+        var io = io.connect('https://learn.codingdojo.com:8787', {force_connection: true, path: '/app1socket'});
+        var pair_hangout = false;
+        var admin_as_student = "";
+
+        io.on("error", function(){
+            console.log('Failed connecting to node js server.');
+        });
+
+        if(admin_as_student != "true"){
+            io.on('server:logout', function(){
+                io.emit("student:signout");
+
+                $.ajax({
+                    url: "/before_signout/",
+                    type: "get",
+                    success: function(values) {
+                        if(values.status){
+                            window.location.href = "/signout";
+                        }
+                    }
+                });
+            });
+        }
+
+        $(document).on('ready page:load', function (){
+            io.on('need_signin', function(socket_data) {
+            	io.emit('student:signin', {user_information: {"id":14718,"first_name":"Elise","last_name":"Drake","email":"edrake09@gmail.com","image_url":null,"created_at":"2016-11-21T16:44:52.000Z","user_level":1,"applicant_id":22702,"is_automated":null,"address":null,"bootcamp_type":1,"bootcamp_date":"December 12, 2016","bootcamp_location":"1","updated_at":"2017-02-07T22:18:39.000Z","last_visited_url":"/m/4/3690/24840","group_ids":[106]}, ip_address: $("#page_info input:nth-child(6)").val(), device: navigator.userAgent}, function(data){
+            		new_track();
+            	});
+            });
+
+            if(admin_as_student != "true"){
+                io.on('server:warning_duplicate_user', function(data){
+                    console.log("warning!!");
+                    io.emit("track:logout_duplicate", data);
+                });
+            }
+
+            function new_track(){
+            	io.emit('track:new', {
+    	        	url: $("#page_info input:nth-child(1)").val(),
+    	        	track_id: $("#page_info input:nth-child(2)").val(),
+    	        	course_id: $("#page_info input:nth-child(3)").val(),
+    	        	chapter_id: $("#page_info input:nth-child(4)").val(),
+    	        	module_id: $("#page_info input:nth-child(5)").val(),
+    	        	ip_address: $("#page_info input:nth-child(6)").val()
+    	        });
+            }
+
+            new_track();
+
+            $("#logout_button").click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                io.emit("student:signout");
+                window.location.href = "/signout";
+            });
+
+            io.on("new_chat_message", function(new_message){
+                display_sent_chat_message(new_message);
+            });
+
+            io.on("send_new_message", function(message){
+                display_received_chat_message(message);
+            });
+
+            io.on('make_user_unavailable', function(call_information){
+                make_user_unavailable(call_information);
+            });
+
+            io.on('make_user_available', function(user){
+                make_user_available(user);
+            });
+
+            io.on("invite_student", function(call_information){
+                display_call_request(call_information);
+            });
+        });
+    </script> 
+
+<div role="log" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div></body></html>
