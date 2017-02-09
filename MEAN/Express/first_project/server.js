@@ -63,3 +63,19 @@ app.post('/users', function (req, res){
     // redirect the user back to the root route.  
     res.redirect('/')
 });
+
+app.get("/users/:id", function (req, res){
+    console.log("The user id requested is:", req.params.id);
+    // just to illustrate that req.params is usable here:
+    res.send("You requested the user with id: " + req.params.id);
+    // code to get user from db goes here, etc...
+});
+
+// THE CODE BELOW IS FOR SESSION!!!
+// new code:
+var session = require('express-session');
+// original code:
+var app = express();
+// more new code:
+app.use(session({secret: 'codingdojorocks'}));  // string for encryption
+

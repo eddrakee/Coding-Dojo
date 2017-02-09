@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Survey</title>
+        <meta charset="UTF-8">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">-->
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+                   <h2>Submitted Information</h2>
+                   <hr>
+                   <ul>
+                        <li>Name: <strong><%= user_data.name %></strong></li>
+                        <li>Location: <strong><%= user_data.location %></strong></li>
+                        <li>Language: <strong><%= user_data.language %></strong></li>
+                        <li>Comment: <strong><%= user_data.comment %></strong></li>
+                   </ul>
+                   
+                   <a href="/"><h3>Back</h3></a>
+            </div>
+        </div>
+    </body>
+</html>
