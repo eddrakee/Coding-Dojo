@@ -1,0 +1,34 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+.wrapper{
+    width:900px;
+    height:1000px;
+    background-color:tomato;
+    padding:20px;
+}
+
+.mainContent h1{
+    text-align: center;
+	-webkit-text-stroke-color:  blue;
+	-webkit-text-stroke-width: 3px;
+	font-size: 60px;
+	font-family:comic sans ms;
+	color:gold;
+}
+
+.mainContent h3{
+    text-align: center;
+	margin:10px;
+	font-size: 30px;
+	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	color:black;
+}
+
+.mainContent{
+    padding:20px;
+    text-align:center;
+    border: 2px solid white;
+}
