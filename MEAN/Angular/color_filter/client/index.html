@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Color Filter</title>
+        <meta charset="UTF-8">
+        <script src="/angular/angular.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body ng-app="colorApp">
+        <div ng-controller='colorController'>
+            <h1>Color Filter</h1>
+            <p>Filter by Name:
+            <input type="text" placeholder="Filter" ng-model="filterName"></p>
+
+            <table>
+                <tr>
+                    <th>Hex</th>
+                    <th>Name</th>
+                    <th>RGB</th>
+                </tr>
+                <tr ng-repeat="color in colorList | filter:filterName">
+                    
+                    <th>{{color.hex}}</th>
+                    <th>{{color.name}}</th>
+                    <th>{{color.rgb}}</th>
+                </tr>
+            </table>
+        </div>
+    
+    </body>
+</html>
