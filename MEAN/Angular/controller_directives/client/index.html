@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>First Angular</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="app.js"></script>
+        <style>
+            body {background-color:lightcyan; margin:50px; text-align: center;}
+            h1 {color: midnightblue; font-family:Arial, Helvetica, sans-serif;}
+            h2 {color: darkslategray; font-family:Arial, Helvetica, sans-serif;}
+            p {color: darkslategray; font-family:Arial, Helvetica, sans-serif;}
+           
+        </style>
+
+    </head>
+    <body ng-app="foodApp">
+        <div ng-controller="foodController">
+            <h1>Favorite Foods!</h1>
+            <hr>
+            <h2>- Using ng-click -</h2>
+            <form>
+                <p>Favorite Food: <input type="text" ng-model="newFood">
+                <input type="submit" ng-click="addFood()" value="Add Food!"></p>
+                <p>{{food}}</p>
+                
+            </form>
+                <br>
+                
+            <h2>- Using ng-repeat with Filter- </h2>
+                <p>Find a Favorite: <input type="text" placeholder="Filter" ng-model="filterText"></p>
+                <p ng-repeat ="name in food | filter:filterText" ng-bind='name'></p>
+
+            <br>
+            <h2>- Using ng-submit -</h2>
+                <form ng-submit="useSubmit()">
+                    <p>Enter a Dish: <input type="text" ng-model="newDish"></p>
+                    <input type="submit" value = "Submit!" >
+                     <p>You are typing:{{newDish}}</p>
+                    <p>{{personName}}</p>
+                </form>
+            </div>
+
+    </body>
+</html>
