@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>Filter</title>
+  <script src='bower_components/angular/angular.js'></script>
+  <script src="app.js"></script>
+</head>
+<body ng-app='myApp'>
+    <div ng-controller='friendsController'>
+      Search Friends: <input type="text" placeholder="Filter" ng-model="filter_name">
+      <ul>
+        <li ng-repeat="friend in friends | filter:filter_name">
+          {{ friend.name }} - age {{ friend.age | number:0 }}, gender {{ friend.gender | uppercase }}
+        </li>
+      </ul>
+    </div>
+</body>
+</html>

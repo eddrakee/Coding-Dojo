@@ -11,6 +11,11 @@
             h1 {color: midnightblue; font-family:Arial, Helvetica, sans-serif;}
             h2 {color: darkslategray; font-family:Arial, Helvetica, sans-serif;}
             p {color: darkslategray; font-family:Arial, Helvetica, sans-serif;}
+            
+            .animate-show-hide.ng-hide {opacity: 0;}
+            .animate-show-hide.ng-hide-add,
+            .animate-show-hide.ng-hide-remove {transition: all linear 0.5s;}
+            .check-element {border: 1px dotted deeppink; opacity: 1; padding: 10px;}
            
         </style>
 
@@ -40,6 +45,14 @@
                      <p>You are typing:{{newDish}}</p>
                     <p>{{personName}}</p>
                 </form>
+            <br>
+            <h2>- Using ng-hide -</h2>
+            Hide: <input type="checkbox" ng-model="checked" aria-label="Toggle ngHide"><br />
+                <div class="check-element animate-show-hide" ng-hide="checked">
+                <p>Check the box to hide me!</p>
+                </div>
+
+
             </div>
 
     </body>
