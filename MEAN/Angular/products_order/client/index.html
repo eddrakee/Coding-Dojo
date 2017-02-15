@@ -12,7 +12,7 @@
 
         <style>
         body {margin:50px;}
-        #mainContent {border: 1px solid black; padding:25px;  height:600px; width:600px; margin-left:15%; }
+        #mainContent {border: 1px solid black; padding:25px;  height:600px; width:500px; margin-left:5%; margin-bottom:25px; display:inline-block; vertical-align: top; }
         h1 {color:slategrey; font-family:monospace; text-align: center;}
         h3 {color:midnightblue; font-family:Arial, Helvetica, sans-serif;}
         p {color:deeppink; font-family:Arial, Helvetica, sans-serif;}
@@ -32,6 +32,7 @@
             <form ng-submit='create()'>
             <h3>Product Name: <input type="text" ng-model="product.name"></h3>
             <h3>Product Price: <input type="number" step="any" ng-model="product.price"></h3>
+            <h3>Product Quantity: <input type="number" step="any" ng-model="product.quantity"></h3>
             <input type="submit" value="Add!">
             </form>
 
@@ -40,15 +41,30 @@
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Inventory</th>
                     <th>Actions</th>
                 </tr>
                 <tr ng-repeat="product in products | filter: filterName | orderBy: 'price' track by $index">
                     <td>{{product.name}}</td>
                     <td>{{product.price | currency:"$"}}</td>
+                    <td>{{product.quantity}}</td>
                     <!--<td><a href ng-click="remove(item)">Delete!</a></td>-->
                     <td><button ng-click = "remove(item)">Delete Me!</button></td>
                 </tr>
             </table>
+        </div>
+
+        <div id="mainContent" ng-controller="orderController">
+            <h1>Orders Controller</h1>
+
+            <form ng-submit=''>
+                <tr ng-repeat="product in products | filter: filterName | orderBy: 'price' track by $index">
+                    <td>{{product.name}}</td>
+                    <td>{{product.price | currency:"$"}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td><button ng-click = "buy function">Buy More!</button></td>
+                </tr>
+            </form>
 
         </div>
     </body>

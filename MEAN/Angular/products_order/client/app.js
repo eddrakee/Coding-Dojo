@@ -15,11 +15,21 @@ app.factory('productFactory', ['$http', function($http){
             callback(products);
         }
     }
-
     factory.remove = function(id, callback){
         products.splice(id,1);
         callback(products);
     }
+    factory.buy = function(data, callback){
+        if(Number.isInteger(data.quantity)){
+            if (products[data.id].quantity - data.quantity >0){
+                products[data.id].quantity -= data.quantity;
+            }else {
+                products[quantity.id].quantity = 0;
+            }
+        }
+        callback(products);
+    }
+
     return factory;
 }]);
 
@@ -52,4 +62,23 @@ app.controller('productController', ['$scope', 'productFactory', function($scope
         console.log('in controller remove');
         productFactory.remove(id, setProducts);
     }
+}]);
+
+app.controller('orderController', ['$scope', 'orderFactory', function($scope, productFactory){
+    function($scope, productFactory){
+        function setProducts(data){
+            $scope.products = data;
+            $scope.product = {};
+        }
+        $scope.products = [];
+
+        productFactory.index(setProducts);
+        $scope.update = function(id){
+            productFactory.update({
+                id: id,
+                quantity: product.quantity
+            }, setProducts)
+        }
+    }
+
 }])
