@@ -2,7 +2,7 @@ var app = angular.module('productApp', []);
 app.factory('productFactory', ['$http', function($http){
     // $http lets us talk to our server
     var factory = {};
-    var products = [];
+    var products = [{name:'Carrot', price:4.32, quantity:4}];
     factory.index = function(callback){
         console.log('in factory.index');
         // callback is the function that is passed to setProducts function
@@ -20,15 +20,14 @@ app.factory('productFactory', ['$http', function($http){
         callback(products);
     }
     factory.buy = function(data, callback){
-        if(Number.isInteger(data.quantity)){
-            if (products[data.id].quantity - data.quantity >0){
-                products[data.id].quantity -= data.quantity;
-            }else {
-                products[quantity.id].quantity = 0;
-            }
+        if (data.quantity > 0){
+        data.quantity -= 1;
+        }
+        else{
+            return;
         }
         callback(products);
-    }
+    };
 
     return factory;
 }]);
@@ -43,9 +42,6 @@ app.controller('productController', ['$scope', 'productFactory', function($scope
         $scope.products = data;
         $scope.product = {};
     }
-
-    $scope.products = {};
-    $scope.product = {};
 
     $scope.index = function(){
         console.log('in controller index');
@@ -64,21 +60,24 @@ app.controller('productController', ['$scope', 'productFactory', function($scope
     }
 }]);
 
-app.controller('orderController', ['$scope', 'orderFactory', function($scope, productFactory){
-    function($scope, productFactory){
+app.controller('orderController', ['$scope', 'productFactory', function($scope, productFactory){
         function setProducts(data){
+            console.log('in Orders setProducts');
             $scope.products = data;
             $scope.product = {};
         }
+        
         $scope.products = [];
+        $scope.product={};
 
-        productFactory.index(setProducts);
-        $scope.update = function(id){
-            productFactory.update({
-                id: id,
-                quantity: product.quantity
-            }, setProducts)
+        $scope.index = function(){
+            console.log('in Order index');
+            productFactory.index(setProducts);
         }
-    }
+        $scope.index();
 
-}])
+        $scope.buy = function(product){
+            console.log('in Orders buy');
+            productFactory.buy(product, setProducts)
+        }
+    }]);

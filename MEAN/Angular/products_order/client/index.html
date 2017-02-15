@@ -56,15 +56,14 @@
 
         <div id="mainContent" ng-controller="orderController">
             <h1>Orders Controller</h1>
-
-            <form ng-submit=''>
-                <tr ng-repeat="product in products | filter: filterName | orderBy: 'price' track by $index">
+                <table>
+                <tr ng-repeat="product in products | orderBy: 'price' track by $index">
                     <td>{{product.name}}</td>
                     <td>{{product.price | currency:"$"}}</td>
                     <td>{{product.quantity}}</td>
-                    <td><button ng-click = "buy function">Buy More!</button></td>
+                    <td><button ng-click = "buy(product)">Buy More!</button></td>
                 </tr>
-            </form>
+                </table>
 
         </div>
     </body>
