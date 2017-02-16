@@ -1,4 +1,6 @@
 var app = angular.module('productApp', []);
+
+
 app.factory('productFactory', ['$http', function($http){
     // $http lets us talk to our server
     var factory = {};

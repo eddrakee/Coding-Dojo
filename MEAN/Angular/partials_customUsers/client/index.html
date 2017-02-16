@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Partials & Custom Users</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script src="angular-route/angular-route.js"></script>
+        <script src="app.js"></script>
+        <style>
+            body {font-family: Calibri, 'Trebuchet MS', sans-serif; padding:50px;}
+        </style>
+    </head>
+
+    <body ng-app="mod">
+        <div>
+            <h1>Directory</h1>
+            <a href="#!/">Add Users</a> | <a href="#!/showUsers">Show All</a>
+            <div ng-view="">
+            <!--Partials go here!-->
+            </div>
+        </div>
+        
+    </body>
+</html>
