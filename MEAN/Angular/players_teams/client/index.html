@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Players and Teams</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script src="angular-route/angular-route.js"></script>
+        <script src="app.js"></script>
+        <style>
+            body {font-family:Arial, Helvetica, sans-serif; padding:50px;}
+            h1 {color: darkslategray;
+            -webkit-text-stroke: 1px lightgrey;}
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to the world of sports</h1>
+        <a href="#!/">Players</a> <a href="#!/">Teams</a> <a href="#!/">Associations</a>
+        <div ng-view="">
+            <!--partials go here-->
+        </div>
+    </body>
+</html>
