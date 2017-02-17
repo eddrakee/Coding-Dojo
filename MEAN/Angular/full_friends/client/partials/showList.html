@@ -1,1 +1,18 @@
-<h1>showList</h1>
+<div ng-controller="friendController">
+    <h1>showList</h1>
+    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Show</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        <tr ng-repeat="friend in friends.friends">
+            <td>{{friend.first}} {{friend.last}}</td>
+            <td>Show</td>
+            <td>Update</td>
+            <td><button ng-click="delete(friend._id)">Delete Me!</button></td>
+        </tr>
+    </table>
+</div>
