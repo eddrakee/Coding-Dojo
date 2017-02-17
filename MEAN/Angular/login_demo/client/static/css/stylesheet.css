@@ -18,6 +18,7 @@ h1 {
     height:10%;
     width: 100%;
     background-color: #4d4d4d;
+    /*background-color: mintcream;*/
     color:white;
 }
 .header h1{
@@ -27,13 +28,25 @@ h1 {
 }
 .mainContent{
     width:50%;
-    border: 2px solid black;
+    border: 2px solid #4d4d4d;
     background-color:white;
     margin-left:22%;
     margin-top: 10%;
     padding:50px;
     box-shadow: 2px 2px 5px grey;
 }
-/*body{
-      background-color: #f2f2f2;
-}*/
+.name{
+    padding:5px;
+    width:200px;
+}
+.submit{
+    padding:10px;
+}
+body{
+    background-color:mistyrose
+}
+a href{
+    margin-top:25px;
+    text-align:right;
+    color:palevioletred;
+}

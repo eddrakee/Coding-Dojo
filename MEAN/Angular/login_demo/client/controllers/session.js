@@ -1,6 +1,14 @@
 app.controller('sessionController', function($scope, sessionFactory){
 //    build an errors factory for more controllers
     $scope.errors = [];
+
+    sessionFactory.checkUser(function(data){
+        $scope.currentUser = data;
+    })
+
+    
+
+
     $scope.login = function(){
         // this resets our errors array to empty so you won't get multple errors when repressing button
         $scope.errors = [];

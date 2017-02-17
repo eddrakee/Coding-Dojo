@@ -7,4 +7,12 @@ module.exports = function(app){
         // .send will send back to the function that called it
         session.login(req, res)
     })
+    app.get('/checkuser', function(req, res){
+        // to check use:
+        // res.json(null)
+        session.checkUser(req, res)
+    })
+    app.get('/logout', function(req, res){
+        session.logout(req, res)
+    })
 }
