@@ -11,6 +11,10 @@ app.config(function($routeProvider){
         templateUrl: 'partials/addFriend.html',
         controller:'friendController'
     })
+    .when('/show/:id',{
+        templateUrl: 'partials/showOne.html',
+        controller:'friendController'
+    })
     .otherwise({
         redirectTo: '/'
     });

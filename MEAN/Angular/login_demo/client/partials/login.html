@@ -1,0 +1,15 @@
+<div class="header">
+    <h1>Welcome to CatFacts!</h1>
+</div>
+
+<div class="error" ng-repeat="error in errors track by $index">{{error}}
+    <!--track by index let's us press the button multiple times without getting an error in console-->
+</div>
+
+<div class="mainContent" >
+    <form ng-submit="login()">
+        <h2>Name: <input type="text" ng-model="logReg.name" placeholder="Please enter your name!"> </h2>
+        <br>
+        <input type="submit" value="Login or Register!">
+    </form>
+</div>

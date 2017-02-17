@@ -11,6 +11,9 @@ module.exports = function(app){
     app.delete('/delete/:id', function(req, res){
         console.log(req.body);
         friends.delete(req,res);
-
+    })
+    app.get('/show/:id', function(req,res){
+        console.log(req.params.id)
+        friends.showOne(req,res);
     })
 } 

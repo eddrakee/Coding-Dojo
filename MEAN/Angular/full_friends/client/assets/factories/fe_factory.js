@@ -33,6 +33,13 @@ app.factory('myF', ['$http', function($http){
         })
         // update will be .put
     }
+    factory.showOne = function(id, callback){
+        console.log('in factory.showOne', id);
+        $http.get('/show/'+id).then
+        (function(returned_data){
+            callback(returned_data.data);
+        });
+    }
 
     return factory;
 }])

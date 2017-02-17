@@ -35,6 +35,13 @@ module.exports = (function(){
 // you don't need a redirect since our backend shouldn't have to do anything like this!
             });
           
+        },
+        showOne: function(req, res){
+            console.log('in be_controller showOne');
+            Friend.findOne({_id:req.params.id}, function(err, data){
+                console.log(data)
+                res.json({friends:data})
+            });
         }
     }
 
