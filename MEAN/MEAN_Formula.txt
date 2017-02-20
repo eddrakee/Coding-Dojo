@@ -3,6 +3,9 @@
 🌈 = useful tip/explanation
 👿 = error tip!
 --------------------------------
+------ 🌺🌸🌺 TIPS 🌺🌸🌺 ------
+🌈 req.params will send you info from the address bar
+🌈 req.body information via route
 
 ------ 🌸INITIAL SETUP🌸 ------
 mkdir project folder
@@ -408,9 +411,9 @@ initial set up of mongoose:
     var path = require('path');
     var fs = require('fs');
     var models_path = path.join(__dirname + './../models');
-    mongoose.connect('mongodb://localhost/dbName');
+    mongoose.connect('mongodb://localhost/🍕dbName');
 
-    fs.readdirSync(models_path.forEach(function(file){
+    fs.readdirSync(models_path).forEach(function(file){
         if(file.indexOf('.js') >= 0){
             require(models_path + '/' + file);
         }
