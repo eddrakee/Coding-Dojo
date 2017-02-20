@@ -34,8 +34,9 @@ app.factory('myF', ['$http', function($http){
         // update will be .put
     }
     factory.showOne = function(id, callback){
-        console.log('in factory.showOne', id);
-        $http.get('/show/'+id).then
+        console.log('in factory.showOne', id.id);
+        one_id=id.id
+        $http.get('/show/'+one_id).then
         (function(returned_data){
             callback(returned_data.data);
         });

@@ -13,7 +13,7 @@ module.exports = function(app){
         friends.delete(req,res);
     })
     app.get('/show/:id', function(req,res){
-        console.log(req.params.id)
+        console.log("routes",req.params)
         friends.showOne(req,res);
     })
 } 

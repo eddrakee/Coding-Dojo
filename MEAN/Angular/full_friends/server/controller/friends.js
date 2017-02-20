@@ -37,11 +37,11 @@ module.exports = (function(){
           
         },
         showOne: function(req, res){
-            console.log('in be_controller showOne');
+            console.log('in be_controller showOne', req.params);
             Friend.findOne({_id:req.params.id}, function(err, data){
-                console.log(data)
-                res.json({friends:data})
-            });
+                console.log(data, "one friend")
+                res.json(data)
+            })
         }
     }
 

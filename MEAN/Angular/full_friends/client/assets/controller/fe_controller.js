@@ -8,9 +8,9 @@ app.controller('friendController', ['$scope', 'myF', '$routeParams', function($s
     function updateInfo(){
         myF.index(function(data){
             $scope.friends = data;
-            $scope.oneFriend = data;
         });
     }
+    
     updateInfo();
 
     $scope.addFriend = function(){
@@ -23,8 +23,10 @@ app.controller('friendController', ['$scope', 'myF', '$routeParams', function($s
         myF.delete($routeParams, updateInfo);
         updateInfo()
     }
-    $scope.showOne = function($routeParams){
-        myF.showOne($routeParams, updateInfo);
-       
+    function showOne($routeParams){
+        myF.showOne($routeParams, function(data){
+            $scope.oneFriend = data;
+        });
     }
+    showOne($routeParams);
 }])

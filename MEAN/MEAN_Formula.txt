@@ -1,0 +1,944 @@
+------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
+🍕 = new line entered or updated info
+🌈 = useful tip/explanation
+👿 = error tip!
+--------------------------------
+
+------ 🌸INITIAL SETUP🌸 ------
+mkdir project folder
+cd project folder
+npm init -y
+npm install express express-session body-parser mongoose path --save
+bower install angular angular-route --save
+mkdir server client
+touch server.js
+cd into client folder
+    mkdir controllers factories partials static
+    touch index.html app.js
+        in static folder mkdir css
+            touch stylesheet.css
+cd into server folder
+    mkdir controllers config models
+    cd config
+        touch mongoose.js routes.js
+
+- SETUP SERVER.JS -
+
+    var express = require('express')
+    var app = express();
+    var bp = require('body-parser');
+    var path = require('path');
+    var port = 8000;
+
+    app.use(express.static(path.join(__dirname, './client')));
+    app.use(express.static(path.join(__dirname, './bower_components')));
+    app.use(bp.json());
+
+    app.listen(port, function(){
+        console.log('LISTENING!')
+    })
+
+> then nodemon server to see if it's all connected!
+
+- CREATE A ROUTE -
+in index.html, put in some text to see if it shows up on Local Host
+if it works, erase text and set up html
+
+    <head>
+        <title>Full Friends</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script src="assets/app.js"></script>
+        <link href="/static/css/stylesheet.css" rel="stylesheet">
+    </head>
+
+- SETUP APP.JS -
+console.log some text and check to see if shows up on the browser's console when the page is refreshed
+delete text and enter in line below to let index use ng-app
+
+    var app = angular.module('myMod', []);
+
+- INDEX.HTML -
+now that app.js has been initialized, time to use ng!
+enter this in the body tag:
+    <body ng-app = myMod>
+if that all worked, now add angular-route to index.html
+    <head>
+        <title>Full Friends</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script 🍕src="angular-route/angular-route.js"></script<script src="angular-route/angular-route.js"></script>
+        <script src="assets/app.js"></script>
+        <link href="/static/css/stylesheet.css" rel="stylesheet">
+    </head>
+    
+
+- APP.JS -
+change the first line of app to:
+    var app = angular.module('myMod', ['ngRoute']);
+check LocalHost for errors
+add these lines to start building routes:
+    var app = angular.module('myMod', ['ngRoute']);
+    app.config(function($routeProvider){
+        $routeProvider
+        .when('/login',{
+            templateUrl: 'partials/login.html'
+        })
+        .otherwise({
+            redirectTo: '/login'
+        })
+    })
+
+- PARTIALS FOLDER -
+create a file called login.html
+add in some text to see if it works
+
+- INDEX.HTML -
+add in a div to see the partials!
+    <div ng-view:''>
+    </div>
+
+when you refresh, you should see the text from the login.html file!
+
+- LOGIN.HTML -
+add in some html like a header, as well as a form
+    <form>
+        <input type='text' ng-model='logReg.name' placeholder='Enter name'>
+        <input type='submit' value='Login'>
+    </form>
+
+check on Local Host to see if it's all good
+
+------ 🌸BEGIN BUILDING PATH TO BACKEND🌸 ------
+cd controllers (front end)
+    touch session.js
+    console.log('session.js')
+link this file to index.html
+    <head>
+        <title>Full Friends</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script src="angular-route/angular-route.js"></script>
+        <script src="assets/app.js"></script>
+        🍕<script src="assets/controller/session.js"></script>
+        <link href="/static/css/stylesheet.css" rel="stylesheet">
+    </head>
+check to see if console.log message appears
+
+------ 🌸START BUILDING CONTROLLER🌸 ------
+in controllers/session.js:
+    app.controller('sessionController', function($scope){
+        console.log('sessionController')
+    })
+now link it to our route!
+
+- APP.JS -
+add in the sessionController to the '/login':
+    app.config(function($routeProvider){
+        $routeProvider
+        .when('/login',{
+            templateUrl: 'partials/login.html'
+            controller: 'sessionController'
+        })
+(you can also put ng-controller in a div inside the login.html as well)
+check LocalHost to see if console.log message showed
+
+- LOGIN.HTML -
+we are going to set up a function inside the form so it will do something!
+inside the form we created:
+    🍕<form ng-submit='login()'>
+        <input type='text' ng-model='🐒logReg.name' placeholder='Enter name'>
+        <input type='submit' value='Login'>
+    </form>
+
+Login() does not exist yet, so we must make it in our sessionController!
+
+- CONTROLLERS/SESSION.JS -
+we need to make the Login() function for the login form!
+update controller to:
+    app.controller('sessionController', function($scope){
+        $scope.login = function(){
+            console.log($scope.🐒logReg)
+        }
+    })
+Now go into the LocalHost and enter in info and submit. Once submitted, it will console.log an object with the logReg.name you entered!
+🐒logReg was initially created in the login.html file. It is how we are declaring what the "name" will be.
+
+------ 🌺🌸🌺 VALIDATIONS 🌺🌸🌺 ------
+You should really make an errorsFactory instead of adding it to an individual controller
+
+we need to make the Login() function for the login form!
+just like with Python, we are going to create an array which will hold all of the error messages!
+    (you also need to reset the $scope.errors so you don't get multiple messages when entering empty info)
+    (also, sometimes you don't want else if, but just an if statement)
+
+update controller to:
+    app.controller('sessionController', function($scope){
+        $scope.errors = [];
+        $scope.login = function(){
+            $scope.errors = []
+            if(!$scope.logReg || !$scope.logReg.name){
+                $scope.errors.push('Please enter a name!')
+            }
+            else if($scope.logReg.name.length > 3){
+                $scope.errors.push('Name must be at least 3 characters long!')
+            }else{
+                console.log('no errors, now send to factory')
+            }
+        }
+    })
+
+Then in the desired html, create a tag for it to display the message (make sure it's in the appropriate controller!)
+
+    <div ng-controller='sessionController'>
+        <p ng-repeat='error in errors track by $index'>{{error}}</p>
+    </div>
+
+------ 🌸START BUILDING FACTORY🌸 ------
+go into factories folder and create a file called session.js (client/factories/session.js)
+-FACTORIES/SESSION.JS-
+test it by console.log('factory loading')
+
+-INDEX.HTML-
+connect to the new factories file
+
+    <head>
+        <title>Full Friends</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="angular/angular.js"></script>
+        <script src="angular-route/angular-route.js"></script>
+        <script src="assets/app.js"></script>
+        <script src="assets/controller/session.js"></script>
+        🍕<script src="assets/factories/session.js"></script>
+        <link href="/static/css/stylesheet.css" rel="stylesheet">
+    </head>
+
+reload LocalHost and see if factory console.log loads
+
+-FACTORIES/SESSION.JS-
+erase console.log
+begin initializing the factory:
+    app.factory('sessionFactory', function(){
+        var factory = {};
+        return factory;
+    })
+
+now hook it up to the controller that needs it!
+
+-CONTROLLERS/SESSION.JS-
+pass in the factory into the controller's function and console.log it's contents to see if it's hooked up correctly:
+
+    app.controller('sessionController', function($scope, 🍕sessionFactory){
+        $scope.errors = [];
+        $scope.login = function(){
+            $scope.errors = []
+            if(!$scope.logReg || !$scope.logReg.name){
+                $scope.errors.push('Please enter a name!')
+            }
+            else if($scope.logReg.name.length > 3){
+                $scope.errors.push('Name must be at least 3 characters long!')
+            }else{
+                console.log('🍕sessionFactory')
+            }
+        }
+    })
+
+reload LocalHost and enter in info into the login input and it will console.log an empty object on the browser's console!
+
+🌈time to send info from our controller to our factory!!!
+we are going to request a login function for the factory (it hasn't been created in the factory yet) that will request all the info that the user submitted via the input
+
+    app.controller('sessionController', function($scope, sessionFactory){
+        $scope.errors = [];
+        $scope.login = function(){
+            $scope.errors = []
+            if(!$scope.logReg || !$scope.logReg.name){
+                $scope.errors.push('Please enter a name!')
+            }
+            else if($scope.logReg.name.length > 3){
+                $scope.errors.push('Name must be at least 3 characters long!')
+            }else{
+                🍕sessionFactory.login($scope.logReg)
+            }
+        }
+    })
+
+-FACTORIES/SESSION.JS-
+now let's build that login function we mentioned in the controller!
+
+    app.factory('sessionFactory', function(){
+        var factory = {};
+        🍕factory.login = function(user){
+            console.log(user, 'in factory')
+        }
+        return factory;
+    })
+
+then reload LH and enter in info. When submitted, it should console an object with the logReg.name and 'in factory'
+
+Now, we successfully passed info from our controller to our factory. Now it's time to send the info to our routes (via $http)
+
+    app.factory('sessionFactory', function(){
+        var factory = {};
+        factory.login = function(user){
+            🍕$http.post('/login', user)
+        }
+        return factory;
+    })
+
+👿!!!!You may see an error (cannot read property token of xyz) after doing this! You can ONLY pass objects to the backend! You cannot send a string back!(Or it may be an error for not setting up body-parser.)!!!!👿
+
+Now we build our routes file!
+------ 🌸SET UP THE BACKEND🌸 ------
+go to server/config/routes.js
+    module.exports = function(app){
+        console.log(app)
+    }
+
+-SERVER.JS-
+now we have to require our routes file!
+    var express = require('express')
+    var app = express();
+    var bp = require('body-parser');
+    var path = require('path');
+    var port = 8000;
+
+    app.use(express.static(path.join(__dirname, './client')));
+    app.use(express.static(path.join(__dirname, './bower_components')));
+    app.use(bp.json());
+
+    🍕require('./server/config/routes.js')(app)
+
+    app.listen(port, function(){
+        console.log('LISTENING!')
+    })
+
+Since we console.logged, we will see app in our terminal window as a giant object!
+
+-SERVER/CONFIG/ROUTES.JS-
+take out the console.log!
+build our route so it can retreive the info passed from the factory:
+    module.exports = function(app){
+        🍕app.post('/login', function(req, res){
+            res.send('Now in routes!')
+        })
+    }
+
+🌈res.send will send info back to the function that called it (so in this case, via $http)
+so in theory, it will send that console log back to the factory that requested it. But how does the factory know what to do with the info? This is when we build in a promise into the factory so it will trigger it to do something once the info has been sent back!
+
+-FACTORIES/SESSION.JS-
+
+🌈create the promise! (and we can chain it and put it in the line below the $http) (and we can chain it and put it in the line below the $http)
+also, what is important to note, is that when the promise is called, it will then run a function which will expect 'output.' This 'output' is what is being sent back from the routes. In this case, output will be the console.log('Now in routes!').
+
+🌈So, in otherwords, the promise will run a function as soon as  'output' has been sent back to it!
+
+    app.factory('sessionFactory', function($http){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user)🍕.then(function(output){
+                console.log(output.data)
+            })
+        }
+        return factory;
+    })
+
+When you reload LH and enter in information, the browser's console.log will show an Object with a key of data and it's value will have the 'Now in Routes' message! This is the 'outpt' that was sent back!
+
+👿 Inside the Object that we just consoled, you may see some numbers like this -
+    status: 500 - internal errors
+    status: 400 - not finding a route, or if the server went down
+
+------ 🌸SET UP THE DATABASE🌸------
+Create a backend controller by creating a new file:
+    server/controllers/session.js
+
+- SERVER/CONTROLLERS/SESSION.JS -
+🌈make sure to set up your module.exports as an IMMEDIATELY INVOKED FUNCTION!!!!
+then do something similar to what we do in our factory:
+    module.exports=(function(){
+        return {
+            login: function(req, res){
+                res.send('in backend controller')
+            }
+        }
+    })()🍕
+
+now, let's link it to our routes!
+
+- SERVER/CONFIG/ROUTES.JS -
+this session variable will store the object that the db will send back (the return {etc.} line inside of the session.js db file)
+
+    🍕var session = require('./../controllers/session.js')
+    🍕console.log(session)
+    module.exports = function(app){
+        app.post('/login', function(req,res){
+            res.send('now in routes')
+        })
+    }
+
+when you check the terminal (after refreshing LH) it will show an object with login: [function:login] in it.
+
+now erase the session console.log and the res.send (since our tests worked) and update it so it will run the method that we got from the database:
+
+    var session = require('./../controllers/session.js')
+    module.exports = function(app){
+        app.post('/login', function(req,res){
+            🍕session.login(req, res)
+        })
+    }
+
+Now if we refresh LH and log in, we will see an Object with {data: "in backend controller"} that we console.logged in the back end session.js file! Now you can see how data/output is passed back and forth!
+
+------ 🌸BUILD THE DATABASE🌸------
+-SERVER/CONFIG/MONGOOSE.JS-
+initial set up of mongoose:
+    var mongoose = require('mongoose');
+    var path = require('path');
+    var fs = require('fs');
+    var models_path = path.join(__dirname + './../models');
+    mongoose.connect('mongodb://localhost/dbName');
+
+    fs.readdirSync(models_path.forEach(function(file){
+        if(file.indexOf('.js') >= 0){
+            require(models_path + '/' + file);
+        }
+    }))
+
+🌈it will create a db for us with the mongoose.connect line. Also, make sure to launch mongod and then restart the node server!
+
+
+
+- SERVER.JS -
+now we link our mongoose file to our server.js file!
+
+    var express = require('express')
+    var app = express();
+    var bp = require('body-parser');
+    var path = require('path');
+    var port = 8000;
+
+    app.use(express.static(path.join(__dirname, './client')));
+    app.use(express.static(path.join(__dirname, './bower_components')));
+    app.use(bp.json());
+
+    🍕require('./server/config/mongoose.js')
+    require('./server/config/routes.js')(app)
+
+    app.listen(port, function(){
+        console.log('LISTENING!')
+    })
+👿 you will get an error that says "MongoError: failed to connec tto server on first connect" because we haven't started up the mongod db running! You have to start it up and then restart the node server so it will work!
+
+------ 🌸BUILD A SCHEMA🌸------
+- SERVER.JS -
+we need to create a schema, but we will not call this one "Session" as we do not want something named that inside our db. Multiple things can use a schema, and we do not want it to be exclusive to session info since that will be used only for login/logout. We have to make sure that other things can access this schema since it will hold USER info.
+
+Create a schema file under:
+- SERVER/MODELS/USER.JS -
+the schema is where we will hold all the properties that we want the collection to have
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var UserSchema = new Schema({
+        name: String,
+    })
+
+    mongoose.model('User', UserSchema);
+
+🌈so now whenever someone uses 'User', it will check back to the UserSchema and see if it's valid and get all of the properties associated to it!
+
+------🌸LINK SCHEMA TO BACKEND CONTROLLER🌸------
+-SERVER/CONTROLLERS/SESSION.JS-
+    🍕var mongoose = require('mongoose');
+    🍕var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                    console.log(user)
+                })
+            }
+        }
+    })()
+
+👿if it doesn't link correctly, you will see errors in the terminal
+
+Build the actual login function! What's going on:
+
+    - req.body.name is the logReg.name that was passed in from the login.html
+    - you don't have a user saved to the db yet, so it should return 'null' when you log in on the homepage because nothing has been saved yet
+
+update the backend controller:
+
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                    🍕 if(!user){
+                        var newUser = new User(req.body);
+                        console.log(newUser);
+                    }
+                })
+            }
+        }
+    })()
+
+🌈if you enter in login info, it will show an object with that information. the if(!user) line is basically saying, if that user does not exist in our db, console.log their login info. Now we want to save the user's info with the added lines below:
+
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                     if(!user){
+                        var newUser = new User(req.body);
+                        🍕newUser.save(function(err){
+                            if(err){
+                                return res.json({error: 'Something went wrong. Please try again.'})
+                            }
+                            res.json({status: true})
+                        })
+                    }else{
+                        res.json({status: true})
+                    }
+                })
+            }
+        }
+    })()
+🌈The last res.json({status}) line will send that information back to the front end. It is saying if status exists, they are logged in. The else statement, is saying, if they are already logged in, don't log them in again!
+
+- CLIENT/FACTORIES/SESSION.JS -
+As of the previous section, we have sent back a {status:true} back to the frontend about the user that just logged in. 🌈Now we want to tell the factory what to do depending on if the user is logged in or not. This is also when we introduce $location. This way we can redirect our now logged user to another partials page:
+    app.factory('sessionFactory', function($http, 🍕$location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                🍕if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        return factory;
+    })
+
+'/dashboard' route has not been created, so now we must go back to APP.JS!
+
+- APP.JS -
+let's make our dashboard route!
+
+    var app = angular.module('myMod', ['ngRoute']);
+    app.config(function($routeProvider){
+        $routeProvider
+        .when('/login', {
+            templateUrl: 'partials/login.html',
+            controller: 'sessionController'
+        })
+        🍕.when('/dashboard', {
+            templateUrl: 'partials/dashboard.html',
+            controller: 'sessionController'
+        })
+        .otherwise({
+            redirectTo: '/login'
+        })
+    })
+
+now we need to make a new partials file for our Dashboard!
+------🌸BUILD MORE PARTIALS🌸------
+- CLIENT/PARTIALS/DASHBOARD.HTML -
+👿add in some text to test out the page and see if it works once you log in.
+There is an error at this point! We can go right to the dashboard partial without being logged in. So now, we need to use express-session to check if they are logged in for data validation!
+
+first, let's hook it up to our SERVER.JS file!
+
+- SERVER.JS -
+
+    var express = require('express')
+    var app = express();
+    var bp = require('body-parser');
+    var path = require('path');
+    🍕var session = require('express-session');
+    var port = 8000;
+
+    app.use(express.static(path.join(__dirname, './client')));
+    app.use(express.static(path.join(__dirname, './bower_components')));
+    app.use(bp.json());
+    🍕app.use(session({
+        secret: 'kittensrule',
+        resave: 'false',
+        saveUninitialized: true
+        }))
+
+    require('./server/config/mongoose.js')
+    require('./server/config/routes.js')(app)
+
+    app.listen(port, function(){
+        console.log('LISTENING!')
+    })
+
+👿you may have some trouble with the resavenad saveUninitialized, so we have to test it out to see if it's true or false
+
+- SERVER/CONTROLLERS/SESSION.JS - 
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                🍕console.log(req.session.user)
+                User.findOne({name: req.body.name}, function(err, user){
+                     if(!user){
+                        var newUser = new User(req.body);
+                        newUser.save(function(err){
+                            if(err){
+                                return res.json({error: 'Something went wrong. Please try again.'})
+                            }
+                            🍕req.session.user = newUser;
+                            🍕req.session.save()
+                            res.json({status: true})
+                        })
+                    }else{
+                        🍕req.session.user = user
+                        🍕req.session.save()
+                        res.json({status: true})
+                    }
+                })
+            }
+        }
+    })()
+
+🌈The top two 🍕 (other than the console.log test on the top) tell you what to do if there is no user. It will store the user's info and then save it to our db! The 🍕 in the else statement is saying, if the user does exist, set it to the user's info that we just passed back from the db via 'user' that we passed into the function. And now we save it into our session. So when you log in, it should show an object with your info into the terminal.
+
+------🌸CHECK IF SOMETHING IS IN SESSION🌸------
+- DASHBOARD.HTML -
+
+set this partial to the sessionController (you can also do this in app.js)
+
+- CLIENT/CONTROLLERS/SESSION -
+
+    app.controller('sessionController', function($scope, sessionFactory){
+    $scope.errors = [];
+
+    🍕sessionFactory.checkUser()
+
+    $scope.login = function(){
+        $scope.errors = []
+        if(!$scope.logReg || !$scope.logReg.name){
+            $scope.errors.push('Please enter a name!')
+        }
+        else if($scope.logReg.name.length > 3){
+            $scope.errors.push('Name must be at least 3 characters long!')
+        }else{
+            sessionFactory.login($scope.logReg)
+            }
+        }
+    })
+
+We will have to build sessionFactory now since we have not built it yet!
+- FACTORIES/SESSION.JS -
+    app.factory('sessionFactory', function($http, $location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        🍕factory.checkUser = function(){
+            console.log('validating..')
+        }
+        return factory;
+    })
+
+Test out the factory. It will show up in the browser's console.log and will fire off immediately and get current user regardless of what it is. So now we send out Factory to our Routes to set up our checkUser function!
+
+    app.factory('sessionFactory', function($http, $location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        factory.checkUser = function(){
+            🍕$http.get('/checkUser')
+        }
+        return factory;
+    })
+
+- CONFIG/ROUTES.JS - 
+
+    var session = require('./../controllers/session.js')
+    module.exports = function(app){
+        app.post('/login', function(req,res){
+            session.login(req, res)
+        })
+        🍕app.get('/checkuser', function(req, res){
+            res.json(null) 
+        })
+    }
+req.json(null) <--this is a test to send to our front end to see if it's working. So if someone hits this route, it will send back 'null'!
+
+- FACTORIES/SESSION.JS -
+    app.factory('sessionFactory', function($http, $location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        factory.checkUser = function(){
+            🍕$http.get('/checkUser').then(function(output){
+                console.log(output.data)<--test it!
+            })
+        }
+        return factory;
+    })
+When it works, it will show null in the browser's console.
+👿 if you get an error that says 500(Internal Server Error) was because request.json is not a function. it's res.json! 
+
+- CONFIG/ROUTES.JS - 
+
+    var session = require('./../controllers/session.js')
+    module.exports = function(app){
+        app.post('/login', function(req,res){
+            session.login(req, res)
+        })
+        app.get('/checkuser', function(req, res){
+            🍕session.cehckUser(req, res);
+        })
+    }
+
+- SERVER/CONTROLLERS/SESSION.JS -
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                     if(!user){
+                        var newUser = new User(req.body);
+                        newUser.save(function(err){
+                            if(err){
+                                return res.json({error: 'Something went wrong. Please try again.'})
+                            }
+                            req.session.user = newUser;
+                            req.session.save()
+                            res.json({status: true})
+                        })
+                    }else{
+                        req.session.user = user
+                        req.session.save()
+                        res.json({status: true})
+                    }
+                })
+            },🍕 (don't forget comma!)
+            🍕checkUser: function(req, res){
+                res.json(req.session.user)
+            }
+        }
+    })()
+if you go to the LH console, you will see req.session.user from the controller when you refresh and log in.
+
+👿if you break it on the first time it will get an error like "cannot get info undefined.." so to prevent this, update it with this code:
+
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                     if(!user){
+                        var newUser = new User(req.body);
+                        newUser.save(function(err){
+                            if(err){
+                                return res.json({error: 'Something went wrong. Please try again.'})
+                            }
+                            req.session.user = newUser;
+                            req.session.save()
+                            res.json({status: true})
+                        })
+                    }else{
+                        req.session.user = user
+                        req.session.save()
+                        res.json({status: true})
+                    }
+                })
+            }, 
+            checkUser: function(req, res){
+                🍕if(!req.session || !req.session.user){
+                    res.json(rnull)
+                🍕}else{
+                    res.json(req.session.user)
+                }
+            }
+        }
+    })()
+
+- FACTORIES/SESSION.JS - 
+    app.factory('sessionFactory', function($http, $location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        factory.checkUser = function(🍕callback){
+            $http.get('/checkUser').then(function(output){
+                🍕callback(output.data)
+            })
+        }
+        return factory;
+    })
+
+🌈The callback has not been built yet! But we are about to!
+
+- CLIENT/CONTROLLERS/SESSION.JS -
+    app.controller('sessionController', function($scope, sessionFactory){
+    $scope.errors = [];
+
+    sessionFactory.checkUser🍕(function(data){
+        🍕$scope.currentUser = data;
+    })
+
+    $scope.login = function(){
+        $scope.errors = []
+        if(!$scope.logReg || !$scope.logReg.name){
+            $scope.errors.push('Please enter a name!')
+        }
+        else if($scope.logReg.name.length > 3){
+            $scope.errors.push('Name must be at least 3 characters long!')
+        }else{
+            sessionFactory.login($scope.logReg)
+            }
+        }
+    })
+
+- PARTIALS/DASHBOARD.HTML -
+to test out what has been sent from controller, use and you will see the person's name after logging in again
+
+{{currentUser.name}}
+
+- FACTORIES/SESSION.JS -
+    app.factory('sessionFactory', function($http, $location){
+        var factory = {};
+        factory.login = function(user){
+            $http.post('/login', user).then(function(output){
+                if(output.data){
+                    console.log('user is logged in') <--- to test before we add in $location
+                    $lcoation.url('dashboard')
+
+                }
+            })
+        }
+        factory.checkUser = function(callback){
+            $http.get('/checkUser').then(function(output){
+                🍕if(!output.data){ <---if nothing in session, redirect to login page
+                    $location.url('/login')
+                🍕}else{
+                    callback(output.data)
+            })
+        }
+        return factory;
+    })
+  
+Now it won't let you go to the dashboard page without logging in. It needs something in session in order to access it!
+
+------🌸LOGGING USER OUT🌸------
+To log someone out, first build a link in the dashboard.html (or whichever partials page you would like it to be on)
+    <a href="/logout">Logout!</a>
+
+🌈We don't use angular for logout since we are going to clear session when it's clicked and redirect to the login page!
+
+- ROUTES.JS -
+
+    var session = require('./../controllers/session.js')
+    module.exports = function(app){
+        app.post('/login', function(req,res){
+            session.login(req, res)
+        })
+        app.get('/checkuser', function(req, res){
+            session.cehckUser(req, res);
+        })
+        🍕app.get('/logout', function(req, res){
+            session.logout(req, res)
+        })
+    }
+
+We don't have logout built yet, but will now!
+
+- SERVER/CONTROLLERS/SESSION.JS -
+
+    var mongoose = require('mongoose');
+    var User = mongoose.model('User');
+    module.exports = (function(){
+        return{
+            login:function(req,res){
+                User.findOne({name: req.body.name}, function(err, user){
+                     if(!user){
+                        var newUser = new User(req.body);
+                        newUser.save(function(err){
+                            if(err){
+                                return res.json({error: 'Something went wrong. Please try again.'})
+                            }
+                            req.session.user = newUser;
+                            req.session.save()
+                            res.json({status: true})
+                        })
+                    }else{
+                        req.session.user = user
+                        req.session.save()
+                        res.json({status: true})
+                    }
+                })
+            }, 
+            checkUser: function(req, res){
+                if(!req.session || !req.session.user){
+                    res.json(rnull)
+                }else{
+                    res.json(req.session.user)
+                }
+            }🍕,
+            🍕logout: function(req, res){
+                req.session.destroy();
+                res.redirect('/')
+            }
+        }
+    })()
+
+So this last logout method will do two things: 1. it will clear sessions, and 2. it will redirect back to the log in page
+
+
+
+
+
+
+
+
+    
+
+    
