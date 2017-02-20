@@ -10,6 +10,9 @@ cd project folder
 npm init -y
 npm install express express-session body-parser mongoose path --save
 bower install angular angular-route --save
+    can install moment here:
+    bower install moment angular-moment --save
+    (you will have to link these to your index.html later)
 mkdir server client
 touch server.js
 cd into client folder
@@ -49,8 +52,11 @@ if it works, erase text and set up html
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="angular/angular.js"></script>
-        <script src="assets/app.js"></script>
+        <script src="app.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
+
+        <script src="moment/moment.js"></script>
+        <script src="angular-moment/angular-moment.js"></script>
     </head>
 
 - SETUP APP.JS -
@@ -62,15 +68,15 @@ delete text and enter in line below to let index use ng-app
 - INDEX.HTML -
 now that app.js has been initialized, time to use ng!
 enter this in the body tag:
-    <body ng-app = myMod>
+    <body ng-app = 'myMod'>
 if that all worked, now add angular-route to index.html
     <head>
         <title>Full Friends</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="angular/angular.js"></script>
-        <script 🍕src="angular-route/angular-route.js"></script<script src="angular-route/angular-route.js"></script>
-        <script src="assets/app.js"></script>
+        🍕<script src="angular-route/angular-route.js"></script<script src="angular-route/angular-route.js"></script>
+        <script src="app.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
     </head>
     
@@ -122,7 +128,7 @@ link this file to index.html
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="angular/angular.js"></script>
         <script src="angular-route/angular-route.js"></script>
-        <script src="assets/app.js"></script>
+        <script src="app.js"></script>
         🍕<script src="assets/controller/session.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
     </head>
@@ -448,7 +454,7 @@ the schema is where we will hold all the properties that we want the collection 
 
     var UserSchema = new Schema({
         name: String,
-    })
+    }, {timestamps:true});
 
     mongoose.model('User', UserSchema);
 
