@@ -6,6 +6,12 @@ module.exports = function(app){
     })
 
     app.get('/users/viewall', function(req, res){
-        res.json(['elise', 'doug'])
+        user.viewAll(req,res)
+    })
+    app.get('/users/delete/:id', function(req,res){
+        user.delete(req, res)
+    })
+    app.post('/users/change', function(req, res){
+        user.change(req, res)
     })
 }

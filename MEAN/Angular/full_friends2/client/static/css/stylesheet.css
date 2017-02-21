@@ -41,12 +41,30 @@ body{
 }
 a {
     color:royalblue;
+    vertical-align: top;
 }
 .mainContent h2{
     font-family: 'komika_axisregular';
     color: darkslategray;
     margin-bottom:25px;
+    text-align:center;
 }
 .mainContent input{
     margin-bottom:10px;
+}
+table, td, th{
+    border: 1px solid lightgray;
+    text-align:left;
+    padding: 5px;
+}
+table{
+    border-collapse:collapse;
+    width:100%;
+}
+tr:hover{
+    background-color:lightgoldenrodyellow;
+}
+th{
+    background-color:darkolivegreen;
+    color:white;
 }

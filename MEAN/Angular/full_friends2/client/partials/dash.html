@@ -1,6 +1,24 @@
-<a href='#!/new'>Add a Friend</a>
-<br>
-<h2>List of Users</h2>
-<div ng-repeat="user in users">
-    {{user}}
+<div class="inside">
+    <a href='#!/new'>Add a Friend</a>
+    <br>
+    <h2>List of Users</h2>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birthday</th>
+            <th>View</th>
+            <th>Update</th>
+            <th>Delete</th>
+            
+        </tr>
+        <tr ng-repeat="user in users">
+            <td>{{user.first}}</td>
+            <td>{{user.last}}</td>
+            <td>{{user.bday | date: fulldate}}</td>
+            <td><a href="" ng-click='show(user._id)'>View Profile!</a></td>
+            <td><a href="" ng-click='update(user._id)'>Update Profile!</a></td>
+            <td><a href="" ng-click='delete(user._id)'>Delete!</a></td>
+        </tr>
+    </table>
 </div>

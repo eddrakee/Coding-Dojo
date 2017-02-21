@@ -1,0 +1,13 @@
+<a href='#!/dash'>Back to Dashboard</a>
+<h2>Update Your Profile</h2>
+    <form>
+        Edit First Name: <input type="text" ng-model="cur_user.first">
+        <br>
+        Edit Last Name: <input type="text" ng-model="cur_user.last">
+        <br>
+        Birthday: <input type="text" datetime="MM-dd-yyyy" ng-model="cur_user.bday">
+        <!--Edit Birthday:<input type="date" ng-model="cur_user.bday">-->
+        <br>
+        
+        <input type="submit" value="Update!" ng-click="change()" >
+    </form>
