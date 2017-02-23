@@ -1,0 +1,10 @@
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var QuoteSchema = new Schema({
+    date:{type:Date, required:true},
+    author:{type:String, required:true},
+    content:{type:String, required:true},
+    likes: {type:Number},
+    _user:{type:Schema.Types.ObjectId, ref:"User"},
+},{timestamps:true})
+mongoose.model("Quote",QuoteSchema)

@@ -1,0 +1,48 @@
+<div ng-controller='sessionController'>
+<div class='header'>
+	<h1>Welcome, {{curUser.name}}! </h1>
+</div>
+<div class="error" ng-controller='messageController'>
+	<p ng-repeat='error in errors'>{{error}}</p>
+</div>
+<a href="/logout">Logout</a>
+
+
+<div ng-controller='messageController'>
+	
+	<div ng-controller='commentController'>
+		<div class="mainContent">
+			<h2>Write a Message!</h2>
+			<form ng-submit='addMessage(curUser.id)'>
+				<textarea ng-model='newMessage.content' placeholder="Enter message here... " rows="10" cols="120"></textarea>
+				<br>
+				<input type="submit" value='Post!' >
+			</form>
+		</div>
+		<div class="postWall" ng-repeat="message in messages">
+			<div class="comment">
+			<h3>{{message._user.name}} says:</h3>
+			<p>{{message.content}}</p>
+			<hr>
+			<div ng-repeat="comment in message._comments"><h4>{{comment._user.name}}replied: </h4> <p>{{comment.content}}</p> </div>
+			
+				<h3>Add a comment!</h3>
+				<form ng-submit="addComment(newComment, curUser._id, message._id)">
+					<textarea ng-model="newComment.content"></textarea>
+					<input type="submit", value="Post!">
+				</form>
+			</div>
+				
+			<!--<div ng-repeat="comment in allComments">
+				<h3>{{comment._user.name}} says:</h3>
+			<p>{{comment.content}}</p>
+			<p>{{comment.createdAt | amCalendar: refrenceTime:formats}}</p>
+		Updated:<time am-time-ago="comment.createdAt"></time>
+			</div>-->
+		
+
+		</div>
+	</div>
+</div>
+</div>
+

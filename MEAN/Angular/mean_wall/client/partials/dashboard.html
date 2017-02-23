@@ -1,0 +1,17 @@
+
+<div class="header">
+    <h1>Welcome {{currentUser.name}}!</h1>
+</div>
+<div class="mainContent" ng-controller= 'sessionController'>
+    <a href="/logout">Logout</a>
+    <h2>Your Wall</h2>
+    <br>
+    <p>Write a Post</p>
+    
+    <div ng-controller="messageController">
+        <form>
+        <textarea rows="10" cols="50">Post a Message</textarea>
+        <input type="submit" value="Post!">
+        </form>
+    </div>
+</div>

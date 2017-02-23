@@ -1,0 +1,21 @@
+<div class='header' ng-controller='sessionController'>
+	<h1>Welcome, {{curUser.name}}! </h1>
+</div>
+<a href="/logout">Logout</a>
+
+
+<div ng-controller='messageController'>
+	<div class="mainContent">
+		<h2>Write a Message!</h2>
+		<form ng-submit='addMessage()'>
+			<textarea ng-model='newMessage.content' placeholder="Enter message here... " rows="10" cols="120"></textarea>
+			<br>
+			<input type="submit" value='Post!' >
+		</form>
+	</div>
+	<div class="postWall" ng-repeat="message in messages">
+		<h3>{{message._user.name}} says:</h3>
+		<p>{{message.content}}</p>
+	</div>
+</div>
+

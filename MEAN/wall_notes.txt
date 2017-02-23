@@ -1,0 +1,528 @@
+
+
+1. app.controller ('messageController', function($scope){
+  console.log("asdfasdf")
+  })
+NEED TO LINK TO INDEX.HTML
+2. input div tag inside dash.thml
+3. create form
+4. <div ng-controller = 'messageController'>
+    <form ng-submit='addMessage(curUser._id)'>
+      <textarea ng-model = 'newMessage.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+  </div>
+5. go back to front end controller
+6.
+app.controller ('messageController', function($scope){
+  $scope.addMessage = function(id){
+    $scope.newMessage._id = id
+    console.log($scope.newMessage)
+  }
+})
+7. TEST!! should see ID in the browser console.
+8.
+app.controller ('messageController', function($scope){
+  $scope.errors = []
+  $scope.addMessage = function(id){
+    $scope.errors = []
+    if(!$scope.newMessage || !$scope.newMessage.content){
+      $scope.errors.push('Please write something')
+    }
+    else if($scope.newMessage.content.length < 4){
+      $scope.errors.push('message needs to be more than 4 characters')
+    }
+    else if($scope.newMessage.content.length > 144){
+      $scope.errors.push("message is too long")
+    }
+  }
+})
+9. back in dash.html
+<div ng-controller = 'messageController'>
+  <p ng-repeat = 'error in errors' style='color:red'>{{error}}</p>
+    <form ng-submit='addMessage(curUser._id)'>
+      <textarea ng-model = 'newMessage.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+  </div>
+10. TEST!! see your error.
+11. Need to build factory
+12. message.js
+13. console log("in factory")
+14. go to index and add the link to the new factory
+15. should see it in the browser console.
+16.
+app.factory('messageFactory', function(){
+  var factory = {}
+  factory.message = []
+  factory.addMessage = function(message){
+    console.log(message)
+  }
+  return factory
+})
+17. go back to messageController. add messageFactory
+18.
+app.controller ('messageController', function($scope, messageFactory){
+  $scope.errors = []
+  $scope.addMessage = function(id){
+    $scope.errors = []
+    if(!$scope.newMessage || !$scope.newMessage.content){
+      $scope.errors.push('Please write something')
+    }
+    else if($scope.newMessage.content.length < 4){
+      $scope.errors.push('message needs to be more than 4 characters')
+    }
+    else if($scope.newMessage.content.length > 144){
+      $scope.errors.push("message is too long")
+    }
+    else{
+      $scope.newMessage._id = id
+      messageFactory.addMessage($scope.newMessage)
+    }
+  }
+})
+19. go back to factory!! add $http
+20.
+app.factory('messageFactory', function($http){
+  var factory = {}
+  factory.message = []
+  factory.addMessage = function(message){
+    $http.post('/messages/add',message)
+  }
+  return factory
+})
+21. now we need to go to routes.
+22. //******************* to seperate stuff
+23. app.post('/messages/add',function(request,response){
+  console.log(request.body)
+  })
+24. TEST. see in terminal
+25. now we need to send this to controller.
+26. new file. message.js
+27.
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      console.log(request.body)
+    }
+  }
+})()
+28. Need to connect to routes.
+29. var message = require('./../controllers/message.js')
+app.post('/messages/add',function(request,response){
+  message.add(request,response)
+30. TEST!! should see in terminal
+31. Now we need to add to our database.
+32. in models file. create message.js
+33.
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var MessageSchema = new Schema({
+  content:{type:String, required:true},
+  _user:{type:Schema.Types.ObjectId, ref:"User"}
+  })
+mongoose.model("Message",MessageSchema)
+34. ALSO NEED TO UPDATE User
+35.
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var UserSchema = new Schema({
+  name:{type:String, required:true},
+  _messages:[{type:Schema.Types.ObjectId, ref:"Message"}]
+  })
+mongoose.model("User",UserSchema)
+36. go back into message back end controller.
+37. need to add var stuff!!!
+var mongoose = require('mongoose')
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var message = new Message({content: request.body.content, _user:request.body._id})
+      console.log(message)
+    }
+  }
+})()
+38. TEST!!! should see in terminal!!
+39.
+var mongoose = require('mongoose')
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var message = new Message({content: request.body.content, _user:request.body._id})
+      message.save(function(err,data){
+        User.findOne({_id: request.body._id},function(err,user){
+          console.log(user)
+          })
+        })
+    }
+  }
+})()
+
+40.
+var mongoose = require('mongoose')
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var message = new Message({content: request.body.content, _user:request.body._id})
+      message.save(function(err,data){
+        User.findOne({_id: request.body._id},function(err,user){
+          user._messages.push(data._id)
+          user.save(function(err,userData){
+            response.json(data)
+            })
+          })
+        })
+    }
+  }
+})()
+41. TEST!!! check terminal
+42.
+app.factory('messageFactory', function($http){
+  var factory = {}
+  factory.message = []
+  factory.addMessage = function(message){
+    $http.post('/messages/add',message).then(function(output){
+      console.log(output.data)
+      })
+  }
+  return factory
+43. TEST!!! should see in browser console.
+44.
+app.factory('messageFactory', function($http){
+  var factory = {}
+  factory.message = []
+  factory.addMessage = function(message){
+    $http.post('/messages/add',message).then(function(output){
+      factory.messages.push(output.data)
+      })
+  }
+  return factory
+45.  GO BACK TO CONTROLLER
+app.controller ('messageController', function($scope, messageFactory){
+  $scope.errors = []
+  $scope.addMessage = function(id){
+    $scope.errors = []
+    if(!$scope.newMessage || !$scope.newMessage.content){
+      $scope.errors.push('Please write something')
+    }
+    else if(!$scope.newMessage.content.length < 4){
+      $scope.errors.push('message needs to be more than 4 characters')
+    }
+    else if($scope.newMessage.content.length > 144){
+      $scope.errors.push("message is too long")
+    }
+    else{
+      $scope.newMessage._id = id
+      messageFactory.addMessage($scope.newMessage)
+      $scope.newMessage = {}
+    }
+  }
+})
+46. NOW WE NEED SHOW ALL
+47.
+app.controller ('messageController', function($scope, messageFactory){
+  $scope.errors = []
+  messageFactory.getAll(function(data){
+    $scope.messages = data
+    })
+
+  $scope.addMessage = function(id){
+    $scope.errors = []
+    if(!$scope.newMessage || !$scope.newMessage.content){
+      $scope.errors.push('Please write something')
+    }
+    else if($scope.newMessage.content.length < 4){
+      $scope.errors.push('message needs to be more than 4 characters')
+    }
+    else if($scope.newMessage.content.length > 144){
+      $scope.errors.push("message is too long")
+    }
+    else{
+      $scope.newMessage._id = id
+      messageFactory.addMessage($scope.newMessage, function(data){
+        $scope.messages.push(data)
+        })
+      $scope.newMessage = {}
+    }
+  }
+})
+48. NOW WE NEED TO GO TO FACTORY.
+49. add callback to addMessage
+app.factory('messageFactory', function($http){
+  var factory = {}
+  factory.messages = []
+  factory.getAll = function(callback){
+    $http.get('/messages/getall').then(function(output){
+      callback(output.data)
+      })
+  }
+
+  factory.addMessage = function(message,callback){
+    $http.post('/messages/add',message).then(function(output){
+      factory.messages.push(output.data)
+      callback(output.data)
+      })
+  }
+  return factory
+50. GO TO ROUTES.JS
+51.
+//******************* to seperate stuff
+ app.post('/messages/add',function(request,response){
+  console.log(request.body)
+  })
+  app.get('/messages/getall',function(request,response){
+    message.getAll(request,response)
+    })
+52. NOW WE NEED TO GO TO BACKEND controller
+53.
+var mongoose = require('mongoose')
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var message = new Message({content: request.body.content, _user:request.body._id})
+      message.save(function(err,data){
+        User.findOne({_id: request.body._id},function(err,user){
+          user._messages.push(data._id)
+          user.save(function(err,userData){
+            response.json(data)
+            })
+          })
+        })
+    },
+    getAll: function(request,response){
+      Message.find({})
+      .populate('_user')
+      .exec(function(err,messages){
+        response.json(messages)
+        })
+  }
+})()
+54. GO BACK TO DASHBAORD TO ORGANIZE.
+55.
+<div ng-controller = 'messageController'>
+  <p ng-repeat = 'error in errors' style='color:red'>{{error}}</p>
+    <form ng-submit='addMessage(curUser._id)'>
+      <textarea ng-model = 'newMessage.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+    <div ng-repeat = 'message in messages' style='border:thin solid black'>
+    <p>{{message._user.name}} says:</p>
+    <p>{{message.content}}</p>
+    </div>
+  </div>
+56. DONE with MESSAGE!
+57. COMMEMTS
+58.
+<div ng-controller = 'messageController'>
+  <p ng-repeat = 'error in errors' style='color:red'>{{error}}</p>
+    <form ng-submit='addMessage(curUser._id)'>
+      <textarea ng-model = 'newMessage.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+    <div ng-repeat = 'message in messages' style='border:thin solid black'>
+    <p>{{message._user.name}} says:</p>
+    <p>{{message.content}}</p>
+    <div>
+    <form ng-submit='addComment()'>
+      <textarea ng-model='newComment.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+    </div>
+  </div>
+  59. BUILD COMMENT controller
+  60. console.log some string to see it
+  61. add to index.html for comment.js
+  62. in comment.js
+63. app.controller('commentController', function($scope){
+  $scope.addComment = function(){
+    console.log("asdfadsfasdf")
+  }
+  })
+64. moving some divs around.... look cklosely. add commentController
+<div ng-controller = 'messageController'>
+  <p ng-repeat = 'error in errors' style='color:red'>{{error}}</p>
+    <form ng-submit='addMessage(curUser._id)'>
+      <textarea ng-model = 'newMessage.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+    <div ng-repeat = 'message in messages' style='border:thin solid black'>
+    <p>{{message._user.name}} says:</p>
+    <p>{{message.content}}</p>
+
+    <div ng-controller = 'commentController'>
+    <form ng-submit='addComment(newComment, curUser._id, message._id)'>
+      <textarea ng-model='newComment.content'></textarea>
+      <input type='submit' value='submit'>
+    </form>
+    </div>
+  </div>
+</div>
+65. go back to front end controller
+66. app.controller('commentController', function($scope){
+  $scope.addComment = function(comment,user,message){
+    console.log(comment,user,message)
+  }
+  })
+67. TEST IT!!!
+68. make new factory!!! comment.js
+69. console log inside factory
+70. link to index.html
+71.
+app.factory ("commentFactory", function(){
+  var factory = {}
+  factory.addComment = function(comment){
+    console.log(comment)
+  }
+  return factory
+  })
+72. go back to controller.add commentFactory
+
+app.controller('commentController', function($scope, commentFactory){
+  $scope.addComment = function(comment,user,message){
+    comment._user = user;
+    comment._message = message
+    commentFactory.addComment(comment)
+  }
+  })
+73. go to factory.
+74. pass in $http
+app.factory ("commentFactory", function($http){
+  var factory = {}
+  factory.addComment = function(comment){
+    $http.post('/comment/add', comment)
+  }
+  return factory
+  })
+75. go to routes.js
+76. app.post('/comment/add', function(request,response){
+  console.log(request,response)
+  })
+77. TEST!! look in terminal!!
+78. now i need to send to comment controller
+79. comment.js
+80. module.exports = (function(){
+  return{
+    add:function(request,response){
+      console.log(request.body)
+    }
+  }
+  })()
+81. go back to routes
+82. add var
+var comment = require('./../controllers/comment.js')
+app.post('/comment/add', function(request,response){
+  comment.add(request,response)
+  })
+83. TEST!!!
+84. now we need to go to database
+85. models called comment.js
+86.
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var CommentSchema = new Schema({
+  content:{type:String, required:true},
+  _user:{type:Schema.Types.ObjectId, ref:"User"},
+  _message:{type:Schema.Types.ObjectId, ref:"Message"}
+  })
+  mongoose.model('Comment',CommentSchema)
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var MessageSchema = new Schema({
+  content:{type:String, required:true},
+  _user:{type:Schema.Types.ObjectId, ref:"User"},
+  _comments:[{type:Schema.Types.ObjectId, ref:"Comment"}]
+  })
+mongoose.model("Message",MessageSchema)
+ ALSO NEED TO UPDATE User
+
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var UserSchema = new Schema({
+  name:{type:String, required:true},
+  _messages:[{type:Schema.Types.ObjectId, ref:"Message"}],
+  _comments:[{type:Schema.Types.ObjectId, ref:"Comment"}]
+  })
+mongoose.model("User",UserSchema)
+87. need to add vars to comment.js
+88.
+var mongoose = require("mongoose")
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+var Comment = mongoose.model("Comment")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var comment = new Comment(request.body)
+      comment.save(function(err,commentData){
+        console.log(commentData)
+        })
+    }
+  }
+  })()
+89. TEST!!! should see in terminal!!
+90.
+var mongoose = require("mongoose")
+var Message = mongoose.model("Message")
+var User = mongoose.model("User")
+var Comment = mongoose.model("Comment")
+module.exports = (function(){
+  return{
+    add:function(request,response){
+      var comment = new Comment(request.body)
+      comment.save(function(err,commentData){
+        User.findOne({_id:commentData._user}, function(err,userData){
+          console.log(userData)
+          })
+        })
+    }
+  }
+  })()
+  91. TEST!!! see terminal
+  92.
+  var mongoose = require("mongoose")
+  var Message = mongoose.model("Message")
+  var User = mongoose.model("User")
+  var Comment = mongoose.model("Comment")
+  module.exports = (function(){
+    return{
+      add:function(request,response){
+        var comment = new Comment(request.body)
+        comment.save(function(err,commentData){
+          User.findOne({_id:commentData._user}, function(err,userData){
+            userData._comments.push(commentData._id);
+            userData.save(function(err){
+              Message.findOne({_id:commentData._message}, function(err, messageData){
+                messageData._comments.push(commentData._id);
+                messageData.save(function(err){
+                  response.json(commentData)
+                  })
+                })
+              })
+            })
+          })
+      }
+    }
+    })()
+93. comment factory
+94.
+app.factory ("commentFactory", function($http){
+  var factory = {}
+  factory.addComment = function(comment){
+    $http.post('/comment/add', comment).then(function(output){
+      console.log(output.data)
+      })
+  }
+  return factory
+  })
+95. TEST!!
+stepbystepWall.txt
+Open with Google Docs
+Displaying stepbystepWall.txt.

@@ -1,4 +1,6 @@
 ------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
+🌺🌸🌺  BIG SECTI ON
+🌸 smaller section
 🍕 = new line entered or updated info
 🌈 = useful tip/explanation
 👿 = error tip!
@@ -132,7 +134,7 @@ link this file to index.html
         <script src="angular/angular.js"></script>
         <script src="angular-route/angular-route.js"></script>
         <script src="app.js"></script>
-        🍕<script src="assets/controller/session.js"></script>
+        🍕<script src="controllers/session.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
     </head>
 check to see if console.log message appears
@@ -150,7 +152,7 @@ add in the sessionController to the '/login':
         $routeProvider
         .when('/login',{
             templateUrl: 'partials/login.html'
-            controller: 'sessionController'
+            🍕controller: 'sessionController'
         })
 (you can also put ng-controller in a div inside the login.html as well)
 check LocalHost to see if console.log message showed
@@ -192,7 +194,7 @@ update controller to:
             if(!$scope.logReg || !$scope.logReg.name){
                 $scope.errors.push('Please enter a name!')
             }
-            else if($scope.logReg.name.length > 3){
+            else if($scope.logReg.name.length < 3){
                 $scope.errors.push('Name must be at least 3 characters long!')
             }else{
                 console.log('no errors, now send to factory')
@@ -212,7 +214,7 @@ go into factories folder and create a file called session.js (client/factories/s
 test it by console.log('factory loading')
 
 -INDEX.HTML-
-connect to the new factories file
+connect to the new factories file. MAKE SURE IT IS ABOVE CONTROLLER!
 
     <head>
         <title>Full Friends</title>
@@ -220,9 +222,9 @@ connect to the new factories file
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="angular/angular.js"></script>
         <script src="angular-route/angular-route.js"></script>
-        <script src="assets/app.js"></script>
-        <script src="assets/controller/session.js"></script>
-        🍕<script src="assets/factories/session.js"></script>
+        <script src="app.js"></script>
+        🍕<script src="factories/session.js"></script>
+        <script src="controller/session.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
     </head>
 
@@ -279,7 +281,7 @@ we are going to request a login function for the factory (it hasn't been created
 -FACTORIES/SESSION.JS-
 now let's build that login function we mentioned in the controller!
 
-    app.factory('sessionFactory', function(){
+    app.factory('sessionFactory', function($http){
         var factory = {};
         🍕factory.login = function(user){
             console.log(user, 'in factory')
@@ -291,7 +293,7 @@ then reload LH and enter in info. When submitted, it should console an object wi
 
 Now, we successfully passed info from our controller to our factory. Now it's time to send the info to our routes (via $http)
 
-    app.factory('sessionFactory', function(){
+    app.factory('sessionFactory', function($http){
         var factory = {};
         factory.login = function(user){
             🍕$http.post('/login', user)
@@ -337,6 +339,7 @@ build our route so it can retreive the info passed from the factory:
         })
     }
 
+👿 YOU MAY GET AN ERROR AT THIS POINT. TEST IN THE NEXT SECTION AFTER PUTTING .THEN (line 360)
 🌈res.send will send info back to the function that called it (so in this case, via $http)
 so in theory, it will send that console log back to the factory that requested it. But how does the factory know what to do with the info? This is when we build in a promise into the factory so it will trigger it to do something once the info has been sent back!
 
@@ -456,8 +459,8 @@ the schema is where we will hold all the properties that we want the collection 
     var Schema = mongoose.Schema;
 
     var UserSchema = new Schema({
-        name: String,
-    }, {timestamps:true});
+        name:{type:String, required:true},
+}, {timestamps: true})
 
     mongoose.model('User', UserSchema);
 
@@ -524,7 +527,7 @@ update the backend controller:
             }
         }
     })()
-🌈The last res.json({status}) line will send that information back to the front end. It is saying if status exists, they are logged in. The else statement, is saying, if they are already logged in, don't log them in again!
+🌈The last res.json({status}) line will send that information back to the front end. It is saying if status exists, they are logged in. The else statement, is saying, if they are already logged in, don't log them in again! Or they already exist in the db.
 
 - CLIENT/FACTORIES/SESSION.JS -
 As of the previous section, we have sent back a {status:true} back to the frontend about the user that just logged in. 🌈Now we want to tell the factory what to do depending on if the user is logged in or not. This is also when we introduce $location. This way we can redirect our now logged user to another partials page:
@@ -534,7 +537,7 @@ As of the previous section, we have sent back a {status:true} back to the fronte
             $http.post('/login', user).then(function(output){
                 🍕if(output.data){
                     console.log('user is logged in') <--- to test before we add in $location
-                    $lcoation.url('dashboard')
+                    🍕$location.url('dashboard')
 
                 }
             })
@@ -596,7 +599,7 @@ first, let's hook it up to our SERVER.JS file!
         console.log('LISTENING!')
     })
 
-👿you may have some trouble with the resavenad saveUninitialized, so we have to test it out to see if it's true or false
+👿you may have some trouble with the resave and saveUninitialized, so we have to test it out to see if it's true or false
 
 - SERVER/CONTROLLERS/SESSION.JS - 
     var mongoose = require('mongoose');
@@ -645,7 +648,7 @@ set this partial to the sessionController (you can also do this in app.js)
         if(!$scope.logReg || !$scope.logReg.name){
             $scope.errors.push('Please enter a name!')
         }
-        else if($scope.logReg.name.length > 3){
+        else if($scope.logReg.name.length < 3){
             $scope.errors.push('Name must be at least 3 characters long!')
         }else{
             sessionFactory.login($scope.logReg)
@@ -660,8 +663,8 @@ We will have to build sessionFactory now since we have not built it yet!
         factory.login = function(user){
             $http.post('/login', user).then(function(output){
                 if(output.data){
-                    console.log('user is logged in') <--- to test before we add in $location
-                    $lcoation.url('dashboard')
+                    console.log('user is logged in')
+                    $location.url('dashboard')
 
                 }
             })
@@ -680,7 +683,7 @@ Test out the factory. It will show up in the browser's console.log and will fire
             $http.post('/login', user).then(function(output){
                 if(output.data){
                     console.log('user is logged in') <--- to test before we add in $location
-                    $lcoation.url('dashboard')
+                    $location.url('dashboard')
 
                 }
             })
@@ -688,7 +691,7 @@ Test out the factory. It will show up in the browser's console.log and will fire
         factory.checkUser = function(){
             🍕$http.get('/checkUser')
         }
-        return factory;
+        return factory; 
     })
 
 - CONFIG/ROUTES.JS - 
@@ -711,7 +714,7 @@ req.json(null) <--this is a test to send to our front end to see if it's working
             $http.post('/login', user).then(function(output){
                 if(output.data){
                     console.log('user is logged in') <--- to test before we add in $location
-                    $lcoation.url('dashboard')
+                    $location.url('dashboard')
 
                 }
             })
@@ -734,7 +737,7 @@ When it works, it will show null in the browser's console.
             session.login(req, res)
         })
         app.get('/checkuser', function(req, res){
-            🍕session.cehckUser(req, res);
+            🍕session.checkUser(req, res);
         })
     }
 
@@ -879,7 +882,7 @@ Now it won't let you go to the dashboard page without logging in. It needs somet
 
 ------🌸LOGGING USER OUT🌸------
 To log someone out, first build a link in the dashboard.html (or whichever partials page you would like it to be on)
-    <a href="/logout">Logout!</a>
+    🍕<a href="/logout">Logout!</a>
 
 🌈We don't use angular for logout since we are going to clear session when it's clicked and redirect to the login page!
 

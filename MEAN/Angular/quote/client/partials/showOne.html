@@ -1,0 +1,14 @@
+<div ng-controller="sessionController">
+    <div ng-controller="quoteController">
+        <div class="header">
+            <h1>{{showOne[0].author}}'s Quotes</h1>
+        </div>
+        <div class="mainContent">
+           <p ng-repeat="q in showOne">
+               {{q.content}}</p>
+            <!--<div ng-repeat="quote in quotes">
+            {{quote.content}}
+            </div>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+
+<div ng-controller='sessionController'>
+	<div class ="header">
+		<h1>Welcome to Phasebook</h1>
+	</div>
+
+	<p class="error" ng-repeat='error in errors track by $index'>{{error}}</p>
+	<div class="mainContent">
+		<h2>Please Login!</h2>
+		<form ng-submit='login()'>
+			Username: <input type='text' ng-model='logReg.name' placeholder='Please enter your name'>
+			<input type='submit' value='Login'>
+		</form>
+	</div>
+</div>

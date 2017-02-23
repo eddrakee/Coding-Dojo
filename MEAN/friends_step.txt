@@ -1,0 +1,1104 @@
+Data Flow
+Template - > Controller -> Factory -> Routes -> ServerController -> Models/Database
+
+BUILD IT
+LINK IT
+TEST IT
+
+1. Create Project hierarchy
+2. mkdir _______
+3. cd _____
+4. mkdir server client
+5. cd client
+6. mkdir factories controllers partials
+7. touch app.js index.html
+8. cd ..
+9. cd server
+10. mkdir config controllers models
+11. cd config
+12. touch routes.js mongoose.js
+13. cd ..
+14. cd ..
+15. npm init -y
+16. npm install express mongoose angular angular-route path fs body-parser path --save
+17. touch server.js (in main directory)
+18. atom .
+19. edit server.js
+20. var express = require('express')
+21. var app = express()
+22. var path = require('path')
+23. var bodyParser = require('body-parser')
+24. app.use(bodyParser.json())
+25. app.use(express.static(path.join(__dirname, '/client')))
+    app.use(express.static(path.join(__dirname,  'node_modules')))
+26. app.listen(8000, function(){
+  console.log('listening to port 8000')
+  })
+27. nodemon server.js.
+
+TEST IT
+
+28. add angular into index.html
+29. <script src="angular/angular.js" charset="utf-8"></script>
+30. add angular-route into index.html
+31. <script src="angular-route/angular-route.js" charset="utf-8"></script>
+32. add app.js into index.html
+33. <script src="app.js" charset="utf-8"></script>
+34. IN app.js
+35. var app = angular.module('app', []);
+36. put ng-app='app' inside <body> The 'app' in line 35 needs to match the 'app' put into ng-app
+37. put 'ngRoute' inside array. var app = angular.module('app', ['ngRoute']);
+38. in app.js
+39. app.config(function($routeProvider){
+  $routeProvider
+  .when('/dashboard',{
+    templateUrl: 'partials/dashboard.html'
+    })
+  .otherwise({
+    redirectTo: '/dashboard'
+    })
+})
+40. create dashboard.html in partials
+41. add div tag in body of index.html
+42. put ng-view inside body tag <body ng-view>
+43. TEST IT make sure server is on!! and write something...
+44. ON dashboard.html make link to other page if needed. Do add first.
+45. <a href="#!/new">ADD</a> At the moment there is no add link listed in our app.config. need to create. Put under dashboard.
+46.   .when('/new',{
+    templateUrl: 'partials/new.html'
+    })
+47. create a 'new.html' in partials
+48. TEST IT. click link in dashboard to see if it goes to new.html
+49. in client. CREATE userControllers.js in controllers
+50. add src to the index.html.
+51. <script src="/controllers/userController.js" charset="utf-8"></script>
+52. TEST IT!! console.log "asdfasdfadsfadf" in userControllers.js
+53. in userControllers.js
+54. app.controller('userController', function($scope){
+    $scope.cat = 'asdfasfasdf'
+  })
+55. give name of 'userController'. This is where we start setting all variables.
+56. in new.html, add:
+<div ng-controller = 'userController'>
+  {{cat}}
+</div>
+57. TEST to see if working
+58. IF it works, start making form or whatever on page.
+59. <input type="text" ng-model="newUser.first_name"> ETC ETC
+60. <input type="submit" value = "Create User" ng-click="add()">
+61. In controllers.. create the add() function for the ng-click
+62. app.controller('userController', function($scope){
+      $scope.add = function(){
+        console.log($scope.newUser)
+      }
+  })
+63. TEST! check to see if this works to see if we get the user.
+64. CHECK BROWSER CONSOLE TO SEE IF DATA GETS there
+65. NOW WE SEND CONTROLLER TO FACTORY!
+66. in factories folder. create a new file "userFactory.js"
+67. console.log("in userFactory.js")
+68. link to index!
+69. <script src="/factories/userFactory.js" charset="utf-8"></script>
+70. TEST in browser console.
+71. app.factory('userFactory', function(){
+  var factory = {}
+  return factory;
+  })
+72. go to controllers and add userFactory.
+73. app.controller('userController', function($scope, userFactory){
+      $scope.add = function(){
+        userFactory.add($scope.newUser)
+      }
+  })
+74. make the add function in factory.
+75. app.factory('userFactory', function(){
+  var factory = {}
+    factory.add = function(user){
+      console.log(user, 'in factory')
+    }
+    return factory;
+  })
+75. TEST! make sure data gets into browser console.
+76. import module $http info into factory!. This allows us to send information from server to backend.
+77. app.factory('userFactory', function($http){
+  var factory = {}
+    factory.add = function(user){
+      $http.post('/users/add',user)
+    }
+    return factory;
+  })
+78. NEED TO ADD COMMUNICATION BETWEEN FACTORY AND ROUTES.
+79. in server.js
+80. require('./server/config/routes.js')(app)
+81. in server/config/routes.js
+82. module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    console.log(request.body)
+    })
+}
+83. TEST IT!!! add user this is hang up... but check the terminal!! SHOULD SEE OBJECT!
+84. now we need to go to ... routes -> controller
+85. CREATE users.js in server/controllers
+86. module.exports = (function(){
+    return{
+      add: function(request,response){
+        console.log(request.body, 'in backend controller')
+      }
+    }
+})()
+87. runs function immediately!!! DON'T FORGET TO PUT () AT THE END OF LINE 86!!!! WILL NOT WORK WITHOUT!
+88. in routes.js add variable to link the controller at the top
+89. var user = require('./../controllers/users.js')
+    console.log(user)
+90. to call on that add function...
+var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+}
+91. if we hit the route.. front end will be hanigng but we will see information in the terminal!!! COOL!
+92. NOW WE NEED TO SET UP DATABASE!
+93. edit in server/config/mongoose.js
+94. IN mongoose.js
+95. var mongoose = require('mongoose');
+    var path = require('path');
+    var fs = require('fs');
+    var models_path = path.join(__dirname + './../models');
+    mongoose.connect('mongodb://localhost/meanfriends');
+
+    fs.readdirSync(models_path).forEach(function(file){
+      if(file.indexOf('.js')>= 0){
+        require(models_path + '/' + file)
+      }
+    })
+96. go to server.js and need to add mongoose. MUST BE ABOVE REQUIRE ROUTES.
+97. require('./server/config/mongoose.js')
+98. TURN ON MONGO
+99. sudo mongodb in a seperate terminal
+100. mongo in another terminal
+101. need to create a schema
+102. create a new file in models.
+103. in server/models create user.js
+104. var mongoose = require('mongoose');
+    var Schema = mongoose.Schema
+    var UserSchema = new Schema({
+      first_name:{type:String, required:true},
+      last_name:{type:String, required:true},
+      birthday:{type:String, required:true}
+    })
+    mongoose.model('User',UserSchema);
+105. refer back to front end file. name properties the same! so you don't have any confusion and have to rename everything. validations go here!!!
+106. now we need to tell it to add to our database.
+107 in server side controllers add mongoose at top of file
+108.
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        console.log(user)
+      }
+    }
+})()
+109. TEST!!! should see an object ID property. not sending into database yet. but should see ID in terminal!! CHECK IT!
+110.
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      }
+    }
+})()
+111. This data will go back to whoever called it. FACTORY called it.
+112. IN FACTORY. ADD .then stuff!! This is a promise
+113. app.factory('userFactory', function($http){
+  var factory = {}
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        console.log(output.data)
+        })
+    }
+    return factory;
+  })
+114. SEE THE OUTPUT INFORMATION in the browser!!
+115. add $location to the app.factory next to $http. This is to redirect users when adding.
+116. app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    return factory;
+  })
+117. go to front end controller. make some space  above the add function . This is to get all the users to show onto our dashboard!
+118. app.controller('userController', function($scope, userFactory){
+      userFactory.getAll(function(data){
+        $scope.users = data
+        })
+      $scope.add = function(){
+        userFactory.add($scope.newUser)
+      }
+  })
+118. go to factory to add that new getAll above the existing factory.add
+119. input some names into callback to we can TEST it
+120. app.factory('userFactory', function($http){
+  var factory = {}
+    factory.getAll = function(callback){
+      callback(['billy','kim'])
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    return factory;
+  })
+121. go to our dashboard.html page and make a div ng-repeat 'user in users'
+122. <div ng-controller = "userController">
+<div ng-repeat='user in users'>
+{{user}}
+</div>
+</div>
+123. TEST TO SEE IF IT LOADS!!!
+124. erase hardcoded data. go to backend and get it. with $http
+125. app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        console.log(output.data)
+        })
+    }
+    return factory;
+  })
+126. go to routes.js page.
+127.
+var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    response.json(['tommy', 'phil','pip'])
+    })
+}
+128. TEST IT!!!
+129. remove hardcode data...
+var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    user.getAll(request,response)
+    })
+}
+130. go to server controller and make a route called getAll. don't forget to add comma at the end of the add function
+131.
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        response.json(['tommy','kim','asdfasdfasdf'])
+      }
+    }
+})()
+132. TEST IT.
+133. remove hardcoded data from server side controller
+134. var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        User.find({}, function(err,data){
+          response.json(data)
+          })
+      }
+    }
+})()
+135. TEST. should see a long object on your dashboard.
+136. go to the dashbaord.html to organize data.
+137. create your table to display data.
+138. leave DELETE link blank! don't want page to reload. want angular to handle this. use ng-click
+<div ng-controller = 'userController'>
+  <a href="#!/new">Add a Friend</a>
+  <h1>List of Friends</h1>
+  <table border='1'>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Birthday</th>
+      <th>Delete</th>
+    </tr>
+    <tr ng-repeat='user in users'>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.birthday | date: 'medium'}}</td>
+      <td><a href='' ng-click='delete(user._id)'>Delete</a></td>
+    </tr>
+  </table>
+</div>
+139. now we want to make sure we are passing user ID when clicking delete button.
+140. in controllers add delete function.
+141. app.controller('userController', function($scope, userFactory){
+      userFactory.getAll(function(data){
+        $scope.users = data
+        })
+      $scope.add = function(){
+        userFactory.add($scope.newUser)
+      }
+      $scope.delete = function(id){
+        console.log(id)
+      }
+  })
+142. TEST IT. you should see object ID in the browser console log. Now that we see it. we need that ID to be sent to the factory. update controller with the following:
+
+143. app.controller('userController', function($scope, userFactory){
+        userFactory.getAll(function(data){
+          $scope.users = data
+          })
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+    })
+144. go to factory
+145. app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        console.log(output.data)
+        })
+    }
+    factory.delete = function(id){
+      console.log(id, 'in factory')
+    }
+    return factory;
+  })
+146. TEST IT When we click on delete, we should still see ID in our browser.
+147. Now we need to send it to our routes page.. change to $http.get('/users/delete/' + id)
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        console.log(output.data)
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id)
+    }
+    return factory;
+  })
+148. GO TO ROUTES.JS
+149. var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    user.getAll(request,response)
+    })
+  app.get('/users/delete/:id', function(request,response){
+    console.log(request,params.id)
+    })
+}
+150. TEST IT! load dashboard and click on delete link. should see ID in the terminal
+151. update the delete function with user.delete(request,response)
+152. var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    user.getAll(request,response)
+    })
+  app.get('/users/delete/:id', function(request,response){
+    user.delete(request,response)
+    })
+}
+153. GO TO SERVER SIDE CONTROLLER
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        User.find({}, function(err,data){
+          response.json(data)
+          })
+      },
+      delete: function(request,response){
+        console.log(request.params)
+      }
+    }
+})()
+154. TEST IT. WHen clicking on delete, we should see ID in the terminal in an object.
+155. NOw we need to remove the user from the database. still in our server side controller
+156.
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        User.find({}, function(err,data){
+          response.json(data)
+          })
+      },
+      delete: function(request,response){
+        User.remove({_id: request.params.id}, function(err){
+          response.json({status: 'true'})
+          })
+      }
+    }
+})()
+157. after updating, we need to go back to the factory to add $route in line 1.
+158. app.factory('userFactory', function($http, $location, $route){
+159. ADD .then to the delete. CALLBACK>?
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    return factory;
+  })
+160. TEST!!! should be able to delete
+
+161. add show on dashboard.html have to worry bout some timing stuff...need to match ID that we have in our controller.
+162.
+<div ng-controller = 'userController'>
+  <a href="#!/new">Add a Friend</a>
+  <h1>List of Friends</h1>
+  <table border='1'>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Birthday</th>
+      <th>Delete</th>
+      <th>Show</th>
+    </tr>
+    <tr ng-repeat='user in users'>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.birthday | date: 'medium'}}</td>
+      <td><a href='' ng-click='delete(user._id)'>Delete</a></td>
+      <td><a href='' ng-click='show(user._id)'>Show</a></td>
+    </tr>
+  </table>
+</div>
+163. Go to front end controllers
+add $scope.show to controllers
+164. app.controller('userController', function($scope, userFactory){
+        userFactory.getAll(function(data){
+          $scope.users = data
+          })
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          console.log(id)
+        }
+    })
+165. TEST! see if we can see id. should be able to see in browser side console.
+166. app.controller('userController', function($scope, userFactory){
+        userFactory.getAll(function(data){
+          $scope.users = data
+          })
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+    })
+167. Go to factory to build show
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    factory.show = function(id){
+      $location.url('/show/' + id)
+    }
+    return factory;
+  })
+168. Create show.html in your partials and add div tag!! <div ng-controller = 'userController'>
+169. go to app.js to create a .when for show
+.when('/show/:id',{
+  templateUrl: 'partials/show.html'
+  })
+170. TEST!!!! should be redirected to show page when clicking show link
+171. do not need to hit the backend. need to look through it and see if it matches.
+172. ADD $routeParams to app.controller!!! go to frontend controller
+173. app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          console.log($routeParams)
+        }
+        userFactory.getAll(function(data){
+          $scope.users = data
+          })
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+    })
+174. should see object in the browser console when clicking show
+175. update app.controller with the following.
+app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          userFactory.getAll(function(data){
+            $scope.users = data
+            for(user in $scope.users){
+              if($scope.users[user]['_id'] == $routeParams.id){
+                $scope.cur_user = $scope.users[user]
+                console.log($scope.cur_user)
+              }
+            }
+          })
+        }
+        else{    
+          userFactory.getAll(function(data){
+            $scope.users = data
+            })
+        }
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+    })
+176. make the if statements and move the userFactory.getAll into the else!!!
+177. When console logging, we should see id in the broswer console.
+178. update show page.
+179.
+<div ng-controller='userController'>
+  <input type="text" ng-model='cur_user.first_name'><br>
+  <input type="text" ng-model='cur_user.last_name'><br>
+  <input type="text" value="{{cur_user.birthday | date: 'medium'}}"><br>
+</div>
+189. TEST!!!!
+190. ADD update!
+191. update the dashboard.html with update in TH and TD
+<div ng-controller = 'userController'>
+  <a href="#!/new">Add a Friend</a>
+  <h1>List of Friends</h1>
+  <table border='1'>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Birthday</th>
+      <th>Delete</th>
+      <th>Show</th>
+      <th>Update</th>
+    </tr>
+    <tr ng-repeat='user in users'>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.birthday | date: 'medium'}}</td>
+      <td><a href='' ng-click='delete(user._id)'>Delete</a></td>
+      <td><a href='' ng-click='show(user._id)'>Show</a></td>
+      <td><a href='' ng-click='update(user._id)'>update</a></td>
+    </tr>
+  </table>
+</div>
+192. go to front end controllers and make a $scope.update function
+193.
+app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          userFactory.getAll(function(data){
+            $scope.users = data
+            for(user in $scope.users){
+              if($scope.users[user]['_id'] == $routeParams.id){
+                $scope.cur_user = $scope.users[user]
+                console.log($scope.cur_user)
+              }
+            }
+          })
+        }
+        else{    
+          userFactory.getAll(function(data){
+            $scope.users = data
+            })
+        }
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+        $scope.update = function(id){
+          console.log(id)
+        }
+    })
+194. TEST!!! click update! and should see object in browser console log.
+195. update controller to send to factory.
+app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          userFactory.getAll(function(data){
+            $scope.users = data
+            for(user in $scope.users){
+              if($scope.users[user]['_id'] == $routeParams.id){
+                $scope.cur_user = $scope.users[user]
+                console.log($scope.cur_user)
+              }
+            }
+          })
+        }
+        else{    
+          userFactory.getAll(function(data){
+            $scope.users = data
+            })
+        }
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+        $scope.update = function(id){
+          userFactory.update(id)
+        }
+    })
+196. in factory. add update.
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    factory.show = function(id){
+      $location.url('/show/' + id)
+    }
+    factory.update = function(id){
+      $location.url('/update/' +id)
+    }
+    return factory;
+  })
+197. go to app.js to add an update!
+198. .when('/update/:id',{
+  templateUrl: 'partials/update.html'
+  })
+199. create an update.html in our partials
+200. wrote something in update.html to test
+201. TEST!!! click link and should be redirected.
+202. add div tag into our update.html
+203. <div ng-controller = 'userController'>
+{{cur_user}}
+</div>
+204. TEST!! when we click on the update, we should see the ugly object
+205. grab code from show.html! and put things into a form!
+206. update the date to 'yyyy-MM-dd' and change type to date. MAKE INPUT BUTTON!
+<div ng-controller='userController'>
+<form>
+  <input type="text" ng-model='cur_user.first_name'><br>
+  <input type="text" ng-model='cur_user.last_name'><br>
+  <input type="date" value="{{cur_user.birthday | date: 'yyyy-MM-dd'}}"><br>
+  <input type="submit" value="change user" ng-click="change()">
+</form>
+</div>
+207. go to front end controllers
+208.
+app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          userFactory.getAll(function(data){
+            $scope.users = data
+            for(user in $scope.users){
+              if($scope.users[user]['_id'] == $routeParams.id){
+                $scope.cur_user = $scope.users[user]
+                console.log($scope.cur_user)
+              }
+            }
+          })
+        }
+        else{    
+          userFactory.getAll(function(data){
+            $scope.users = data
+            })
+        }
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+        $scope.update = function(id){
+          userFactory.update(id)
+        }
+        $scope.change = function(){
+          console.log($scope.cur_user)
+        }
+    })
+209. TEST!!! when click change button.. should see changes in browser console.
+210. now we need to send the information to the factory. need to add userFactory.change($scope.cur_user)
+app.controller('userController', function($scope, userFactory, $routeParams){
+        if($routeParams.id){
+          userFactory.getAll(function(data){
+            $scope.users = data
+            for(user in $scope.users){
+              if($scope.users[user]['_id'] == $routeParams.id){
+                $scope.cur_user = $scope.users[user]
+                console.log($scope.cur_user)
+              }
+            }
+          })
+        }
+        else{    
+          userFactory.getAll(function(data){
+            $scope.users = data
+            })
+        }
+        $scope.add = function(){
+          userFactory.add($scope.newUser)
+        }
+        $scope.delete = function(id){
+          userFactory.delete(id)
+        }
+        $scope.show = function(id){
+          userFactory.show(id)
+        }
+        $scope.update = function(id){
+          userFactory.update(id)
+        }
+        $scope.change = function(){
+          userFactory.change($scope.cur_user)
+        }
+    })
+211. GO TO FACTORY!!
+212. need to create change function
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    factory.show = function(id){
+      $location.url('/show/' + id)
+    }
+    factory.update = function(id){
+      $location.url('/update/' +id)
+    }
+    factory.change = function(user){
+      console.log(user)
+    }
+    return factory;
+  })
+213. TEST!!! should see update changes in our browser console!!
+214. we need to send this off into routes.. so update the app.factory with $http.post('/users/change/',user)
+215.
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    factory.show = function(id){
+      $location.url('/show/' + id)
+    }
+    factory.update = function(id){
+      $location.url('/update/' +id)
+    }
+    factory.change = function(user){
+      $http.post('/users/change/',user)
+    }
+    return factory;
+  })
+216. now we need to go into our routes.js to make the route!
+217.
+var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    user.getAll(request,response)
+    })
+  app.get('/users/delete/:id', function(request,response){
+    user.delete(request,response)
+    })
+  app.post('/users/change', function(request,response){
+    console.log(request.body)
+    })
+}
+218. TEST IT!! check terminal!! should seee the updated information int he terminal
+219.  add user.change(request,response) to send it to the server side controller
+var user = require('./../controllers/users.js')
+    console.log(user)
+module.exports = function(app){
+  app.post('/users/add',function(request,response){
+    user.add(request,response)
+    })
+  app.get('/users/getall', function(request,response){
+    user.getAll(request,response)
+    })
+  app.get('/users/delete/:id', function(request,response){
+    user.delete(request,response)
+    })
+  app.post('/users/change', function(request,response){
+    user.change(request,response)
+    })
+}
+220. now we need to go to server side controller to build route.
+221.
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        User.find({}, function(err,data){
+          response.json(data)
+          })
+      },
+      delete: function(request,response){
+        User.remove({_id: request.params.id}, function(err){
+          response.json({status: 'true'})
+          })
+      },
+      change: function(request,response){
+        console.log(request.body)
+      }
+    }
+})()
+222. TEST!!! should see the updated information in our terminal!!!
+223. need to go from controller to database
+224. add change instructions to update the database with the new information
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+module.exports = (function(){
+    return{
+      add: function(request,response){
+        var user = new User(request.body)
+        user.save(function(err,data){
+          if(err){
+            console.log(err)
+          }
+          else{
+            response.json(data)
+          }
+        })
+      },
+      getAll: function(request,response){
+        User.find({}, function(err,data){
+          response.json(data)
+          })
+      },
+      delete: function(request,response){
+        User.remove({_id: request.params.id}, function(err){
+          response.json({status: 'true'})
+          })
+      },
+      change: function(request,response){
+        User.findOne({_id: request.body._id}, function(err,user){
+          user.first_name = request.body.first_name
+            user.last = request.body.last_name
+            user.birthday = request.body.birthday
+            user.save(function(err,user){
+              response.json(user)
+          })
+        })
+      }
+    }
+})()
+225. TEST!!! enter in some stuff... and then go back to the dash board and you'll see the new information
+226. go back to factories... and add the .then
+227.
+app.factory('userFactory', function($http, $location){
+  var factory = {}
+    factory.getAll = function(callback){
+      $http.get('/users/getall').then(function(output){
+        callback(output.data)
+        })
+    }
+    factory.add = function(user){
+      $http.post('/users/add',user).then(function(output){
+        $location.url('/dashboard')
+        })
+    }
+    factory.delete = function(id){
+      $http.get('/users/delete/' + id).then(function(){
+        $route.reload()
+        })
+    }
+    factory.show = function(id){
+      $location.url('/show/' + id)
+    }
+    factory.update = function(id){
+      $location.url('/update/' +id)
+    }
+    factory.change = function(user){
+      $http.post('/users/change/',user).then(function(){
+        $location.url('/dashboard')
+        })
+    }
+    return factory;
+  })
+228. FINALLY DONE
