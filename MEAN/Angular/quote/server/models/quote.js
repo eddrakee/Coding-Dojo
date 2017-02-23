@@ -4,7 +4,7 @@ var QuoteSchema = new Schema({
     date:{type:Date, required:true},
     author:{type:String, required:true},
     content:{type:String, required:true},
-    likes: {type:Number},
+    likes: {type:Number, default:0},
     _user:{type:Schema.Types.ObjectId, ref:"User"},
 },{timestamps:true})
 mongoose.model("Quote",QuoteSchema)

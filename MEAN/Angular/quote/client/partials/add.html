@@ -6,6 +6,8 @@
         <div class="error" ng-repeat='error in errors track by $index'>
             <p>{{error}}</p>
         </div>
+        <a href="#!/dashboard">Home</a>
+        <a href="/logout">Logout</a>
         <div class='mainContent'>
             <h2>Enter Quote Below!</h2>
             <form ng-submit='addQuote(currentUser._id)'>
