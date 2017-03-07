@@ -1,0 +1,24 @@
+<a href="/logout">Logout</a> | <a href="#!/dash">Home</a>
+
+<div ng-controller="userController">
+{{showUser.name}}
+<!--use ng if to find stuff-->
+<h2>List of Finished Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+<h2>List of Pending Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+</div>

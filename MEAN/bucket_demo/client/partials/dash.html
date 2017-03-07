@@ -1,0 +1,32 @@
+<div ng-controller = 'sessionController'>
+  <h1>Welcome, {{curUser.name}} | <a href="/logout">Logout</a></h1>
+
+  <div ng-controller='userController'>
+      <div ng-controller="itemController">
+        <div ng-repeat="error in errors">
+          <p>{{error}}</p>
+        </div>
+        <form ng-submit="addItem(curUser._id)">
+          <input type="text" ng-model="newItem.title" placeholder="Item Name">
+          <input type="text" ng-model="newItem.description" placeholder="Description">
+          <select ng-model="newItem._joinedBy">
+            <option ng-repeat="user in users" ng-if = 'user._id != curUser._id' ng-value="user._id">{{user.name}}</option>
+          </select>
+          <input type="submit" value="Add!">
+        </form>
+
+<!--or filter status pending-->
+        <div ng-repeat="item in items" ng-if=" item.status == 'Pending' && curUser._id== item._createdBy._id || item.status == 'Pending' &&curUser._id== item._joinedBy._id">
+          <input type="checkbox" ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+          <h2>Completed Tasks</h2>
+         <div ng-repeat="item in items" ng-if="item.status == 'Done' && curUser._id== item._createdBy._id || item.status == 'Done' && curUser._id== item._joinedBy._id">
+          <input type="checkbox" checked ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+      </div>
+    <p ng-repeat = 'user in users' ng-if = 'user._id != curUser._id'><a href="#!/show/{{user._id}}">{{user.name}}</a></p>
+    
+  </div>
+</div>

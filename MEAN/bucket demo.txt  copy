@@ -1,0 +1,666 @@
+------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
+🌺🌸🌺  BIG SECTION
+🌸 smaller section
+🍕 = new line entered or updated info
+🌈 = useful tip/explanation
+👿 = error tip!
+--------------------------------
+
+------ 🌸GET ALL🌸 ------
+
+After making your login, you will most likely need to build a getAll function to populate all the users information. (After this, you may create a Add function.)
+
+The first step is to create a front end controller, in this case, it will be a 
+userController!
+
+🌈USERCONTROLLER - client/controllers/user.js
+
+    app.controller('userController', function($scope){
+        console.log('user test')
+    })
+
+🌈LINK TO INDEX.HTML 
+
+    <script src="controllers/user.js"></script>
+
+🌈ADD LINK IN DASHBOARD TO NEW PARTIAL 
+    <a href="#!/add">Add</a>
+
+🌈GO TO APP.JS TO ADD NEW #!/ADD ROUTE
+    .when('/add', {
+        templateUrl: 'partials/add.html'
+    })
+
+🌈CREATE NEW PARTIAL - partials/add.html
+    1. add text to the page for testing
+    2. test it
+    3. build the form!
+        <div ng-controller="userController">
+            <form>
+                Task: <input type="text" ng-model="newAppt.task">
+                Date: <input type="date" ng-model="newAppt.date">
+                Task: <input type="time" ng-model="newAppt.time">
+                <input type="submit" value="Add!" ng-click="add()">
+            </form>
+        </div>
+    4. add a link to go back to dashboard (make sure it's the same name as the one on app.js)
+        <a href="#!/dashboard">Add</a>
+
+👿 You can test out the form by putting a console.log in the userController
+
+🌈CREATE USER FACTORY - client/factories/user.js
+    app.factory('userFactory', function(){
+        var factory = {}
+        return factory;
+    })
+
+🌈LINK USER FACTORY TO USER CONTROLLER - client/controllers/user.js
+    1. add userFactory
+    2. test it
+
+    app.controller('userController', function($scope, 🍕userFactory){
+        console.log('user test')
+    })
+    
+
+🌈NOW CREATE A GETALL FUNCTION - client/controllers/user.js
+
+    app.controller('userController', function($scope, userFactory){
+    userFactory.getAll(function(data){
+        🍕$scope.users = data;
+        console.log(data)
+        })
+    })
+
+    👿Don't test now since we don't have anything in our factory to receive $scope
+
+🌈ADD TO USER FACTORY - client/factories/user.js
+
+
+
+
+go to controller and link in userFactory
+
+create a get all function in controller
+
+app.controller('userController', function($scope, userFactory){
+    userFactory.getAll(function(data){
+        $scope.users = data;
+        console.log(data)
+    })
+})
+
+go to factory and define getAll
+//this will pass the whole function in console.log
+    app.factory('userFactory', function(){
+        var factory = {}
+        factory.getAll = (callback){
+            callback('askdjaskd')
+    
+            console.log(callback)
+        } return factory
+    })
+
+make it send to routes
+    app.factory('userFactory', function(){
+        var factory = {}
+        factory.getAll = (callback){
+            c$http.get('/users/get').then(function(output){
+                callback(output.data)
+            })
+        } return factory
+    })
+
+go to routes
+/////user routes///////
+make sure to link user and session in routes
+    var session = require(asdasdasd)
+    var user = require(kljdasds)
+    app.get('/users/get', function(req, res){
+        res.json(['test', 'test'])
+    })
+
+go to backend controller - first create one as user.js!
+    
+    module.exports = (function(){
+        return{
+
+        }
+    })()
+
+update route after testing
+    var session = require(asdasdasd)
+    var user = require(kljdasds)
+    app.get('/users/get', function(req, res){
+        user.getAll(req,res);
+    })
+
+back to routes - 
+    module.exports = (function(){
+        return{
+            getAll: function(req, res){
+                res.json(['test', 'test'])
+            }
+        }
+    })()
+
+go to db and grab all users by linking at the top of page!
+var mongoose = require('mongoose');
+var User = mongoose.model('User')
+    module.exports = (function(){
+        return{
+            getAll: function(req, res){
+                User.find({}, function(err, users){
+                    res.json(users)
+                })
+            }
+        }
+    })()
+
+now we have all the users storedin the $scope.users data
+go back to front end controller
+
+    app.controller('userController', function($scope, userFactory){
+    userFactory.getAll(function(data){
+        $scope.users = data;
+    })
+})
+
+go to html and loop through users. make sure the session controller envelopes the user controller because we need access to currentUser
+    <div ng-controller = "userController">
+    <p ng-repeat="user in users" ng-if="user._id != currentUser._id"><a href=">{{user.name}}</a></p>
+    </div>
+
+now make the bucket list item creation
+go to dashboard.html
+
+now create input form for adding list. note you will have to make an option field for users!
+    <form>
+          <input type="text" placeholder="Item Name">
+          <input type="text" placeholder="Description">
+          <select>
+            <option ng-repeat="user in users">{{user.name}}</option>
+          </select>
+          <input type="submit" value="Add!">
+
+        </form>
+
+Now it's time to do associations. There are many ways to do it! So we will have to make a createdBy and joinedBy field in Schema. So let's make an itemController.
+    create a file in fe controller item.js
+    link to index.html
+
+    do the same set up as we did for user controller
+
+change the input form to ng-controller ="itemController"
+
+lets put ng-model tags in dash.html and the ng-submit = addItem()
+
+now, do we put ng-model on select or option? you can console log to test it!
+
+make a function in item controller
+    app.controller('itemController', function($scope){
+    $scope.addItem = function(){
+        console.log($scope.newItem)
+    }
+})
+
+go back to html and use ng-value on the option to get the users id instead of name since there could be people with the same name! This way it wont be confused.
+
+in dash.html you need to pass addItem(curUser._id). This id will be appended to the $scope.newItem.createdBy object so we could save it to our db later
+
+Now go back to itemController item.js and make it so it will store everything entered into our db. 
+    app.controller('itemController', function($scope){
+    $scope.addItem = function(curUser){
+        $scope.newItem.createdBy = curUser;
+    }
+})
+
+Now, we don't want the current user to be shown in teh drop down box. So let's filter it out!
+Put: ng-if = 'user._id != curUser._id' into the option field.
+
+NOTE: for future routes, you can use showall and then filter to see specific data
+
+NOW SEND TO FACTORY!
+created item.js file and link to index.html and inject to your controller
+    app.factory('itemFactory',function($http){
+  var factory = {}
+  
+
+  return factory
+})
+
+ITEM controller =
+    app.controller('itemController', function($scope, itemFactory){
+    $scope.addItem = function(curUser){
+        $scope.newItem.createdBy = curUser;
+        console.log($scope.newItem, itemFactory)
+    }
+})
+
+Now build a function to add an item
+    app.factory('itemFactory',function($http){
+  var factory = {}
+    factory.addItem = function(item){
+        console.log(item, "in factory")
+    }
+  return factory
+})
+
+ITEM CONTROLLER - 
+    app.controller('itemController', function($scope, itemFactory){
+    $scope.addItem = function(curUser){
+        $scope.newItem.createdBy = curUser;
+        itemFactory.addItem($scope.newItem)
+    }
+})
+
+EDIT FACTORY TO SEND TO ROUTE - (make sure $http is injected now!)
+    app.factory('itemFactory',function($http){
+  var factory = {}
+    factory.addItem = function(item){
+        // if passing objects, use post not get. so when console loging item, it should be an object. If it's a string, you can wrap it in an object
+        // make sure the route starts with a /
+        $http.post('/item/add', item)
+    }
+  return factory
+})
+
+
+GO TO ROUTES - 
+add in the get route. use console log to test that it's being sent through
+    app.post('/item/add', function(request, response){
+    console.log(request.body)
+  })
+
+ERROR TIP -
+ERR EMPTY RESPONSE means nothing was sent back
+    res.json and res.send will respond to whomeever called it
+
+BUILD BE_CONTROLLER ITEM.JS
+    module.exports = (function(){
+    return {
+        
+    }
+})()
+
+ROUTES LINK ITEM -
+    var session = require('./../controllers/session.js')
+var user = require('./../controllers/user.js')
+var item = require('./../controllers/item.js')
+
+ALSO ADD ADD FUNCTION IN ROUTE -
+    app.post('/item/add', function(request, response){
+    item.add(request, response)
+  })
+
+BACK TO BE_CONTROLLER -
+    var mongoose = require('mongoose');
+    var Item = mongoose.model('Item')
+    module.exports = (function(){
+    return {
+        add:function(request, response){
+            console.log(request.body, "req")
+        }
+    }
+})()
+//WILL GET AN ERROR FOR NOT HAVING AMODEL
+
+NOW ADD TO DB by MAKING A MODEL - item.js
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var ItemSchema = new Schema({
+    title: {type:String, required: true},
+    description: {type:String, required: true},
+    _joinedBy:{type: Schema.Types.ObjectId, ref:'User'},
+    _createdBy:{type: Schema.Types.ObjectId, ref:'User'}
+    }, {timestamps:true})   
+    mongoose.model('Item', ItemSchema)
+
+USER SCHEMA - (need to update user. when you udpate one schema, need to update the other. also keep note that you have users in your db that do not have these new fields!)
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+    var UserSchema = new Schema({
+  name:String,
+  // one user can create many items. They can also join many items
+  _created:[{type: Schema.Types.ObjectId, ref:'Item'}],
+  _joined:[{type: Schema.Types.ObjectId, ref:'Item'}]
+    })
+    mongoose.model('User', UserSchema) 
+
+BE_CONTROLLER ITEM - (remember to add var User up top)
+    var mongoose = require('mongoose');
+    var Item = mongoose.model('Item')
+    var User = mongoose.model('User')
+    module.exports = (function(){
+        return {
+            add:function(request, response){
+            var item = new Item(request.body);
+            console.log(request.body, item, "in backend controller")
+            }
+        }
+    })()
+ERROR _ MAKE SURE YOU PUT _joinedBy in the dashboard so it will send it and the _createdBy in front end controller
+
+ERROR - YOU WILL ALSO GET AN EMPTY/ITEM NULL error beucase we are not done yet
+
+BE_CONTROLLER ITEM.JS-  
+    var mongoose = require('mongoose');
+var Item = mongoose.model('Item')
+var User = mongoose.model('User')
+module.exports = (function(){
+    return {
+        add:function(request, response){
+        var item = new Item(request.body);
+        item.save(function(err){
+            // we just saved, so now we have to update and do it twice since we have two associations
+            User.findOne({_id: request.body._createdBy}, function(err, creator){
+                creator._created.push(item._id)
+                creator.save(function(err){
+                    User.findOne({_id: request.body._joinedBy}, function(err, joiner){
+                        joiner._joined.push(item._id)
+                        joiner.save(function(err){
+                            // send the item we just saved
+                            response.json(item)
+                            })
+                        })
+                })
+            })
+        })
+        }
+    }
+})()
+
+TEST IT!
+    YOu can go inside mongo to see if it added
+    you will see it on botht he creator nad the joiner
+
+ITEM FACTORY -
+add $location and $route
+    app.factory('itemFactory',function($http, $location, $route){
+    var factory = {}
+    factory.addItem = function(item){
+        // if passing objects, use post not get. so when console loging item, it should be an object. If it's a string, you can wrap it in an object
+        // make sure the route starts with a /
+        $http.post('/item/add', item).then(function(output){
+            $route.reload();
+        })
+        }
+    return factory
+    })
+
+NOW WE NEED TO GET ALL ITEMS - ITEM CONTROLLER
+(we have to now build the get all function)
+    app.controller('itemController', function($scope, itemFactory){
+    $scope.addItem = function(curUser){
+        $scope.newItem._createdBy = curUser;
+        itemFactory.addItem($scope.newItem)
+    }
+    itemFactory.getAll(function(data){
+        $scope.items = data
+        console.loge(data)
+    })
+    })
+
+FACTORY -
+test outthe callback
+    app.factory('itemFactory',function($http, $location, $route){
+  var factory = {}
+    factory.addItem = function(item){
+        // if passing objects, use post not get. so when console loging item, it should be an object. If it's a string, you can wrap it in an object
+        // make sure the route starts with a /
+        $http.post('/item/add', item).then(function(output){
+            $route.reload();
+        })
+    }
+    factory.getAll = function(callback){
+        callback('asdsads')
+    }
+  return factory
+})
+
+AND UPDATE IT AFTER TESTING -
+    factory.getAll = function(callback){
+        $http.get('/item/all')(function(output){
+            callback(output.data)
+            })
+        }
+GO TO ROUTES.JS -
+add this and test 
+
+    app.get('/item/all', function(request, response){
+    res.json(['jalskdjsad'])
+  })
+
+  UPDATE TO -
+    app.get('/item/all', function(request, response){
+    item.all(request, response)
+  })
+
+GO TO BE_CONTROLLER - NOW WE POPULATE!
+Add below the add: function -
+    all: function(request, response){
+            Item.find({})
+                .populate('_createdBy')
+                .populate('_joinedBy')
+                .exec(function(err, items){
+                    response.json(items)
+                })
+        }
+
+NOW WE DISPLAY IN DASH.HTML-
+(inside itemcontroller but under form)
+    Test it --
+        <div ng-repeat="item in items">{{item}}</div>
+    
+    Make it pretty! -
+         <div ng-repeat="item in items" ng-if="curUser._id== item._createdBy._id || curUser._id== item._joinedBy._id">
+          <input type="checkbox">{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+
+ERROR -
+    TypeError: Cannot read property '_joined' of null
+
+    property = in an object
+    trying to look for a property of something taht doesnt exist. This was happening when I didn't submit a joined person
+
+    To fix: in be_controller add 
+    if(res.body_joined){
+        add User.find one etc
+    }
+    else{
+        response.json(item)
+    }
+
+Then we have SHow ALL and Status
+
+checkbox - need to create a status field in our item and toggle
+
+pending and done - two repeats for things that match curUser._id = etc..(in the html) && item.status == done
+
+Then the other repeat would be for pending
+
+DASHBOARD -
+add ng-click in checkbox
+    ng-click='updateStatus(item)'
+
+FE_CONTROLLER - 
+it will console log status. item is item taht was clicked
+ADD:
+    $scope.updateStatus = function(item){
+        console.log('update status', item)
+    }
+
+AFTER TESTING -
+    $scope.updateStatus = function(item){
+            itemFactory.updateStatus(item)
+        }
+
+ITEM FACTORY -
+will need to clear db before this works all the way since none of our items have "status" yet
+    factory.updateStatus = function(item){
+        console.log(item)
+    }
+UPDATE IT APRES TESTING -
+    factory.updateStatus = function(item){
+        $http.post('/item/updatestatus', item).then(function(output){$route.reload()
+            })
+    }
+
+ROUTES -  
+TEST THE NEW ROUTE -
+    app.post('/item/updatestatus', function(request, response){
+    console.log(request.body, "beep")
+    })
+UPDATE IT - 
+    app.post('/item/updatestatus', function(request, response){
+    item.updateStatus(request, response)
+    })
+
+BE_CONTROLLER ITEM.JS -
+START IT -
+    updateStatus: function(request, response){
+            
+        }
+
+ITEM SCHEMA -
+    var ItemSchema = new Schema({
+    title: {type:String, required: true},
+    description: {type:String, required: true},
+    status: {type:String, default:'Pending'},
+    _joinedBy:{type: Schema.Types.ObjectId, ref:'User'},
+    _createdBy:{type: Schema.Types.ObjectId, ref:'User'},
+    }, {timestamps:true})
+
+CLEAR DB FOR IT TO UPLOAD -
+    db.users.remove({})
+    db.items.remove({})
+
+BACK TO ROUTES -
+    updateStatus: function(request, response){
+            Item.findOne({_id: request.body._id}, function(err, item){
+                if(item.status == 'Pending'){
+                    item.status = 'Done'
+                }else{
+                    item.status = 'Pending'
+                }
+                item.save(function(err){
+                    response.json(item)
+                        })
+                    })
+                }
+
+CHECK DB AFTER ENTERING SOME ONLINE TO SEE IF UPDATE WORKED -
+db.items.find().pretty()
+
+GO TO DASHBOARD -
+
+Make your two fields for completed and not completed tasks -
+    <div ng-repeat="item in items" ng-if=" item.status == 'Pending' && curUser._id== item._createdBy._id || item.status == 'Pending' &&curUser._id== item._joinedBy._id">
+          <input type="checkbox" ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+          <h2>Completed Tasks</h2>
+         <div ng-repeat="item in items" ng-if="item.status == 'Done' && curUser._id== item._createdBy._id || item.status == 'Done' && curUser._id== item._joinedBy._id">
+          <input type="checkbox" checked ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+SHOW one
+-make show one html and put some text in it
+
+APP.JS-
+add it - 
+    .when('/show/:id',{
+    templateUrl: 'partials/showOne.html'
+    })
+
+DASHBOARD -
+add the link for the user names
+        <p ng-repeat = 'user in users' ng-if = 'user._id != curUser._id'><a href="#!/show/{{user._id}}">{{user.name}}</a></p>
+
+We already have a list of users in the front end, so we don't have to go in the back to grab it. We are going to look through an array of objects. We will need to change ONE thing in the backend. We only have the ID stored, so we need to populate it with more info!
+
+USER BACKEND CONTROLLER -
+    var mongoose = require('mongoose')
+    var User = mongoose.model("User")
+    module.exports = (function(){
+    return{
+        getAll:function(request,response){
+        // response.json(['this is for testing!!!'])
+        User.find({},function(err,users){
+            User.find({})
+            .populate('_created')
+            .populate('_joined')
+            .exec(function(err, users){
+                response.json(users)
+            })
+            
+        })
+        }
+    }
+    })()
+
+NOW we are done with the backend and need to go to the front end to use what we just populated!
+
+USER FRONT END CONTROLLER -
+1. add $routeParams to the top of the controller
+2. RouteParams will look for the id in the brower url bar and then will create an object to store it. so it will say object(id: routeparams id)
+    app.controller('userController', function($scope, userFactory, $routeParams){
+  userFactory.getAll(function(data){
+    $scope.users = data;
+    // console.log($scope.users);
+  })
+  if($routeParams.id){
+    userFactory.getAll(function(data){
+      $scope.users = data;
+      $scope.showUser = null;
+      for(user in $scope.users){
+        // [user] is the user we are looking at currently
+        if($scope.u s.id){
+          // set variable showUser to be that users[user]
+          $scope.showUser = $scope.users[user];
+            }
+        }
+        })
+    }
+    })
+
+SHOWUSER.HTML -
+<a href="/logout">Logout</a> | <a href="#!/dash">Home</a>
+
+<div ng-controller="userController">
+{{showUser.name}}
+<!--use ng if to find stuff-->
+<h2>List of Finished Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+<h2>List of Pending Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+    
+

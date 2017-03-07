@@ -1,0 +1,919 @@
+------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
+🌺🌸🌺  BIG SECTION
+🌸 smaller section
+🍕 = new line entered or updated info
+🌈 = useful tip/explanation
+👿 = error tip!
+🍿 = variable name needs to be changed!
+--------------------------------
+
+------ 🌸GET ALL🌸 ------
+
+After making your login, you will most likely need to build a getAll function to populate all the users information. (After this, you may create a Add function.)
+
+The first step is to create a front end controller, in this case, it will be a 
+userController!
+
+🌈USERCONTROLLER - client/controllers/user.js
+
+    app.controller('userController', function($scope){
+        console.log('user test')
+    })
+
+🌈CREATE USER FACTORY - client/factories/user.js
+    app.factory('userFactory', function(){
+        var factory = {}
+        return factory;
+    })
+
+🌈LINK USER FACTORY TO USER CONTROLLER - client/controllers/user.js
+    1. add userFactory
+    2. test it
+    3. 👿Link it to index.html!!!! - or you will get an error
+    4. 👿Make sure there are no typos, other wise you will get an error
+
+    app.controller('userController', function($scope, 🍕userFactory){
+        console.log('user test')
+    })
+
+🌈UPDATE DASHBOARD.HTML FOR FUTURE TESTING  
+
+    <div ng-controller="userController">
+        <div ng-repeat=" user in users">
+        {{user}}
+        </div>
+    </div>
+
+🌈NOW CREATE A GETALL FUNCTION - client/controllers/user.js
+
+    app.controller('userController', function($scope, userFactory){
+    userFactory.getAll(function(data){
+        🍕$scope.users = data;
+        console.log(data)
+        })
+    })
+
+👿Don't test now since we don't have anything in our factory to receive $scope
+
+🌈ADD TO USER FACTORY TO DEFINE GETALL - client/factories/user.js
+    1. Create a getAll function in the factory
+    2. Test the callback function. It will pass the whole function when you console.log
+        
+        app.factory('userFactory', function(){
+        var factory = {}
+        factory.getAll = (callback){
+            callback('askdjaskd')
+            console.log(callback)
+
+            }return factory
+        })
+
+👿If you get a "Error: [$injector:unpr] Unkown provider:..." it is because the factory is not linked into the index.html
+
+🌈NOW UPDATE FACTORY TO SEND INFO TO ROUTES - client/factories/user.js
+    1. make sure to inject $http at top function
+    2. delete previous console log
+    3. you cannot immediately test this, since we haven't updated ROUTES.JS yet
+    
+    app.factory('userFactory', function(🍕$http){
+        var factory = {}
+        factory.getAll = (callback){
+            🍕$http.get('/users/get').then(function(output){
+                callback(output.data)
+                console.log(output.data)
+                })
+            } return factory
+        })
+
+🌈UPDATE ROUTES - server/config/routes.js
+    1. Add in a row of "********" to separate session routes from user routes
+    2. Create route
+        app.get('/users/get', function(req, res){
+            res.json(['test', 'test'])
+        })
+    
+    3. Test it! You should see the res.json in your browser console
+    4. Add a link to user.js at the top. This should be below the var session one.    
+        var user = require('./../controllers/user.js)
+
+🌈CREATE BACKEND CONTROLLER USER.JS - server/controllers/user.js
+    1. Do a simple set up so we can see if info is being sent from Routes
+    2. Make sure it's an immediate function!!!!
+        module.exports = (function(){
+            return{
+
+            }
+        })()
+
+🌈UPDATE ROUTES - server/config/routes.js
+    1. update the existing users/get route:
+    app.get('/users/get', function(req, res){
+            🍕user.getAll(req,res)
+        })
+
+🌈UPDATE SERVER CONTROLLER - server/controllers/user.js
+    1. Create a getAll function 
+    
+    module.exports = (function(){
+        return{
+            🍕getAll: function(req, res){
+                res.json(['test', 'test'])
+            }
+        }
+    })()
+    
+    2. Test it
+    3. Now set up a mongoose and User variable at the top of the page. This will let us use the User schema! Also, don't forget to update the getAll function
+
+        🍕var mongoose = require('mongoose');
+        🍕var User = mongoose.model('User')
+            module.exports = (function(){
+                return{
+                    getAll: function(req, res){
+                        🍕User.find({}, function(err, users){
+                            res.json(users)
+                        })
+                    }
+                }
+            })()
+
+🌈CHECK OUT FRONT END USER CONTROLLER - client/controllers/users.js
+    1. Currently, all of the users from the db are stored inside the $scope.users = data
+    2. We don't have to update this section, but it's good to know!
+    
+        app.controller('userController', function($scope, userFactory){
+        userFactory.getAll(function(data){
+            $scope.users = data;
+            })
+        })
+🌈UPDATE DASHBOARD.HTML 
+    1. We want to see the user's names instead of object, so change {{user}} to {{user.name}}
+    2. We made ours an <a href> for future use in our showOne page
+
+        <div ng-controller = "userController">
+        <p ng-repeat="user in users" ng-if="user._id != currentUser._id"><a href=">{{user.name}}</a></p>
+        </div>
+
+------ 🌸MAKE A CREATE FUNCTION🌸 ------
+
+🌈LINK TO INDEX.HTML 
+
+    <script src="controllers/appointment.js"></script>
+
+🌈ADD LINK IN DASHBOARD TO NEW PARTIAL 
+    <a href="#!/add">Add</a>
+
+🌈GO TO APP.JS TO ADD NEW #!/ADD ROUTE
+    .when('/add', {
+        templateUrl: 'partials/add.html'
+    })
+
+🌈CREATE NEW PARTIAL - partials/add.html
+    1. add text to the page for testing
+    2. test it
+    3. build the form!
+    <div ng-controller="sessionController">
+        <div ng-controller="🍕apptController">
+            <form>
+                Task: <input type="text" 🍕ng-model="newAppt.task">
+                Date: <input type="date" 🍕ng-model="newAppt.date">
+                Task: <input type="time" 🍕ng-model="newAppt.time">
+                <input type="submit" value="Add!" ng-click="🍕add(🍿currentUser._id)">
+            </form>
+        </div>
+    </div>
+
+    4. add a link to go back to dashboard (make sure it's the same name as the one on app.js)
+        <a href="#!/dashboard">Add</a>
+
+👿 You can't test this until we make our apptController
+
+🌈CREATE A APPT CONTROLLER - client/controllers/appointment.js
+    1. We have our userController to populate all the users. We will be doing associations with them later
+    2. We need an apptController to add appointments and etc!
+    3. Make an add function!
+
+    app.controller('apptController', function($scope){
+    $scope.addAppt = function(){
+        console.log($scope.newAppt)
+        }
+    })
+
+    4. Test it! It will show up on the browser console!
+
+------ 🌸IF USING DROP DOWN MENU🌸 ------
+🌈 If you have a drop down menu will different users (or items) you will want to sort it by id instead of name just in case you have people with the same name! This way you can get the correct information. This is how you do it:
+
+    1. In dashboard.html, you need to pass in the current user's information
+        addAppt(🍿currentUser._id)
+    2. This id will be appended to the $scope.newAppt._createdBy object so it can be saved to the db later
+    3. Go back to the apptController appointment.js and update it:
+        app.controller('apptController', function($scope){
+            $scope.addAppt = function(currentUser){
+                $scope.newAppt._createdBy = currentUser
+            }
+        })
+
+🌈 Now we want to get rid of the current user's name so it won't be shown in the drop down box. Use an ng-if inside the option field:
+    ng-if = 'user._id != curUser._id'
+
+🌈 Note! For future routes, you can also use showAll and then filter specifc data
+
+------ 🌸BACK TO BUILDING APPT CONTROLLER🌸 ------
+🌈UPDATE APPT CONTROLLER - client/controller/appointment.js
+
+    app.controller('apptController', function($scope){
+    $scope.add = function(🍕id){
+        $scope.newAppt._id = id
+        console.log($scope.newAppt)
+        }
+    })
+
+🌈CREATE APPT FACTORY APPOINTMENT.JS - client/factories/appointment.js
+    1. Make sure you link it to index.html after creating it
+    2. Also go to apptController and inject it at the top so we can user it!
+    3. You will also need to update the console.log($scope.newAppt) to:
+        apptFactory.add($scope.newAppt)
+    4. Now set up the apptFactory and add our Add function!
+        app.factory
+
+        app.factory('apptFactory', function(🍕$http){
+            var factory = {}
+
+            factory.add = function(appointment){
+                console.log('in factory', appointment)
+            }
+
+            return factory
+        })
+    5. Test it
+    6. Update Factory with $http so it will send Routes
+    
+        app.factory
+
+        app.factory('apptFactory', function(🍕$http){
+            var factory = {}
+
+            factory.add = function(appointment){
+            🍕$http.post('/appt/add', appointment)
+            }
+
+            return factory
+        })
+🌈GO TO ROUTES.JS - server/config/routes.js
+    1. User **** to separate Appt functions from the User function
+    2. Create an "add" route 
+
+        app.post('/appt/add', function(req, res){
+            console.log(req.body)
+        })
+    3. You will see req.body in the terminal!
+
+👿ERROR TIP - if you receive a ERR_EMPTY_RESPONSE error, this means nothing was sent back.
+
+🌈CREATE BACKEND CONTROLLER FOR APPT - server/controllers/appointment.js
+    1. Initialize the controller:
+        module.exports = (function(){
+            return {
+                
+            }
+        })🍕()
+
+🌈LINK BACKEND CONTROLLER TO ROUTES - server/config/routes.js
+    1. add in var appt to link it!
+
+    var session = require('./../controllers/session.js')
+    var user = require('./../controllers/user.js')
+    🍕var appt = require('./../controllers/appointment.js')
+
+    2. Update the new route with the add function!
+    
+    app.post('/appt/add', function(req, res){
+        🍕appt.add(req, res)
+    })
+
+🌈BACK TO APPT BACK END CONTROLLER - server/controllers/appointment.js
+    1. Link to Mongoose and Appt Schema (note: it hasn't been created)
+    2. Add in the add function
+        🍕var mongoose = require('mongoose');
+        🍕var Item = mongoose.model('Item')
+        module.exports = (function(){
+        return {
+            🍕add:function(req, res){
+                console.log(req.body, "req")
+                }
+            }
+        })()
+
+👿NOTE: You will get an error for not having an Appt model yet!
+
+🌈CREATE APPT SCHEMA - server/models/appointment.js
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var ApptSchema = new Schema({
+    task: {type:String, required: true},
+    date: {type:String, required: true},
+    time: {type:String, required: true},
+    _joinedBy:{type: Schema.Types.ObjectId, ref:'User'},
+    _createdBy:{type: Schema.Types.ObjectId, ref:'User'}
+    }, {timestamps:true})   
+    mongoose.model('Appt', ApptSchema)
+
+🌺🌸🌺----NOTE-----🌺🌸🌺
+🌺We use _createdBy to call the user who created the appointment. This is how we get their id/info
+🌸If you have a situation where two users share ownership of a task (for instance, if you could add 🌺another user to join you at that task) you will need to use _joinedBy
+
+🌈UPDATE USER SCHEMA - server/models/user.js
+    1. Since we referenced User in the Appointment Schema, we need to connect the link in user.js
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+    var UserSchema = new Schema({
+    name:String,
+    // one user can create many items. They can also join many items
+    _created:[{type: Schema.Types.ObjectId, ref:'Item'}],
+    _joined:[{type: Schema.Types.ObjectId, ref:'Item'}]
+    })
+    mongoose.model('User', UserSchema) 
+
+👿NOTE:Make sure the _created: and _joined: are arrays with an object inside!
+👿NOTE: Since we made changes to our db, you should remove old users and update them since they do not have these new fields
+
+🌈BACKEND CONTROLLER FOR APPOINTMENTS - server/controllers/appointment.js
+    1. Add User variable at the top to give it access to the User schema
+        var User = mongoose.model('User')
+    
+    2. Update controller
+        var mongoose = require('mongoose');
+        🍕var Appt = mongoose.model('Appt')
+        🍕var User = mongoose.model('User')
+        module.exports = (function(){
+            return {
+                🍕add:function(req, res){
+                var appt = new Appt(req.body);
+                console.log(req.body, appt, "in backend controller")
+                }
+            }
+        })()
+
+👿NOTE: If using _joinedBy, (for instance, in a drop down menu) make sure to ng-model it in the dashboard.html so it will send it and the _createdBy to the front end controller
+
+👿NOTE: You will get an empty/null error because we are not finished yet!
+
+🌈 UPDATE BACKEND CONTROLLER FOR APPOINTMENTS - server/controllers/appointment.js
+    1. We want to save the info we just passed back! We will have to do it multiple times due to associations
+    2. res.json(appt) will save the information we just saved
+    3. It will be hard to test until finishing, because all of the info needs to be updated and sent back (via res.json) before you can see info
+
+    var mongoose = require('mongoose');
+    var Appt = mongoose.model('Appt')
+    var User = mongoose.model('User')
+    module.exports = (function(){
+        return {
+            add:function(req, res){
+            var appt = new Appt(req.body);
+            appt.save(function(err){
+                User.findOne({_id: 🌺req.body._id(ENTER IN WHAT YOU HAVE ON HTML!!!)}, function(err, creator){
+                    creator._created.push(appt._id)
+                    creator.save(function(err){
+                        res.json(appt)
+                    })
+                })
+            })
+            }
+        }
+    })()
+👿NOTE:Since we do not have a ng-model:newAppt._createdBy, we need to search for 🌺req.body._id instead of req.body._createdBy. This will give us the id for task that just created which we will then call "creator." This will find the _created field in the User schema and push this creator object into it. This will now associate the newly made task to a person!
+
+🌺🌸🌺----IF USING _JOINEDBY-----🌺🌸🌺 
+    var mongoose = require('mongoose');
+    var Appt = mongoose.model('Appt')
+    var User = mongoose.model('User')
+    module.exports = (function(){
+        return {
+            add:function(req, res){
+            var appt = new Appt(req.body);
+            appt.save(function(err){
+                User.findOne({_id: 🌺req.body._createdBy}, function(err, creator){
+                    creator._created.push(appt._id)
+                    creator.save(function(err){
+                        User.findOne({_id: req.body._joinedBy}, function(err, joiner){
+                            🍕joiner._joined.push(appt._id)
+                            joiner.save(function(err){
+                                res.json(appt)
+                                })
+                            })
+                    })
+                })
+            })
+            }
+        }
+    })()
+🌺NOTE: we used req.body._createdBy since this is a field that is in the add.html most likely. 
+
+🌈TEST IT!
+    You can search inside mongo to see if the task has been added. It should now have the _createdBy field
+
+🌈APPT FACTORY - client/factories/appointment.js
+    1. Inject $location and $route
+    2. Then update the route to create the add function
+    3. 👿Note: if you are passing objects, use Post and not Get. If what you receive is a string, you can wrap it in an object so it will be transferable!
+    4. 👿Also, make sure all of your routes begin with a '/'
+    5. If you are not redirecting to a new page, you can use --> $route.reload(); to refresh it
+
+    app.factory('apptFactory',function($http, 🍕$location, 🍕$route){
+    var factory = {}
+    factory.add = function(appt){
+        $http.post('/appt/add', item).then(function(output){
+            $location.url('/dashboard')
+            })
+            }
+        return factory
+        })
+
+🌈FRONT END APPT CONTROLLER - client/controllers/appointment.js
+    1. In order to view all of our appts on the add.html, we need to first create a "getAll" function which we can then ng-repeat through
+    2. Build the getAll function:
+
+        app.controller('apptController', function($scope, apptFactory){
+        $scope.add = function(id){
+            $scope.newAppt._id = id;
+            apptFactory.add($scope.newAppt)
+        }
+        apptFactory.getAll(function(data){
+            $scope.appts = data
+            console.log(data)
+            })
+        })
+
+🌈FRONT END APPT FACTORY - client/factories/appointment.js
+    1. First, we are going to test out the callback function. It should appear on dashboard.html
+    2. Also make sure you don't forget to add ng-controller="apptController" so you can see it!
+
+    app.factory('apptFactory',function($http, $location, $route){
+    var factory = {}
+        factory.add = function(appt){
+            $http.post('/appt/add', appt).then(function(output){
+                $location.url('/dashboard');
+            })
+        }
+        factory.getAll = function(callback){
+            callback('test test!')
+        }
+    return factory
+    })
+
+🌈UPDATE FACTORY AFTER TESTING - client/factories/appointment.js
+
+    app.factory('apptFactory',function($http, $location, $route){
+    var factory = {}
+        factory.add = function(appt){
+            $http.post('/appt/add', appt).then(function(output){
+                $location.url('/dashboard');
+            })
+        }
+        factory.getAll = function(callback){
+            🍕$http.get('/appt/all').then(function(output){
+                🍕callback(output.data)
+                })
+            }
+        return factory
+        })
+
+🌈GO TO ROUTES TO TEST - server/config/routes.js
+    1. Create route and first test it with res.json!
+    2. 👿NOTE: make sure res.json has an array inside it!
+
+        app.get('/appt/all', function(req, res){
+            res.json(['jalskdjsad'])
+        })
+
+    2. After testing, update it to this:
+
+        app.get('/appt/all', function(req, res){
+            appt.getAll(req,res)
+        })
+
+🌈GO TO BACKEND CONTROLLER AND MAKE GETALL FUNCTION - server/controllers/appointment.js
+    1. We must populate in order to the function to work!
+    2. First, we test! You should see it in the browser
+    3. Don't to forget the comma between functions!
+
+        getAll: function(req, res){
+            res.json(['I am a test'])
+        }
+    
+    3. Now update the function with good stuff!
+
+        getAll: function(req, res){
+            Appt.find({})
+            .populate('_createdBy')
+            .exect(function(err, appts){
+                res.json(appts)
+            })
+        }
+
+🌺🌸🌺----IF USING _JOINEDBY-----🌺🌸🌺 
+        getAll: function(req, res){
+                Item.find({})
+                    .populate('_createdBy')
+                    .populate('_joinedBy')
+                    .exec(function(err, appts){
+                        res.json(appts)
+                    })
+            }
+
+🌈NOW DISPLAY INFO IN DASHBOARD.HTML - client/partials/dashboard.html
+    1. Inside apptController underneath any forms
+    2. Create a ng-repeat div to test 
+
+        <div ng-repeat="appt in appts">{{appt}}</div>
+    
+    3. Now make it pretty!
+    
+         <div ng-repeat="appt in appts" ng-if="🍿currentUser._id== appt._createdBy._id">
+          <input type="checkbox">{{appt._createdBy.name}} | {{appt.task}} | {{appt.createdAt | date: medium}} | {{appt.time | date:'shortTime'}} | {{appt.date | date:'medium'}}
+            </div>
+
+🌺🌸🌺----IF USING _JOINEDBY-----🌺🌸🌺 
+
+    <div ng-repeat="appt in appts" ng-if="🍿currentUser._id== appt._createdBy._id || currentUser._id== appt._joinedBy._id">
+    <input type="checkbox">{{appt._createdBy.name}} | {{appt.task}} | {{appt.createdAt | date: medium}} | {{appt.time}} | {{appt.date}}
+    </div>
+
+//////////////////////////////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//////////////////////////////////////////////////////////
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//////////////////////////////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+
+
+ERROR -
+    TypeError: Cannot read property '_joined' of null
+
+    property = in an object
+    trying to look for a property of something taht doesnt exist. This was happening when I didn't submit a joined person
+
+    To fix: in be_controller add 
+    if(res.body_joined){
+        add User.find one etc
+    }
+    else{
+        response.json(item)
+    }
+
+Then we have SHow ALL and Status
+
+checkbox - need to create a status field in our item and toggle
+
+pending and done - two repeats for things that match curUser._id = etc..(in the html) && item.status == done
+
+Then the other repeat would be for pending
+
+DASHBOARD -
+add ng-click in checkbox
+    ng-click='updateStatus(item)'
+
+FE_CONTROLLER - 
+it will console log status. item is item taht was clicked
+ADD:
+    $scope.updateStatus = function(item){
+        console.log('update status', item)
+    }
+
+AFTER TESTING -
+    $scope.updateStatus = function(item){
+            itemFactory.updateStatus(item)
+        }
+
+ITEM FACTORY -
+will need to clear db before this works all the way since none of our items have "status" yet
+    factory.updateStatus = function(item){
+        console.log(item)
+    }
+UPDATE IT APRES TESTING -
+    factory.updateStatus = function(item){
+        $http.post('/item/updatestatus', item).then(function(output){$route.reload()
+            })
+    }
+
+ROUTES -  
+TEST THE NEW ROUTE -
+    app.post('/item/updatestatus', function(request, response){
+    console.log(request.body, "beep")
+    })
+UPDATE IT - 
+    app.post('/item/updatestatus', function(request, response){
+    item.updateStatus(request, response)
+    })
+
+BE_CONTROLLER ITEM.JS -
+START IT -
+    updateStatus: function(request, response){
+            
+        }
+
+ITEM SCHEMA -
+    var ItemSchema = new Schema({
+    title: {type:String, required: true},
+    description: {type:String, required: true},
+    status: {type:String, default:'Pending'},
+    _joinedBy:{type: Schema.Types.ObjectId, ref:'User'},
+    _createdBy:{type: Schema.Types.ObjectId, ref:'User'},
+    }, {timestamps:true})
+
+CLEAR DB FOR IT TO UPLOAD -
+    db.users.remove({})
+    db.items.remove({})
+
+BACK TO ROUTES -
+    updateStatus: function(request, response){
+            Item.findOne({_id: request.body._id}, function(err, item){
+                if(item.status == 'Pending'){
+                    item.status = 'Done'
+                }else{
+                    item.status = 'Pending'
+                }
+                item.save(function(err){
+                    response.json(item)
+                        })
+                    })
+                }
+
+CHECK DB AFTER ENTERING SOME ONLINE TO SEE IF UPDATE WORKED -
+db.items.find().pretty()
+
+GO TO DASHBOARD -
+
+Make your two fields for completed and not completed tasks -
+    <div ng-repeat="item in items" ng-if=" item.status == 'Pending' && curUser._id== item._createdBy._id || item.status == 'Pending' &&curUser._id== item._joinedBy._id">
+          <input type="checkbox" ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+          <h2>Completed Tasks</h2>
+         <div ng-repeat="item in items" ng-if="item.status == 'Done' && curUser._id== item._createdBy._id || item.status == 'Done' && curUser._id== item._joinedBy._id">
+          <input type="checkbox" checked ng-click='updateStatus(item)'>{{item._createdBy.name}} | {{item.title}} | {{item.description}} | {{item.createdAt | date: medium}}
+        </div>
+
+🌺🌸🌺----HOW TO SHOW ONE-----🌺🌸🌺 
+
+🌈CREATE A HYPERLINK ON HTML - partials/dashboard.html
+
+            <tr ng-repeat="question in questions |orderBy: '-createdAt'">
+                <td>{{question.category}}</td>
+                <td>🍕<a href="#!/show/{{question._id}}">{{question.topic}}</a></td>
+                <td>{{question._user.name}}</td>
+                <td>Posts...</td>
+            </tr>
+🌈CREATE A SHOWONE PARTIAL - partials/showOne.html
+    1. Add some text to see if it links for testing later
+
+🌈UPDATE FRONTEND CONTROLLER -
+    1. Need to inject $routeParams
+    2. Will need to use getAll function from before to parse through info
+
+         if($routeParams.id){
+            questionFactory.getAll(function(data){
+                $scope.questions = data
+                for(question in $scope.questions){
+                    if($scope.questions[question]['_id'] == $routeParams.id){
+                        $scope.currentTopic = $scope.questions[question]
+                        console.log($scope.currentTopic)
+                        }
+                    }
+                })
+            }else{
+                questionFactory.getAll(function(data){
+                $scope.questions = data;
+                })
+            }
+            $scope.addQuestion = function(id){
+                $scope.newQuestion._id = id
+                questionFactory.addQuestion($scope.newQuestion)
+            }
+            
+            $scope.showTopic = (function(id){
+                questionFactory.showTopic(id)
+            })
+        })
+    
+
+🌈UPDATE FACTORY  -
+    factory.showOne = function(id){
+        $location.url('/show/' + id)
+    }
+
+🌈UPDATE APP.JS
+    .when('/show/:id',{
+    templateUrl: 'partials/showOne.html'
+    })
+
+🌈GO TO SHOW ONE PARTIAL - 
+    1. Show the new information we found!
+    2. We will use currentTopic here to parse through information
+
+    <div ng-controller="sessionController">
+    <div class="header">
+        <h1>Hello {{currentUser.name}}</h1>
+    </div>
+        <a href="/logout">Logout!</a>
+        <a href="#!/dashboard">Home!</a>
+        <div ng-controller="questionController" class="mainContent">
+            <h2>{{currentTopic._user.name}} posted a topic</h2>
+            <h3>{{currentTopic.topic}}</h3>
+            <p>{{currentTopic.description}}</p>
+
+        
+            <h2>Post your answer here</h2>
+            <form ng-submit="addComment()">
+                <textarea rows="10" cols="50" ng-model="addComment.content"></textarea>
+                <input type="submit" value="Post!">
+            </form>
+
+
+        </div>
+    </div>
+
+🌺🌸🌺----HOW TO ADD A COMMENT-----🌺🌸🌺 
+
+🌈CREATE AN COMMENT FRONT END CONTROLLER - client/controllers/answer.js
+    1. create a comment controller js page
+    2. link our controller to our index.html
+    3. don't worry about testing yet because we have more connections to make
+
+        app.controller('commentController', function($scope){
+            $scope.addComment = function(){
+                console.log('testing comment')
+            }
+        })
+
+🌈UPDATE SHOWONE.HTML AND ADD IN COMMENTCONTROLLER div
+    1. Find the comment form we put in the showOne.html
+    2. Create a commentController div to next the form inside
+        🍕<div ng-controller="commentController">
+            <h2>Post your answer here</h2>
+            🍕<form ng-submit="addComment(newComment, currentUser._id, currentTopic._id)">
+                <textarea rows="10" cols="50" ng-model="newComment.content"></textarea>
+                <input type="submit" value="Post!">
+            </form>
+        </div>
+
+🌈UPDATE FRONT END CONTROLLER - client/controllers/comment.js
+    1. We now want to console log the information we passed through
+
+    app.controller('commentController', function($scope){
+        $scope.addComment = function(comment, user, question){
+            console.log(comment, user, question)
+        }
+    })
+
+🌈MAKE A COMMENTS FACTORY
+    1. Make sure to link it to index.html!
+    2. Inject it into our commentController
+    3. Make sure factory is being RETURNED!!!!
+    4. Test it out!
+        app.factory('commentFactory', function(){
+            var factory = {}
+            factory.addComment = function(comment){
+                console.log(comment)
+            }
+            return factory
+        })
+
+🌈UPDATE FRONT END CONTROLLER
+    1. We want to update some variables and send info to the factory
+    app.controller('commentController', function($scope, commentFactory){
+        $scope.addComment = function(comment, user, question){
+            comment._user = user;
+            comment._question = question;
+            commentFactory.addComment(comment)
+        }
+    })
+
+🌈COMMENT FACTORY 
+    1. Make sure to inject $http
+    2. You have to edit Routes before testing
+
+        app.factory('commentFactory', function($http){
+            var factory = {}
+            factory.addComment = function(comment){
+                $http.post('/comment/add', comment).then(function(req, res){
+                    console.log(req.body)
+                    console.log('factory', req, res)
+                })
+            }
+            return factory
+        })
+
+🌈GO TO ROUTES.JS
+    1. add in your new route
+        app.post('/comment/add', function(req, res){
+            comment.add(req, res)
+        })
+
+SHOW one
+-make show one html and put some text in it
+
+APP.JS-
+add it - 
+    .when('/show/:id',{
+    templateUrl: 'partials/showOne.html'
+    })
+
+
+DASHBOARD -
+add the link for the user names
+        <p ng-repeat = 'user in users' ng-if = 'user._id != curUser._id'><a href="#!/show/{{user._id}}">{{user.name}}</a></p>
+
+We already have a list of users in the front end, so we don't have to go in the back to grab it. We are going to look through an array of objects. We will need to change ONE thing in the backend. We only have the ID stored, so we need to populate it with more info!
+
+USER BACKEND CONTROLLER -
+    var mongoose = require('mongoose')
+    var User = mongoose.model("User")
+    module.exports = (function(){
+    return{
+        getAll:function(request,response){
+        // response.json(['this is for testing!!!'])
+        User.find({},function(err,users){
+            User.find({})
+            .populate('_created')
+            .populate('_joined')
+            .exec(function(err, users){
+                response.json(users)
+            })
+            
+        })
+        }
+    }
+    })()
+
+NOW we are done with the backend and need to go to the front end to use what we just populated!
+
+USER FRONT END CONTROLLER -
+1. add $routeParams to the top of the controller
+2. RouteParams will look for the id in the brower url bar and then will create an object to store it. so it will say object(id: routeparams id)
+    app.controller('userController', function($scope, userFactory, $routeParams){
+  userFactory.getAll(function(data){
+    $scope.users = data;
+    // console.log($scope.users);
+  })
+  if($routeParams.id){
+    userFactory.getAll(function(data){
+      $scope.users = data;
+      $scope.showUser = null;
+      for(user in $scope.users){
+        // [user] is the user we are looking at currently
+        if($scope.u s.id){
+          // set variable showUser to be that users[user]
+          $scope.showUser = $scope.users[user];
+            }
+        }
+        })
+    }
+    })
+
+SHOWUSER.HTML -
+<a href="/logout">Logout</a> | <a href="#!/dash">Home</a>
+
+<div ng-controller="userController">
+{{showUser.name}}
+<!--use ng if to find stuff-->
+<h2>List of Finished Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Done"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+<h2>List of Pending Items</h2>
+<div ng-repeat = 'item in showUser._created' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+<h4>Joined</h4>
+<div ng-repeat = 'item in showUser._joined' ng-if='item.status == "Pending"'>
+    {{item.title}} | {{item.description}} | {{item.createdAt | date:medium}}
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+    
+

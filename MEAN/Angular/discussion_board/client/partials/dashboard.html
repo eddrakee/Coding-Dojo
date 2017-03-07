@@ -1,0 +1,40 @@
+<div ng-controller = "sessionController">
+    <div class ="header">
+        <h1>Welcome {{currentUser.name}}!</h1>
+    </div>
+
+    <a href="/logout">Logout!</a>
+
+    <div ng-controller="questionController">
+        {{currentUser}} 
+        <h2>Add a new Topic</h2>
+        <form>
+            Topic:<input type="text" ng-model="newQuestion.topic"> <br>
+            Description: <br><textarea rows="8" cols="40" ng-model="newQuestion.description"></textarea><br>
+            Category: <select ng-model="newQuestion.category">
+                    <option value="HTML">HTML</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="CSS">CSS</option>
+                </select>
+            <input type="submit" value="Add!" ng-click="addQuestion(currentUser._id)">
+        </form>
+    <div>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Topic</th>
+                <th>User Name</th>
+                <th>Posts</th>
+            </tr>
+            <tr ng-repeat="question in questions |orderBy: '-createdAt'">
+                <td>{{question.category}}</td>
+                <td><a href="#!/showTopic/{{question._id}}">{{question.topic}}</a></td>
+                <td>{{question._user.name}}</td>
+                <td>Posts...</td>
+            </tr>
+        </table>    
+    </div>
+
+    </div>
+</div>

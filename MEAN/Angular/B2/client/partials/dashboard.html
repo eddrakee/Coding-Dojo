@@ -1,0 +1,48 @@
+<div ng-controller="sessionController">
+    <div class="header">
+        <h1>Hello {{currentUser.name}}!</h1>
+    </div>
+    <a href="#!/add">Add an item</a>
+    <a href="#!/showAll">All Items</a>
+    <a href="/logout">Logout</a>
+    <div ng-controller="quoteController" class='mainContent'>
+        <h2>Add an Item</h2>
+        <div class="error" ng-repeat='error in errors track by $index'>
+            <p>{{error}}</p>
+        </div>
+        <a href="#!/dashboard">Home</a>
+        <a href="/logout">Logout</a>
+        <div class='mainContent'>
+            <h2>Enter Quote Below!</h2>
+            <form ng-submit='addQuote(currentUser._id)'>
+                Title: <input type='text' ng-model='newQuote.title'><br>
+                Description: <textarea ng-model='newQuote.content' rows='7' cols='50'></textarea><br>
+                <input type='submit' value='ADD!!!'>
+            </form>
+        </div>
+
+        <h2>Top 3 Items!</h2>
+         <table>
+        <tr>
+            <th>Created By</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>status</th>
+            <th>change status</th>
+            <th>Created At</th>
+        </tr>
+        <tr ng-repeat="quote in quotes |limitTo: -3 | orderBy: 'likes':true" | >
+            <td><a href='#!/showOne/{{quote.author}}'>{{quote.author}}</a></td>
+            <td>{{quote.title}}</td>
+            <td>{{quote.content}}</td>
+            <td>{{quote.status}}</td>
+            <td><button ng-click="changeStat(quote)">Going?</button></td>
+            <td>{{quote.createdAt | amCalendar:referenceTime:formats}}</td>
+        </tr>
+    </table>
+    
+        
+    </div>
+</div>
+
+

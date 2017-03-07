@@ -1,5 +1,5 @@
 ------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
-🌺🌸🌺  BIG SECTI ON
+🌺🌸🌺  BIG SECTION
 🌸 smaller section
 🍕 = new line entered or updated info
 🌈 = useful tip/explanation
@@ -80,15 +80,15 @@ if that all worked, now add angular-route to index.html
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="angular/angular.js"></script>
-        🍕<script src="angular-route/angular-route.js"></script<script src="angular-route/angular-route.js"></script>
-        <script src="app.js"></script>
+        🍕<script src="angular-route/angular-route.js"></script>
+        🍕<script src="app.js"></script>
         <link href="/static/css/stylesheet.css" rel="stylesheet">
     </head>
     
 
 - APP.JS -
 change the first line of app to:
-    var app = angular.module('myMod', ['ngRoute']);
+    🍕var app = angular.module('myMod', ['ngRoute']);
 check LocalHost for errors
 add these lines to start building routes:
     var app = angular.module('myMod', ['ngRoute']);
@@ -420,7 +420,7 @@ initial set up of mongoose:
         if(file.indexOf('.js') >= 0){
             require(models_path + '/' + file);
         }
-    }))
+    })
 
 🌈it will create a db for us with the mongoose.connect line. Also, make sure to launch mongod and then restart the node server!
 
@@ -799,7 +799,7 @@ if you go to the LH console, you will see req.session.user from the controller w
             }, 
             checkUser: function(req, res){
                 🍕if(!req.session || !req.session.user){
-                    res.json(rnull)
+                    res.json(null)
                 🍕}else{
                     res.json(req.session.user)
                 }
@@ -873,6 +873,7 @@ to test out what has been sent from controller, use and you will see the person'
                     $location.url('/login')
                 🍕}else{
                     callback(output.data)
+                }
             })
         }
         return factory;

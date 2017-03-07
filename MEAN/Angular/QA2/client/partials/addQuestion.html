@@ -1,0 +1,27 @@
+<div ng-controller="sessionController">
+    <div class="header">
+        <h1>{{currentUser.name}}, add a question!</h1>
+    </div>
+
+    <a href="/logout">LOGOUT</a> <a href="#!/dashboard">HOME</a>
+
+    <div ng-controller="questionController">
+        <div class="error" ng-repeat='error in errors track by $index'>
+            <p>{{error}}</p>
+        </div>
+
+        <div class="mainContent">
+            <h2>Enter a Question Below</h2>
+            <form ng-submit="addQuestion(currentUser._id)">
+                <h3>Question</h3>
+                <textarea rows="4" cols="60" ng-model="newQuestion.topic"></textarea>
+                <h3>Description</h3>
+                <textarea rows="4" cols="60" ng-model="newQuestion.description"></textarea><br>
+                <input type="submit" value="ADD">
+
+                <a href="#!/dashboard"><button>CANCEL</button></a>
+            </form>
+
+        </div>
+    </div>
+</div>

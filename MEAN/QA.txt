@@ -1,0 +1,651 @@
+------ 🌺🌸🌺 LEGEND 🌺🌸🌺 ------
+🌺🌸🌺  BIG SECTION
+🌸 smaller section
+🍕 = new line entered or updated info
+🌈 = useful tip/explanation
+👿 = error tip!
+🍿 = variable name needs to be changed!
+--------------------------------
+
+------ 🌸CREATE LOGIN🌸 ------
+🌈 CREATE A LOGIN APP
+    1. Make sure to have the appropriate validation!
+    2. Make sure you have changed the name of the db in the Mongoose file!
+
+------🌺🌸🌺CREATE QUESTION FUNCTION🌺🌸🌺------
+    1. Now that we can log in, we need to create a function to make questions.
+
+------ 🌸START WITH AN ADD FUNCTION🌸 ------
+🌈 CREATE QUESTION CONTROLLER - client/controllers/question.js
+    1. Do a quick set up
+    2. Link it to index.html
+    3. Don't test it out yet, we need to add it to our partial
+
+    app.controller ('questionController', function($scope){
+        console.log("asdfasdf")
+        })
+
+🌈 UPDATE DASHBOARD.HTML
+    1. Make a link to send it to our new Question partial
+        <a href="#!/🍿addQuestion">Add Question</a>
+
+🌈 MAKE A QUESTION PARTIAL - partials/question.html
+    1. Add in a div with questionController and put in some text
+        
+        <div ng-controller = 'questionController'>
+            <form ng-submit='🍿addQuestion(curUser._id)'>
+            <input type="text" ng-model='newQuestion.title'>
+            <textarea ng-model = '🍿newQuestion.content'></textarea>
+            <input type='submit' value='submit'>
+            </form>
+        </div>
+
+🌈 GO BACK TO FRONT END QUESTION CONTROLLER - client/controllers/question
+    1. Update your controller
+    2. Test it out! ID should be in the console
+
+        app.controller ('questionController', function($scope){
+            $scope.addQuestion = function(id){
+                $scope.newQuestion._id = id
+                console.log($scope.newQuestion)
+                }
+            })
+
+🌈 UPDATE FRONTEND CONTROLLER WITH VALIDATION 
+    1. Add in appropriate validation
+
+        app.controller ('questionController', function($scope){
+            $scope.errors = []
+            $scope.addQuestion = function(){
+                $scope.errors = []
+                if(!$scope.newQuestion || !$scope.newQuestion.title){
+                    $scope.errors.push = 'Please enter content'
+                }else if($scope,newQuestion.title.length < 5){
+                    $scope.errors.push = 'Title needs to be at least 5 characters long!'
+                }else if($scope.newQuestion.content.length < 10){
+                    $scope.errors.push = 'Content must be at least 10 characters long!'
+                }else{
+                    console.log($scope.newQuestion)
+                    }
+                }
+        
+            })
+
+🌈 ADD QUESTION PARTIAL - partials/question.html
+    1. Add in an errors div
+    2. Test it out! You should errors appear
+    3. Add links to go back to dashboard and logout
+        <div>
+            <p ng-repeat= 'error in errors' style="color: red">{{error}}</p>
+        </div>
+        <div ng-controller = 'questionController'>
+            <form ng-submit='🍿addQuestion(curUser._id)'>
+            <input type="text" 'newQuestion.title'>
+            <textarea ng-model = '🍿newQuestion.content'></textarea>
+            <input type='submit' value='submit'>
+            </form>
+        </div>
+
+🌈 CREATE A ROUTE FOR IT IN APP.JS - client/app.js
+    .when('/question/add', {
+        templateUrl: 'partials.question.html'
+    })
+
+🌈 CREATE QUESTION FACTORY - client/factories/question.js
+    1. Make sure to link it to index.html
+    2. Initial set up for FACTORY
+
+        console.log('in factory')
+
+🌈 UPDATE QUESTION FACTORY
+
+    app.factory('questionFactory', function(){
+        var factory = {}
+        factory.question = [] 🍿 <-- you may or may not need this
+        factory.addQuestion = function(question){
+            console.log(question)
+        }
+        return factory
+    })
+
+🌈 UPDATE QUESTION CONTROLLER 
+    1. We need to inject factory into controller
+    2. Update the current console.log to an actual function!
+
+    app.controller ('🍕 questionController', function($scope){
+            $scope.errors = []
+            $scope.addQuestion = function(){
+                $scope.errors = []
+                if(!$scope.newQuestion || !$scope.newQuestion.title){
+                    $scope.errors.push = 'Please enter content'
+                }else if($scope,newQuestion.title.length < 5){
+                    $scope.errors.push = 'Title needs to be at least 5 characters long!'
+                }else if($scope.newQuestion.content.length < 10){
+                    $scope.errors.push = 'Content must be at least 10 characters long!'
+                }else{
+                    🍕 $scope.newQuestion._id = id
+                    questionFactory.addQuestion($scope.newQuestion)
+                    }
+                }
+        
+            })
+
+🌈 UPDATE QUESTION FACTORY
+    1. Inject $http
+    2. You can't test yet because we need to hook up routes
+        app.factory('questionFactory', function($http){
+            var factory = {}
+       
+            factory.addQuestion = function(question){
+                $http.post('/question/add', question)
+            }
+            return factory
+        })
+
+🌈 ROUTES.JS - server/config/routes.js
+    1. We need to set up a route to accept info from Factory
+    2. User *** to separate routes from session controller
+    3. When you test, it should appear in teh terminal
+
+        app.post('/question/add', function(req, res){
+            console.log(req.body)
+        })
+
+🌈 MAKE A BACKEND QUESTION CONTROLLER - server/controllers/question.js
+    1. Make sure this is immediately invoked!!!!
+        module.exports = (function(){
+            return{
+                add:function(req, res){
+                    console.log(req.body)
+                }
+
+            }
+        })()
+
+🌈 BACK TO ROUTES - TIME TO CONNECT!
+    1. Add a question variable to the top of the page!
+
+        var question = require('./../controllers/question.js)
+
+    2. Update the route:
+
+        app.post('/question/add', function(req, res){
+            question.add(req, res)
+        })
+    
+    3. TEST IT!
+
+🌈 NOW WE CONNTECT TO DB - server/models/question.js
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var QuestionSchema = new Schema({
+        topic:{type:String, required:true},
+        description: {type:String, required:true},
+        category:{type:String, required:true},
+        _user: {type:Schema.Types.ObjectId, ref:"User"}
+    }, {timestamps:true})
+
+    mongoose.model('Question', QuestionSchema)
+
+🌈 UPDATE THE USER SCHEMA TO ALLOW FOR QUESTIONS
+    1. When finished, test it and it should appear in terminal 
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var UserSchema = new Schema({
+        name:{type:String, required:true},
+        _questions:[{type:Schema.Types.ObjectId, ref:'Question'}]
+        }, {timestamps: true})
+
+    mongoose.model('User', UserSchema); 
+
+🌈 UPDATE QUESTION BACKEND CONTROLLER
+    1. Make sure to add Question and User schema linked at the top
+    2. Then test as you go! feel free to console log between functions. It will appear in the terminal
+
+        var mongoose = require('mongoose');
+        var Question = mongoose.model('Question')
+        var User = mongoose.model('User')
+        module.exports = (function(){
+            return{
+                add:function(req, res){
+                    var question = new Question({topic:req.body.topic,description:req.body.description, category:req.body.category, _user:req.body._id})
+                    question.save(function(err, data){
+                        User.findOne({_id: req.body._id}, function(err, user){
+                            user._questions.push(data._id)
+                            user.save(function(err, userData){
+                                res.json(data)
+                        
+                            })
+                        })
+                    })
+                    
+                }
+            }
+        })()
+
+🌈 UPDATE QUESTION FACTORY  
+    1. This is when we add in .then!
+
+        factory.addQuestion = function(question){
+            $http.post('/question/add', question).then(function(output){
+                console.log(output.data)
+                })
+            }
+    
+    2. If it looks all good, then 
+
+        app.factory('questionFactory', function($http){
+            var factory = {}
+            factory.questions = []
+            factory.addQuestion = function(message){
+                $http.post('/question/add',question).then(function(output){
+                factory.questions.push(output.data)
+                })
+            }retun factory
+
+🌈 UPDATE QUESTION CONTROLLER
+
+    app.controller ('questionController', function($scope, 🍕questionFactory){
+            $scope.errors = []
+            $scope.addQuestion = function(🍕id){
+                $scope.errors = []
+                if(!$scope.newQuestion || !$scope.newQuestion.title){
+                    $scope.errors.push = 'Please enter content'
+                }else if($scope,newQuestion.title.length < 5){
+                    $scope.errors.push = 'Title needs to be at least 5 characters long!'
+                }else if($scope.newQuestion.content.length < 10){
+                    $scope.errors.push = 'Content must be at least 10 characters long!'
+                }else{
+                    🍕 $scope.newQuestion._id = id
+                    questionFactory.addQuestion($scope.newQuestion)
+                    $scope.newQuestion = {}
+                    }
+                }
+        
+            })
+
+
+
+🌺🌸🌺----HOW TO SHOW ONE-----🌺🌸🌺 
+
+🌈CREATE A HYPERLINK ON HTML - partials/dashboard.html
+
+            <tr ng-repeat="question in questions |orderBy: '-createdAt'">
+                <td>{{question.category}}</td>
+                <td>🍕<a href="#!/show/{{question._id}}">{{question.topic}}</a></td>
+                <td>{{question._user.name}}</td>
+                <td>Posts...</td>
+            </tr>
+🌈CREATE A SHOWONE PARTIAL - partials/showOne.html
+    1. Add some text to see if it links for testing later
+
+🌈UPDATE FRONTEND CONTROLLER -
+    1. Need to inject $routeParams
+    2. Will need to use getAll function from before to parse through info
+
+         if($routeParams.id){
+            questionFactory.getAll(function(data){
+                $scope.questions = data
+                for(question in $scope.questions){
+                    if($scope.questions[question]['_id'] == $routeParams.id){
+                        $scope.currentTopic = $scope.questions[question]
+                        console.log($scope.currentTopic)
+                        }
+                    }
+                })
+            }else{
+                questionFactory.getAll(function(data){
+                $scope.questions = data;
+                })
+            }
+            $scope.addQuestion = function(id){
+                $scope.newQuestion._id = id
+                questionFactory.addQuestion($scope.newQuestion)
+            }
+            
+            $scope.showTopic = (function(id){
+                questionFactory.showTopic(id)
+            })
+        })
+    
+
+🌈UPDATE FACTORY  -
+    factory.showOne = function(id){
+        $location.url('/show/' + id)
+    }
+
+🌈UPDATE APP.JS
+    .when('/show/:id',{
+    templateUrl: 'partials/showOne.html'
+    })
+
+🌈GO TO SHOW ONE PARTIAL - 
+    1. Show the new information we found!
+    2. We will use currentTopic here to parse through information
+
+    <div ng-controller="sessionController">
+    <div class="header">
+        <h1>Hello {{currentUser.name}}</h1>
+    </div>
+        <a href="/logout">Logout!</a>
+        <a href="#!/dashboard">Home!</a>
+        <div ng-controller="questionController" class="mainContent">
+            <h2>{{currentTopic._user.name}} posted a topic</h2>
+            <h3>{{currentTopic.topic}}</h3>
+            <p>{{currentTopic.description}}</p>
+
+        
+            <h2>Post your answer here</h2>
+            <form ng-submit="addComment()">
+                <textarea rows="10" cols="50" ng-model="addComment.content"></textarea>
+                <input type="submit" value="Post!">
+            </form>
+
+
+        </div>
+    </div>
+
+🌺🌸🌺----HOW TO ADD A COMMENT-----🌺🌸🌺 
+
+🌈CREATE AN COMMENT FRONT END CONTROLLER - client/controllers/answer.js
+    1. create a comment controller js page
+    2. link our controller to our index.html
+    3. don't worry about testing yet because we have more connections to make
+
+        app.controller('commentController', function($scope){
+            $scope.addComment = function(){
+                console.log('testing comment')
+            }
+        })
+
+🌈UPDATE SHOWONE.HTML AND ADD IN COMMENTCONTROLLER div
+    1. Find the comment form we put in the showOne.html
+    2. Create a commentController div to next the form inside
+        🍕<div ng-controller="commentController">
+            <h2>Post your answer here</h2>
+            🍕<form ng-submit="addComment(newComment, currentUser._id, currentTopic._id)">
+                <textarea rows="10" cols="50" ng-model="newComment.content"></textarea>
+                <input type="submit" value="Post!">
+            </form>
+        </div>
+
+🌈UPDATE FRONT END CONTROLLER - client/controllers/comment.js
+    1. We now want to console log the information we passed through
+
+    app.controller('commentController', function($scope){
+        $scope.addComment = function(comment, user, question){
+            console.log(comment, user, question)
+        }
+    })
+
+🌈MAKE A COMMENTS FACTORY
+    1. Make sure to link it to index.html!
+    2. Inject it into our commentController
+    3. Make sure factory is being RETURNED!!!!
+    4. Test it out!
+        app.factory('commentFactory', function(){
+            var factory = {}
+            factory.addComment = function(comment){
+                console.log(comment)
+            }
+            return factory
+        })
+
+🌈UPDATE FRONT END CONTROLLER
+    1. We want to update some variables and send info to the factory
+    app.controller('commentController', function($scope, commentFactory){
+        $scope.addComment = function(comment, user, question){
+            comment._user = user;
+            comment._question = question;
+            commentFactory.addComment(comment)
+        }
+    })
+
+🌈COMMENT FACTORY 
+    1. Make sure to inject $http
+    2. You have to edit Routes before testing
+
+        app.factory('commentFactory', function($http){
+            var factory = {}
+            factory.addComment = function(comment){
+                $http.post('/comment/add', comment).then(function(req, res){
+                    console.log(req.body)
+                    console.log('factory', req, res)
+                })
+            }
+            return factory
+        })
+
+🌈GO TO ROUTES.JS
+    1. add in your new route
+    2. Make sure it's linked at the top of the page
+    3. 👿NOTE: If you get a 500 internal error, it's because the backend "add" function is not finished yet
+        
+        app.post('/comment/add', function(req, res){
+            comment.add(req, res)
+        })
+
+🌈BUILD COMMENT BACKEND CONTROLLER - server/controllers/comment.js
+    1. Add in initial info
+    2. Now we can test it!
+
+    var mongoose = require('mongoose');
+    var Question = mongoose.model('Question')
+    var User = mongoose.model('User')
+
+    module.exports = (function(req, res){
+        return{
+            console.log('be', req.body)
+        }
+    })()
+
+🌈CREATE A COMMENT SCHEMA - server/models/comment.js
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var CommentSchema = new Schema ({
+        content:{type:String, required: true},
+        _user: {type:Schema.Types.ObjectId, ref:'User'},
+        _questions:{type:Schema.Types.ObjectId, ref:'🍕Question'}
+    }, {timestamp:true})
+
+    mongoose.model('Comment', CommentSchema)
+
+🌈UPDATE QUESTION SCHEMA
+
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var QuestionSchema = new Schema({
+        topic:{type:String, required:true},
+        description: {type:String, required:true},
+        category:{type:String, required:true},
+        _user: {type:Schema.Types.ObjectId, ref:"User"},
+        🍕_comments:[{type:Schema.Types.ObjectId, ref: "Comment"}]
+    }, {timestamps:true})
+
+    mongoose.model('Question', QuestionSchema)
+
+🌈UPDATE USER SCHEMA
+    var mongoose = require('mongoose');
+    var Schema = mongoose.Schema;
+
+    var UserSchema = new Schema({
+        name:{type:String, required:true},
+        _questions:[{type:Schema.Types.ObjectId, ref:'Question'}],
+        🍕_comments:[{type:Schema.Types.ObjectId, ref:'🍕Comment'}]
+        }, {timestamps: true})
+
+    mongoose.model('User', UserSchema); 
+
+🌈UPDATE COMMENT BACKEND CONTROLLER 
+    1. Need to add a comment variable at the top
+        var Comment = mongoose.model('Comment')
+    
+    2. Need to update the add function
+    3. When you console.log(req.body) it will give the fields that you need to enter in for var comment
+    4. Test it!
+
+        var mongoose = require('mongoose');
+        var Question = mongoose.model('Question')
+        var User = mongoose.model('User')
+        var Comment = mongoose.model('Comment')
+
+        module.exports = (function(){
+            return{
+                add:function(req, res){
+                    console.log(req.body)
+                    var comment = new Comment({content: req.body.content, _user:req.body._user, _questions:req.body._question})
+
+                    comment.save(function(err, commentData){
+                        console.log(commentData)
+                    })
+                }
+            }
+        })()
+
+    5. Now update with User info
+
+        var mongoose = require('mongoose');
+        var Question = mongoose.model('Question')
+        var User = mongoose.model('User')
+        var Comment = mongoose.model('Comment')
+
+        module.exports = (function(){
+            return{
+                add:function(req, res){
+                    // console.log(req.body)
+                    var comment = new Comment({content: req.body.content, _user:req.body._user, _questions:req.body._question})
+
+                    comment.save(function(err, commentData){
+                        User.findOne({_id:commentData._user}, function(err, userData){
+                            console.log(userData)
+                        })
+                    })
+                }
+            }
+        })()
+    
+    6. Now do the same but for message data
+
+       var mongoose = require('mongoose');
+        var Question = mongoose.model('Question')
+        var User = mongoose.model('User')
+        var Comment = mongoose.model('Comment')
+
+        module.exports = (function(){
+            return{
+                add:function(req, res){
+                    // console.log(req.body)
+                    var comment = new Comment({content: req.body.content, _user:req.body._user, _questions:req.body._question})
+
+                    comment.save(function(err, commentData){
+                        User.findOne({_id:commentData._user}, function(err, userData){
+                            userData._comments.push(commentData._id);
+                            userData.save(function(err){
+                                🍕Question.findOne({_id:commentData._questions}, function(err, questionData){
+                                    questionData._comments.push(commentData._id);
+                                    questionData.save(function(err){
+                                        res.json(commentData)
+                                    })
+                                } )
+                            })
+                        })
+                    })
+                }
+            }
+        })()
+
+🌈UPDATE COMMENT FACTORY
+    1. Then test after updating
+        app.factory('commentFactory', function($http){
+            var factory = {}
+            factory.addComment = function(comment){
+                $http.post('/comment/add', comment).then(function(output){
+
+        app.factory('commentFactory', function($http){
+            var factory = {}
+            factory.addComment = function(comment){
+                $http.post('/comment/add', comment).then(function(output){
+                    🍕console.log(output.data)
+                })
+            }
+            return factory
+        })
+
+    2. Then add a callback
+
+        app.factory('commentFactory', function($http){
+            var factory = {}
+            factory.addComment = function(comment,🍕 callback){
+                $http.post('/comment/add', comment).then(function(output){
+                    🍕callback(output.data)
+                })
+            }
+            return factory
+        })
+
+🌈UPDATE COMMENT CONTROLLER
+    1. You may have to do this before updating callback in factory
+
+        app.controller('commentController', function($scope, commentFactory){
+        $scope.addComment = function(comment, user, question){
+            comment._user = user;
+            comment._question = question;
+            commentFactory.addComment(comment, function(data){
+                for(var q=0; q < $scope.questions.length; q++){
+                    if($scope.questions[q]._id == question){
+                    $scope.questions[q]._comments.push(data)
+                    }
+                }
+            })
+            $scope.newComment = {}
+        }
+    })
+
+
+🌈YOU MAY NEED TO POPULATE COMMENTS
+
+
+
+🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈SOMETHING ABOUT LIKES🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈
+
+in out show html.
+need to create a button for the like!
+<td><button ng-click='like(a)'>LIKE!</button></td>
+
+in our answer controller..
+
+$scope.like = function(answer){
+  answerFactory.like(answer, function(data){
+    $route.reload()
+  })
+}
+
+in our answer factory...
+factory.like = function(answer, callback){
+  $http.post('/answer/like',answer).then(function(output){
+    callback(output.data)
+  })
+}
+
+now we need to go to our routes.js
+
+app.post('/answer/like',function(request,response){
+  answer.like(request,response)
+})
+in our bckend controller
+like:function(request,response){
+  Answer.findById({_id:request.body._id},function(err,answer){
+    answer.likes +=1
+    answer.save(function(err){
+      response.json(answer)
+    })
+  })
+}
+NEED TO ADD LIEKS TO OUR SCHEMA!!
+  likes:{type:Number, default:0},

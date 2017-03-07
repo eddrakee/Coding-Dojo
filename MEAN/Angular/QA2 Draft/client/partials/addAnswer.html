@@ -1,0 +1,32 @@
+<div ng-controller="sessionController">
+    <div class="header">
+        <h1>{{currentUser.name}}, Add an Answer!</h1>
+    </div>
+
+    <div ng-controller="questionController">
+
+        <a href="/logout">LOGOUT</a> <a href="#!/dashboard">HOME </a> <a href="#!/show/{{currentQuestion._id}}">BACK TO QUESTION</a>
+        <div class="mainContent">
+            <h2>- {{currentQuestion._user.name}} asked -</h2>
+            <h3>{{currentQuestion.topic}}</h3>
+            <h2>- Description -</h2>
+            <h3>{{currentQuestion.description}}</h3>
+        </div>
+
+        <div ng-controller="answerController" class="mainContent">
+            <div class="error" ng-repeat='error in errors track by $index'>
+                <p>{{error}}</p>
+            </div>
+                <h2>Post Answer Below</h2>
+                <form ng-submit="addAnswer(newAnswer, currentUser._id, currentQuestion._id)">
+                        <h3>Answer</h3><textarea rows="5" cols="50" ng-model="newAnswer.content"></textarea>
+                        <h3>Description (optional)</h3><textarea rows="5" cols="50" ng-model="newAnswer.description"></textarea>
+                    <br>
+                        <input type="submit" value="POST"> 
+                        <a href="#!/dashboard"><button>CANCEL</button></a>
+                </form>
+         
+        </div>
+
+    </div>
+</div>

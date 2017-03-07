@@ -1,0 +1,30 @@
+<div ng-controller="sessionController">
+    <div class="header">
+        <h1>{{currentUser.name}}, Check out this Question!</h1>
+    </div>
+    <a href="/logout">LOGOUT</a>  <a href="#!/dashboard">HOME </a> 
+    <div class = "mainContent" ng-controller="questionController">
+            <a href="#!/answer/add/{{currentQuestion._id}}">ANSWER QUESTION</a>
+
+        <h2>{{currentQuestion._user.name}} posted a question</h2>
+        <h3>Question: {{currentQuestion.topic}}</h3>
+        <p>Description: {{currentQuestion.description}}</p>
+        <hr>
+        <!--<button ng-click="likeQuestion(question)">LIKE ITTTT</button>
+
+        <button ng-click="likeQuestion(question)">LIKE</button>
+            {{currentQuestion.likes}}-->
+
+            {{currentQuestion}}
+            <h2>Comments:</h2>
+            <div ng-repeat="answer in currentQuestion._answers">
+                <!--{{answer}}-->
+                <h3>{{answer._user}} says - </h3>
+                    <p>Answer: {{answer.content}}</p>
+                    <p>Description: {{answer.description}}</p>
+                <button ng-click="likeAnswer(answer)">Like!</button>
+                {{answer.likes}}
+            </div>
+
+    </div>
+</div>

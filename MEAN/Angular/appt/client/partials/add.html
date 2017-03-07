@@ -1,0 +1,12 @@
+<div ng-controller = 'sessionController'>
+
+  <div ng-controller = 'apptController'>
+    <a href="#!/dashboard">GO HOME</a>
+    <form>
+      Task: <input type="text" ng-model='newAppt.task'>
+      Date: <input type="date" ng-model="newAppt.date">
+      Time: <input type="time" ng-model="newAppt.time">
+      <input type="submit" value="Enter Appointment" ng-click="add(curUser._id)">
+    </form>
+  </div>
+</div>

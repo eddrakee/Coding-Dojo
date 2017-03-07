@@ -1,0 +1,38 @@
+<div ng-controller="sessionController">
+    <div class="header">
+        <h1>Hello {{currentUser.name}}</h1>
+    </div>
+    <a href="/logout">Logout!</a>
+    <a href="#!/dashboard">Home!</a>
+    <div ng-controller="questionController" class="mainContent">
+        <h2>{{currentTopic._user.name}} posted a topic</h2>
+        <h3>{{currentTopic.topic}}</h3>
+        <p>{{currentTopic.description}}</p>
+        <p>{{currentTopic._comments[0].content}}</p>
+
+            <h2>Comments:</h2>
+            <div ng-repeat="comment in currentTopic._comments">
+                
+                <h3>{{comment._user}} Says:</h3>
+               
+                {{comment.content}}
+            </div>
+
+
+
+        <div ng-controller="commentController">
+            <h2>Post your answer here</h2>
+            <form ng-submit="addComment(newComment, currentUser._id, currentTopic._id)">
+                <textarea rows="10" cols="50" ng-model="newComment.content"></textarea>
+                <input type="submit" value="Post!">
+            </form>
+             {{currentTopic}}
+             
+
+            
+
+        </div>
+
+
+    </div>
+</div>

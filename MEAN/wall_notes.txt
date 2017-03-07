@@ -196,7 +196,7 @@ app.factory('messageFactory', function($http){
 44.
 app.factory('messageFactory', function($http){
   var factory = {}
-  factory.message = []
+  factory.messages = []
   factory.addMessage = function(message){
     $http.post('/messages/add',message).then(function(output){
       factory.messages.push(output.data)

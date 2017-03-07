@@ -1,7 +1,7 @@
 app.factory('quoteFactory', function($http, $location){
     var factory = {}
-    factory.quote = []
-    var counter = 0;
+    // factory.quote = []
+    // var counter = 0;
     factory.allQuotes = function(callback){
         $http.get('/quotes/allQuotes').then(function(output){
              

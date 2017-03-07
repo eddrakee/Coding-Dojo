@@ -1,0 +1,18 @@
+<div id="login_wrapper">
+    <div ng-controller="sessionController">
+        <div id="login_header">
+            <h1>Login</h1>
+        </div>
+        <div class="error">
+            <p ng-repeat='error in errors track by $index'>{{error}}</p>
+        </div>
+        <div id="login_mainContent">
+            <form ng-submit="login()">
+                <h2>Name</h2>
+                <input id="login_input" type='text' ng-model='logReg.name' placeholder='Enter name'>
+                <input class="button" type='submit' value='Login'>
+            </form>
+        </div>
+
+    </div>
+</div>

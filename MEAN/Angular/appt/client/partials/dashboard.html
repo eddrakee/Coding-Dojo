@@ -1,0 +1,26 @@
+<div ng-controller = 'sessionController'>
+  Welcome, {{curUser.name}} | <a href="/logout">Logout</a>
+  <a href="#!/add">Add</a>
+  <div ng-controller = 'userController'>
+    <div ng-repeat = 'user in users'>
+      User: {{user.name}}
+
+      <div ng-controller = 'apptController'>
+        <div ng-repeat = 'appt in appts' ng-if="user._id == appt._createdBy._id">
+        <ul>
+          <li>
+            <p ng-repeat = 'appt in appts | filter : ' >{{appt.task}} - {{appt.date|date:'shortDate'}} - {{appt.time | date:'shortTime'}}
+            {{appt._createdBy._created[0]}}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<!--ng-if="curUser._id == appt._createdby[0]"-->

@@ -1,0 +1,29 @@
+<div ng-controller='sessionController'>
+        <div class='header'>
+            <h1>{{currentUser.name}}, Check out these Quotes!</h1>
+        </div>
+    <div ng-controller='quoteController'>
+        <a href="#!/dashboard">Go Home!</a>
+        <div class='mainContent'>
+            <h2>All the Quotes!</h2>
+        <table>
+        <tr>
+            <th>Author</th>
+            <th>Quotes</th>
+            <th>Date</th>
+            <th>Likes</th>
+            <th>Actions</th>
+    
+            
+        </tr>
+        <tr ng-repeat="quote in quotes">
+            <td><a href='#!/showOne/{{quote.author}}'>{{quote.author}}</a></td>
+            <td>{{quote.content}}</td>
+            <td>{{quote.date | date: fulldate}}</td>
+            <td>{{quote.likes}}</td>
+            <td><button ng-click="likeQuote(quote)">Like it!</button></td>
+        </tr>
+    </table>
+        </div>
+    </div>
+</div>

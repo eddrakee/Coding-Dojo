@@ -1,0 +1,20 @@
+<div ng-controller='sessionController'>
+        <div class='header'>
+            <h1>{{currentUser.name}}, Add a Quote!</h1>
+        </div>
+    <div ng-controller='quoteController'>
+        <div class="error" ng-repeat='error in errors track by $index'>
+            <p>{{error}}</p>
+        </div>
+        <a href="#!/dashboard">Home</a>
+        <a href="/logout">Logout</a>
+        <div class='mainContent'>
+            <h2>Enter Quote Below!</h2>
+            <form ng-submit='addQuote(currentUser._id)'>
+                Title: <input type='text' ng-model='newQuote.title'><br>
+                Description: <textarea ng-model='newQuote.content' rows='7' cols='50'></textarea><br>
+                <input type='submit' value='ADD!!!'>
+            </form>
+        </div>
+    </div>
+</div>
