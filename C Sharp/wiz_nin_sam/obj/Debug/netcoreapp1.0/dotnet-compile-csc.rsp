@@ -83,4 +83,7 @@
 -r:"/Users/elizabethdrake/.nuget/packages/System.Xml.ReaderWriter/4.0.11/ref/netstandard1.3/System.Xml.ReaderWriter.dll"
 -r:"/Users/elizabethdrake/.nuget/packages/System.Xml.XDocument/4.0.11/ref/netstandard1.3/System.Xml.XDocument.dll"
 "/Users/elizabethdrake/Desktop/Coding_Dojo/C Sharp/wiz_nin_sam/Human.cs"
+"/Users/elizabethdrake/Desktop/Coding_Dojo/C Sharp/wiz_nin_sam/Ninja.cs"
 "/Users/elizabethdrake/Desktop/Coding_Dojo/C Sharp/wiz_nin_sam/Program.cs"
+"/Users/elizabethdrake/Desktop/Coding_Dojo/C Sharp/wiz_nin_sam/Samurai.cs"
+"/Users/elizabethdrake/Desktop/Coding_Dojo/C Sharp/wiz_nin_sam/Wizard.cs"
