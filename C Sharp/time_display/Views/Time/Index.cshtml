@@ -1,0 +1,28 @@
+<!--Razor View Engine Info Goes Below-->
+@{
+    DateTime today = DateTime.Now;
+    string date = String.Format("{0:MM/d/yyyy}", today);
+    string time = String.Format("{0:hh:mm tt}", today);
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="~/css/style.css" rel="stylesheet">
+        <title>Time Display</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div ="maincontent">
+                <h1>Today's Current Date & Time</h1>
+        
+                <div id="time">
+                    <p>@date</p>
+                    <p>@time</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

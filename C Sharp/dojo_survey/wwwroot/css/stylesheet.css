@@ -1,0 +1,38 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    width:960;
+    height:960;
+    background-color:lightblue;
+}
+body h1{
+    color:midnightblue;
+    text-align:center;
+    margin-top:50px;
+
+}
+.mainContent{
+    margin-top: 25px;
+    margin-left:20%;
+    border: solid 1px black;
+    background-color: white;
+    width:60%;
+    padding:25px;
+}
+
+.form{
+    margin-top:15px;
+}
+
+.error{
+    background-color: hotpink;
+    color: white;
+    text-align: center;
+}
+.insideText{
+    margin-top:15px;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Password Generator</title>
+    <link rel="stylesheet" type="text/css" href="~/css/stylesheet.css">
+</head>
+
+<body>
+  
+    <h1>- Create a Password -</h1>
+    <div class="mainContent">
+        <form action="/generate" method = "POST">
+            <h2>Random Password #@ViewBag.Counter</h2>
+            @ViewBag.Password
+            <input type="submit" value="Generate">
+        </form>
+    </div>
+</body>
+
+</html>

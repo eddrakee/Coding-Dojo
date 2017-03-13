@@ -17,6 +17,7 @@ namespace Time
             // Use the Mvc to handle Http requests and responses
             loggerFactory.AddConsole();
             app.UseDeveloperExceptionPage();
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }

@@ -1,0 +1,28 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+#time{
+    border: solid 4px yellow;
+    color:white;
+    width:30%;
+    padding:25px;
+    text-align: center;
+    margin-top: 25px;
+    margin-left:34%;
+}
+
+#maincontent{
+    text-align: center;
+    margin-top:100px;
+}
+
+#wrapper{
+    height:1000px;
+    width:100%;
+    background-color:tomato;
+    font-family: monospace;
+    color: white;
+    text-align:center;
+}
