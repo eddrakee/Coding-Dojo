@@ -1,0 +1,6 @@
+/*Write all of your CSS here*/
+.error{
+    background-color:tomato;
+    color:white;
+    text-align: center;
+}

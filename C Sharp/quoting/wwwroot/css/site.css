@@ -1,0 +1,35 @@
+/*Write all of your CSS here*/
+label{
+    color:#e27969;
+    vertical-align: top;
+    margin-top:25px;
+    font-size: 16px;
+}
+textarea, input{
+    margin-top:25px;
+    margin-left:5px;
+}
+body{
+    background-color:#eff5f2;
+}
+h1{
+    margin-top:50px;
+   color: #00665f;
+   font-family: 'komika_axisregular';
+}
+
+@font-face {
+    font-family: 'komika_axisregular';
+    src: url('KOMIKAX_-webfont.eot');
+    src: url('KOMIKAX_-webfont.eot?#iefix') format('embedded-opentype'),
+         url('KOMIKAX_-webfont.woff') format('woff'),
+         url('KOMIKAX_-webfont.ttf') format('truetype'),
+         url('KOMIKAX_-webfont.svg#komika_axisregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.error{
+    background-color:#e27969;
+    text-align: center;
+    color:white;
+}

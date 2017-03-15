@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dojodachi</title>
+    <link rel="stylesheet" type="text/css" href="~/css/stylesheet.css">
+</head>
+
+<body>
+    <h1>Hello Kitty Dojodachi</h1>
+    <div class="mainContent">
+        <div class="currentStats">
+        Fullness: @ViewBag.Hello.Fullness   Happiness: @ViewBag.Hello.Happiness   Meals: @ViewBag.Hello.Meals   Energy: @ViewBag.Hello.Energy
+    </div>
+        <img src="/images/hellokitty.jpg">
+        <div class="status">
+            <p>@ViewBag.Hello.Message</p>
+        </div>
+    </div>
+    <div class="button">
+        <table>
+            <tr>
+                <td>
+                    <form action="/dojodachi/feed" method = "get">
+                        <input type="submit" value="Feed">
+                    </form>
+                </td>
+                <td>
+                    <form action="/dojodachi/play" method = "get">
+                        <input type="submit" value="Play">
+                    </form>
+                </td>
+                <td>
+                    <form action="/dojodachi/work" method = "get">
+                        <input type="submit" value="Work">
+                    </form>
+                </td>
+                <td>
+                    <form action="/dojodachi/sleep" method = "get">
+                        <input type="submit" value="Sleep">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        
+        
+        
+        
+        
+    </div>
+    
+
+</body>
+
+</html>

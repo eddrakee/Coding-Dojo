@@ -1,22 +1,13 @@
-﻿using System.IO;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Dojodachi
+namespace login_reg
 {
-    public class HelloKitty
-    {
-        public int Happiness = 20;
-        public int Fullness = 20;
-        public int Energy = 50;
-        public int Meals = 5;
-        public string Message = "";
-
-    }
     public class Program
     {
         public static void Main(string[] args)
         {
-            IWebHost host = new WebHostBuilder()
+            var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()

@@ -1,0 +1,23 @@
+<h1>List of Quotes</h1>
+    <table>
+        <thead>  
+            <tr>
+                <th>Author</th>
+                <th>Quote</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{
+            foreach(var quote in @ViewBag.quotes)
+            {
+                <tr>
+                    <td>@quote["author"]</td>
+                    <td>@quote["content"]</td>
+                    <td>@quote["created_at"]</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+      
