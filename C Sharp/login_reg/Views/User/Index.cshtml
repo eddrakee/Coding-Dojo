@@ -1,0 +1,44 @@
+@{ ViewData["Title"] = "Home Page"; }
+
+<div>
+    @{ foreach(var error in ViewBag.RegErrors){ if(@error.Errors.Count > 0){
+    <p>@error.Errors[0].ErrorMessage</p>
+    } } }
+    <p>@ViewBag.LogError</p>
+</div>
+
+<div class="regBox">
+    <h1>Register</h1>
+    <form action="/Register" method="post">
+        <label for="fname">First Name:</label>
+        <input type="text" id="fname" name="FirstName">
+        <br>
+        <label for="lname">Last Name:</label>
+        <input type="text" id="lname" name="LastName">
+        <br>
+        <!--for and id need to match up-->
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="Email">
+        <br>
+        <label for="pw">Password:</label>
+        <input type="text" id="pw" name="Password">
+        <br>
+        <label for="pwc">Password Confirmation:</label>
+        <input type="text" id="pwc" name="PasswordConfirmation">
+        <br>
+        <input type="submit" value="Register" class="btn btn-success">
+    </form>
+</div>
+
+<div class="regBox">
+    <h1>Login</h1>
+    <form action="/Login" method="post">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="Email">
+
+        <label for="pw">Password:</label>
+        <input type="text" id="pw" name="Password">
+
+        <input type="submit" value="Login" class="btn btn-success">
+    </form>
+</div>
