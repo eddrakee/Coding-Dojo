@@ -1,1 +1,73 @@
 /*Write all of your CSS here*/
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.wrapper{
+    height:1000px;
+    width: 1500px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:#E9EBEE
+}
+
+.header{
+    background-color: #3B5898;
+    color: white;
+    height:75px;
+    width:100%;
+    /*margin-bottom:50px;*/
+}
+.header h1{
+    padding-top: 15px;
+    margin-left: 15px;
+    font-size:40px;
+    display:inline-block;
+}
+
+.mainContent, .login{
+    padding:25px;
+    width:60%;
+    margin-top: 20px;
+    font-size:18px;
+    margin-left: 90px;
+    background-color:white;
+    border:1px solid #D0D1D5;
+    border-radius: 8px;
+}
+.login h1{
+    color:#365799;
+    margin-bottom:25px;
+}
+.field{
+    margin-bottom: 15px;
+    padding:3px;
+}
+.button{
+    padding:5px 16px;
+    color:white;
+    display:inline-block;
+    font-size:16px;
+    text-align:center;
+    background-color:#959799;
+    border-radius: 5px;
+    /*hover*/
+    -webkit-transition-duration: 0.4s;
+    
+}
+.button:hover{
+    color:white;
+    background-color:#3B5898;
+    padding:5px 16px;
+}
+.header a{
+    color:white;
+    margin-left:100px;
+    display:inline-block;
+}
+.error{
+    background-color:tomato;
+    color: white;
+    text-align: center;
+
+}

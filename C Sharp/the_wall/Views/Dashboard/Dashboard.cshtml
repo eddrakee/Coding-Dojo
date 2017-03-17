@@ -1,0 +1,26 @@
+@{ ViewData["Title"] = "The Wall"; }
+<div class="wrapper">
+    <div class="header">
+        <h1>Welcome @ViewBag.CurrentUser["FirstName"]</h1>
+        <a href="Logout">Log Out</a>
+    </div>
+    <div class="error">
+        <p>@ViewBag.MessageError</p>
+    </div>
+    <div class="mainContent">
+        <form action="AddMessage" method="post">
+            <label for="message">Post a Message:</label>
+            <br>
+            <textarea id="message" name="MessageContent" class="field" rows="8" cols="50"></textarea>
+            <br>
+            <input type="submit" value="Post!" class="button">
+        </form>
+    </div>
+    <div class="mainContent">
+        Messages will go here
+        @{ foreach(var message in ViewBag.AllMessages){ 
+            <li>@message.MessageContent</li>
+         } }
+
+    </div>
+</div>
