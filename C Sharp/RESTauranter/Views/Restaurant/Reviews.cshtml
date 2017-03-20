@@ -1,0 +1,36 @@
+@{ ViewData["Title"] = "All Reviews"; }
+<h1>View All Reviews:</h1>
+<a href="/">Home</a>
+<div class="container">
+    <table>
+        @{
+            foreach(var review in @ViewBag.AllReviews){
+        
+        <tr>
+            <td>
+                <p>Review For: @review.RestaurantName | Stars: @review.Stars</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Reviewer: @review.ReviewerName, @review.CreatedAt</p>
+            </td>
+        </tr>
+            
+        <tr>
+            <td>
+                @review.ReviewContent
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date Visited: @review.DateVisited
+                 <hr>
+            </td>
+            
+        </tr>
+        
+        }}
+    </table>
+   
+</div>

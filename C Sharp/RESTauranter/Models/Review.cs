@@ -20,11 +20,13 @@ namespace RESTauranter.Models
         public string ReviewContent { get; set; }
 
         [Required]
+        // This calls our custom validation attribute
+        [InThePast]
         public DateTime DateVisited { get; set; }
 
         [Required]
         [RangeAttribute(1,5)]
-        public sbyte Stars { get; set; }
+        public int Stars { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

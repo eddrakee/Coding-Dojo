@@ -1,6 +1,22 @@
 @{ ViewData["Title"] = "Home"; }
 <h1>Write a New Review:</h1>
 
+<div>
+    @{
+        foreach(var error in ViewBag.AllErrors)
+        {
+            //If there are any errors for a field...
+            if(@error.Errors.Count > 0)
+            {
+                // We show the first error for that field
+                <p>@error.Errors[0].ErrorMessage</p>
+            }
+        }
+    }
+</div>
+
+<a href="ViewAll">See All Reviews</a>
+
 <div class="container">
     <form action="AddReview" method="post">
         <label for="ReveiwerName">Reviewer Name:</label>
@@ -10,13 +26,13 @@
         <input type="text" name="RestaurantName">
         <br>
         <label for="ReveiwerContent">Review:</label>
-        <input type="text" name="ReviewContent">
+        <textarea name="ReviewContent" rows="5" cols="40"></textarea>
         <br>
         <label for="DateVisited">Date Visited:</label>
         <input type="date" name="DateVisited">
         <br>
         <labelfor="Stars">Stars: </label>
-        <select>
+        <select name="Stars">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
