@@ -23,7 +23,7 @@ namespace the_wall.Factory
         public void Add(User item)
         {
             using (IDbConnection dbConnection = Connection) {
-                string query =  "INSERT INTO users (FirstName, LastName, Email, CreatedAt, UpdatedAt) VALUES (@FirstName, @LastName, @Email, @Password, NOW(), NOW())";
+                string query =  "INSERT INTO users (FirstName, LastName, Email, Password, CreatedAt, UpdatedAt) VALUES (@FirstName, @LastName, @Email, @Password, NOW(), NOW())";
                 dbConnection.Open();
                 dbConnection.Execute(query, item);
             }

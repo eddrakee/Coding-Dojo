@@ -1,0 +1,43 @@
+@{ ViewData["Title"] = "The Wall"; }
+<div class="wrapper">
+    <div class="header">
+        <h1>Welcome @ViewBag.CurrentUser.FirstName</h1>
+        <a href="Logout">Log Out</a>
+    </div>
+    <div class="error">
+        <p>@ViewBag.MessageError</p>
+    </div>
+    <div class="mainContent">
+        <h2>Post a Message</h2>
+        <form action="AddMessage" method="post">
+            <!--<label for="message">Enter Message Below:</label>-->
+            <textarea id="message" name="MessageContent" class="field" rows="8" cols="50"></textarea>
+            <input type="hidden" name="User_Id" value="@ViewBag.CurrentUser.UserId">
+            <br>
+            <input type="submit" value="Post!" class="button">
+        </form>
+    </div>
+    <div class="mainContent">
+        <h2>View All Messages</h2>
+        @{ foreach(var message in ViewBag.AllMessages){
+        <p><span class="name">@message.FirstName</span> says @message.MessageContent @message.UpdatedAt.ToString("MMM dd ' at ' h:mm tt")</p>
+        <br> 
+        @foreach(var comment in ViewBag.AllComments){ @if(comment.Message_Id == message.MessageId){
+        <p class="indented"><span class="name">@comment.FirstName</span> says @comment.CommentContent @comment.UpdatedAt.ToString("MMM dd ' at ' h:mm tt")</p>
+        }}
+        <div class="comment">
+            <form action="AddComment" method="post">
+                <textarea id="comment" name="CommentContent" class="field" rows="8" cols="50"></textarea>
+                <input type="hidden" name="Message_Id" value="@message.MessageId">
+                <input type="hidden" name="User_Id" value="@ViewBag.CurrentUser.UserId">
+                <br>
+                <input type="submit" value="Post Comment!" class="button">
+            </form>
+        </div>
+        <br>
+        <hr>
+        <br> } }  
+
+
+    </div>
+</div>

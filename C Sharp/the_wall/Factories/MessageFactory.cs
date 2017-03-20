@@ -25,18 +25,19 @@ namespace the_wall.Factory
         {
             using (IDbConnection dbConnection = Connection)
             {
-                string query = "INSERT INTO messages (MessageContent, CreatedAt, UpdatedAt) VALUES (@MessageContent, NOW(), NOW())";
+                string query = "INSERT INTO messages (MessageContent, CreatedAt, UpdatedAt, User_Id) VALUES (@MessageContent, NOW(), NOW(), @User_Id)";
                 dbConnection.Open();
                 dbConnection.Execute(query, item);
             }
         }
-        public IEnumerable<Message> AllMessages()
+        public IEnumerable <object> AllMessages()
         {
             using (IDbConnection dbConnection = Connection)
             {
                 // string query = $"SELECT * FROM Messages JOIN Users ON Messages.User_Id=users.UserId";
                 dbConnection.Open();
-                return dbConnection.Query<Message>($"SELECT * FROM Messages JOIN Users ON Messages.User_Id=users.UserId");
+                return dbConnection.Query<object>($"SELECT * FROM Messages JOIN Users ON Messages.User_Id=users.UserId");
+                // Need to make these ordered by earliest on top
                 
             }
 
