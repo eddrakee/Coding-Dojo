@@ -1,1 +1,6 @@
 /*Write all of your CSS here*/
+.header{
+    height:10%;
+    width:100%;
+    background-color:tomato;
+}

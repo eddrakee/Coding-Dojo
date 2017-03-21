@@ -7,14 +7,8 @@ using System.Linq;
 
 namespace BankAccounts.Controllers
 {
-    public class HomeController : Controller
+    public class BankController : Controller
     {
-        // GET: /Home/
-        [HttpGet]
-        [Route("")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }
