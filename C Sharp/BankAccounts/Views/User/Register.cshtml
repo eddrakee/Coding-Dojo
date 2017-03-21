@@ -1,11 +1,19 @@
 @{ ViewData["Title"] = "Register"; }
 <div class="header">
-    <h1>Bank of Elise</h1>
-    <a href="Register">Register</a>
+    <h1>Welcome to <span class="blue">Bank</span>of<span class="blue">Elise</span></h1>
 </div>
+<div class="errors">
+        @{ foreach(var error in ViewBag.Errors){
+        <p>@error</p>
+        } }
+</div>
+<a href="Login">LOGIN</a> | <a href="">LOGOUT</a>
 
-<div class="login">
-    <h2>Register</h2>
+<div class="choose">
+    <div class="chooseHeader">
+    <h2>Register Below</h2>
+    </div>
+    <div class="chooseInput">
     <form action="Register" method="post">
         <label for="FirstName">First Name:</label>
         <input type="text" name="FirstName">
@@ -24,4 +32,5 @@
         <br>
         <input class="btn" type="submit" value="REGISTER">
     </form>
+    </div>
 </div>

@@ -1,10 +1,11 @@
-@{ ViewData["Title"] = "Register"; }
+@{ ViewData["Title"] = "Account"; }
 <div class="header">
-    <h1>Welcome, USER</h1>
-    <a href="/">Home</a> Logout...
+    <h1>Welcome, @ViewBag.User.FirstName @ViewBag.User.LastName</h1>
 </div>
+<a href="/">HOME</a>
+<a href="Logout">LOGOUT</a>
 
-<div >
+<div>
     <h2>Register</h2>
     <label>Current Balance:</label>
     <label for="deposit">Current Balance:</label>
@@ -17,12 +18,15 @@
     <input class="btn" type="submit" value="SUBMIT">
 </div>
 <table>
-   <tr>
-       <th>Amount</th>
-       <th>Date</th>
-   </tr>
-   <tr>
-       <td>NUM</td>
-       <td>NUM</td>
-   </tr>
+    @{ foreach( var transaction in ViewBag.AllTransactions) {
+    <tr>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+    <tr>
+        <td>@transaction.Amount</td>
+        <td>@transaction.Date</td>
+    </tr>
+    }}
+
 </table>
