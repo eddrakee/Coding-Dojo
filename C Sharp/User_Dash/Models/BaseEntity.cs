@@ -1,6 +1,6 @@
 using System;
 
-namespace NAMESPACE.Models
+namespace UserDash.Models
 {
     public abstract class BaseEntity
     {

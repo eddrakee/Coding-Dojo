@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace NAMESPACE
+namespace UserDash
 {
     public static class SessionExtensions
 {

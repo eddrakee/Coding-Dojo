@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NAMESPACE.Models;
+using UserDash.Models;
 using System.Linq;
 
-namespace NAMESPACE.Controllers
+namespace UserDash.Controllers
 {
     public class HomeController : Controller
     {

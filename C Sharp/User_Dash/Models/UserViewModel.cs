@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-namespace NAMESPACE.Models
+namespace UserDash.Models
 {
     public class UserValidation : User
     {

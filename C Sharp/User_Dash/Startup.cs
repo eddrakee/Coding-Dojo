@@ -5,7 +5,7 @@ using MySQL.Data.EntityFrameworkCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
 
-namespace NAMESPACE
+namespace UserDash
 {
     public class Startup
     {

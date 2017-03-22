@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NAMESPACE.Models;
+using UserDash.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace NAMESPACE.Controllers
+namespace UserDash.Controllers
 {
+
     public class UserController : Controller
     {
         private BaseContext _context;
