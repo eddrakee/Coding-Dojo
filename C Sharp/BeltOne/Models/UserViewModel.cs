@@ -8,12 +8,12 @@ namespace UserDash.Models
         // Everything is set as "new" because it is overriding the definition in the User.cs
 
         [Required]
-        [MinLength(2)]
+        [MinLength(1)]
         [RegularExpression(@"^[a-zA-Z]+$")]
         public new string FirstName { get; set; }
 
         [Required]
-        [MinLength(2)]
+        [MinLength(1)]
         [RegularExpression(@"^[a-zA-Z]+$")]
         public new string LastName { get; set; }
  
@@ -30,9 +30,11 @@ namespace UserDash.Models
  
         [Compare("Password", ErrorMessage = "Password and confirmation must match.")]
         public string ConfirmPassword { get; set; }
-        // There is no description or userlevel validation
 
-        // This will convert UserValidation object into a User object
+        [Required]
+        [MinLength(5)]
+        public new string Description { get; set; }
+
         public User ToUser()
         {
            User NewUser = new User
@@ -41,6 +43,7 @@ namespace UserDash.Models
                 LastName = this.LastName,
                 Email = this.Email.ToLower(),
                 Password = this.Password,
+                Description = this.Description,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
            };
