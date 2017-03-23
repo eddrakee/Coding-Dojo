@@ -1,13 +1,18 @@
 @{ ViewData["Title"] = "Register"; }
-@{ foreach(var error in ViewBag.Errors){
-<div class="alert alert-danger fade in">
-    <p>@error</p>
+<div class="header">
+    <h1>Welcome to <span class="blue">Bank</span>of<span class="blue">Elise</span></h1>
 </div>
-} }
+<div class="errors">
+        @{ foreach(var error in ViewBag.Errors){
+        <p>@error</p>
+        } }
+</div>
 <a href="Login">LOGIN</a> | <a href="">LOGOUT</a>
 
-<div class="col-lg-6">
+<div class="choose">
+    <div class="chooseHeader">
     <h2>Register Below</h2>
+    </div>
     <div class="chooseInput">
     <form action="Register" method="post">
         <label for="FirstName">First Name:</label>

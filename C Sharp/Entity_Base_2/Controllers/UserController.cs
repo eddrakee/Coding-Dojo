@@ -65,7 +65,7 @@ namespace UserDash.Controllers
                     // Now set it to session
                     HttpContext.Session.SetInt32("UserId", Results.UserId);
                     // If all good, now send it to the Main method in OtherController
-                    return RedirectToAction("Dashboard", "Dash");
+                    // return RedirectToAction("Main", "Other");
                 }
                 else
                 {
@@ -145,7 +145,7 @@ namespace UserDash.Controllers
 
 
                         // NEED TO CHANGE CONTROLLER NAME!
-                      return RedirectToAction("Dashboard", "Dash");
+                        // return RedirectToAction("Main", "Bank");
                     }
                 }
                 Errors.Add("Invalid Email/Password combination! Please try again!");

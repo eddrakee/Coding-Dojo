@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - UserDash</title>
-    
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
-            asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css"
-            asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-    
+
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css" asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.css"
+        asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
-    <div class="container col-lg-12">
-        <div class="col-lg-1">
-            <h2>Test App</h2>
-        </div>
-        <div class="col-lg-1">
-            @{
-                if(@ViewBag.User == null){
-                    <a href="/">HOME</a>
-                }else{
-                    <a href="/Dashboard">DASHBOARD</a>
-                }
-            }
-        </div>
-        <div class="col-lg-1">
-            @{
-                if(@ViewBag.User == null){
-                    <p></p>
-                }else{
-                    <a href="/Profile">Profile</a>
-                }
-            }
-        </div>
-        <div class="col-lg-offset-8 col-lg-1">
-            @{
-                if(@ViewBag.User == null){
-                    <a href="/Login">SIGN IN</a>
-                }else{
-                    <a href="/Logout">SIGN OUT</a>
-                }
-            }
-        </div>
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">TestApp</a>
     </div>
+    <ul class="nav navbar-nav">
+        @{if(@ViewBag.User == null){
+            <li class="active"><a href="/">HOME</a></li>
+        }
+        else{
+            <li class="active"><a href="/Dashboard">DASHBOARD</a></li>
+        }
+        if(@ViewBag.User == null){
+            <li></li>
+        }
+        else{
+           <li><a href="/Profile/ViewBag.User.UserId">PROFILE</a></li> 
+        }
+        if(@ViewBag.User == null){
+            <li><a href="/Login">SIGN IN</a></li>
+        }
+        else{
+            <li><a href="/Logout">SIGN OUT</a></li>
+        }}
+    </ul>
+  </div>
+</nav>
     <div class="container body-content">
         @RenderBody()
     </div>
-        
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.js"
-                asp-fallback-test="window.jQuery">
-        </script>
-        
-        
-        <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @RenderSection("scripts", required: false)
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js" asp-fallback-src="~/lib/jquery/dist/jquery.js" asp-fallback-test="window.jQuery">
+                </script>
+
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@RenderSection("scripts", required: false)
 </body>
+
 </html>

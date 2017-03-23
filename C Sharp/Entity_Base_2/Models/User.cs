@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserDash.Models
 {
@@ -18,12 +17,7 @@ namespace UserDash.Models
         public int UserLevel { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
-        // This inverse look up will let us "look" backwards. Without this, you may get a "Unable to determine the relationship represented" error
-        [InverseProperty("MessageAuthor")]
         public List<Message> MessagesSent { get; set; }
-
-        [InverseProperty("MessageRecipient")]
         public List<Message> MessagesReceived { get; set; }
         public List<Comment> CommentsSent { get; set; }
         public User()
@@ -44,10 +38,3 @@ namespace UserDash.Models
 
     }
 }
-
-// POSGRESS COMMANDS
-// dotnet ef migrations remove
-
-// TO MAKE MIGRATIONS DO THESE TWO COMMANDS
-// dotnet ef migrations add NAMEMIGRATION
-// dotnet ef database update

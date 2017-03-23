@@ -1,10 +1,4 @@
-@{ ViewData["Title"] = "Login"; } 
-
-@{ foreach(var error in ViewBag.Errors){
-<div class="alert alert-danger fade in">
-    <p>@error</p>
-</div>
-} }
+@{ ViewData["Title"] = "Login"; }
 
 <div class="col-lg-12">
     <div class="login">
@@ -19,5 +13,4 @@
             <input class="btn" type="submit" value="LOGIN">
         </form>
     </div>
-    <p>Do you need an account? <a href="Register">REGISTER</a> for one!</p>
 </div>

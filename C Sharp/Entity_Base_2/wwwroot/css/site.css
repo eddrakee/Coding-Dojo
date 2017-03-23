@@ -1,6 +1,8 @@
 /*Write all of your CSS here*/
-#header{
-    background-color:royalblue;
+.header{
+    height:10%;
+    width:100%;
+    background-color:tomato;
     color:white;
     padding:20px;
 }
