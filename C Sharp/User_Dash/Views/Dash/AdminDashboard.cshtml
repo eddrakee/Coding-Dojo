@@ -18,14 +18,14 @@
             @{ foreach( var user in @ViewBag.AllUsers ){
             <tr>
                 <td>@user.UserId</td>
-                <td><a href="/Profile/@ViewBag.User.UserId">@user.FirstName @user.LastName</a></td>
+                <td><a href="/MyProfile/@user.UserId">@user.FirstName @user.LastName</a></td>
                 <td>@user.Email</td>
                 <td>@user.CreatedAt.ToString("MMM dd, yyyy")</td>
                 <td>@if(user.UserLevel == 9) {
                     <text>Admin</text>} else{
                     <text>Normal</text>}
-                <td><a href="/EditUser/@ViewBag.User.UserId"><button class="btn">EDIT</button></a></td>
-                <td><a href="/DeleteUser/@ViewBag.User.UserId"><button class="btn" onclick="DeleteFunction()">DELETE</button></a></td>
+                <td><a href="/EditUser/@user.UserId"><button class="btn">EDIT</button></a></td>
+                <td><a href="/DeleteUser/@user.UserId"><button class="btn" onclick="DeleteFunction()">DELETE</button></a></td>
             </tr>
             }}
 
