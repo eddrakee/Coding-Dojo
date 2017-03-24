@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserDash.Models
 {
@@ -17,20 +16,24 @@ namespace UserDash.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-
-        [InverseProperty("InviteSentFrom")]
-        public List<Friend> FriendInvitesSent { get; set; }
-
-        [InverseProperty("InviteReceived")]
-        public List<Friend> FriendInvitesReceived { get; set; }
-        
+        public List<Invitation> InvitationsSent { get; set; }
+        public List<Invitation> InvitationsReceived { get; set; }
         public List<Friend> FriendList { get; set; }
-        
         public User()
-        {
-            FriendInvitesSent = new List<Friend>();
-            FriendInvitesReceived = new List<Friend>();
+         {
+            InvitationsSent = new List<Invitation>();
+            InvitationsReceived = new List<Invitation>();
             FriendList = new List<Friend>();
-        }
+         }
+
+
+        // For Many relationship
+        // public List<Transaction> Transactions { get; set; }
+
+        // public User()
+        // {
+        //     Transactions = new List<Transaction>();
+        // }
+
     }
 }

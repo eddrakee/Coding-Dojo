@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using UserDash.Models;
 
-namespace BeltTwo.Migrations
+namespace BeltOne.Migrations
 {
     [DbContext(typeof(BaseContext))]
     partial class BaseContextModelSnapshot : ModelSnapshot
@@ -20,11 +20,13 @@ namespace BeltTwo.Migrations
                     b.Property<int>("FriendId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AssociatedFriend");
+
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<int>("InviteReceivedId");
+                    b.Property<int?>("InvitationId");
 
-                    b.Property<int>("InviteSentFromId");
+                    b.Property<int>("InvitationSentFrom");
 
                     b.Property<DateTime>("UpdatedAt");
 
@@ -32,13 +34,35 @@ namespace BeltTwo.Migrations
 
                     b.HasKey("FriendId");
 
-                    b.HasIndex("InviteReceivedId");
-
-                    b.HasIndex("InviteSentFromId");
+                    b.HasIndex("InvitationId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Friends");
+                    b.ToTable("Friend");
+                });
+
+            modelBuilder.Entity("UserDash.Models.Invitation", b =>
+                {
+                    b.Property<int>("InvitationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int>("PersonWhoAsked");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<int?>("UserId1");
+
+                    b.HasKey("InvitationId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Invitation");
                 });
 
             modelBuilder.Entity("UserDash.Models.User", b =>
@@ -67,19 +91,24 @@ namespace BeltTwo.Migrations
 
             modelBuilder.Entity("UserDash.Models.Friend", b =>
                 {
-                    b.HasOne("UserDash.Models.User", "InviteReceived")
-                        .WithMany("FriendInvitesReceived")
-                        .HasForeignKey("InviteReceivedId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("UserDash.Models.User", "InviteSentFrom")
-                        .WithMany("FriendInvitesSent")
-                        .HasForeignKey("InviteSentFromId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("UserDash.Models.Invitation")
+                        .WithMany("FriendsRequested")
+                        .HasForeignKey("InvitationId");
 
                     b.HasOne("UserDash.Models.User")
                         .WithMany("FriendList")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("UserDash.Models.Invitation", b =>
+                {
+                    b.HasOne("UserDash.Models.User")
+                        .WithMany("InvitationsReceived")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("UserDash.Models.User")
+                        .WithMany("InvitationsSent")
+                        .HasForeignKey("UserId1");
                 });
         }
     }

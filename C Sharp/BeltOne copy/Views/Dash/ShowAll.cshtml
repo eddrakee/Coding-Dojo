@@ -25,7 +25,7 @@
                 @{ foreach( var user in @ViewBag.AllUsers){
                 <tr>
                     <td><a href="/Profile/@user.UserId">@user.FirstName @user.LastName</a></td>
-                    <td><a href="/AddFriend">CONNECT</a></td>
+                    <td><a href="/AddFriend/@user.UserId">CONNECT</a></td>
                 </tr>
 
                 } }

@@ -8,7 +8,8 @@ namespace UserDash.Models
         public BaseContext(DbContextOptions<BaseContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
         public DbSet<Friend> Friends { get; set; }
-      
+        public DbSet<Invitation> Invitations { get; set; }
+
 
 
         // Add in what you need to have access to below

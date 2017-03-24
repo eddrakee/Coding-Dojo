@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using UserDash.Models;
 
-namespace BeltTwo.Migrations
+namespace BeltOne_pt2.Migrations
 {
     [DbContext(typeof(BaseContext))]
     partial class BaseContextModelSnapshot : ModelSnapshot

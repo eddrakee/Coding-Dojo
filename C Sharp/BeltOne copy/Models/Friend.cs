@@ -7,16 +7,15 @@ namespace UserDash.Models
 {
     public class Friend : BaseEntity
     {
+        // This sets these params below as the key attribute
         [Key]
         public int FriendId { get; set; }
 
         [ForeignKey("UserId")]
-        public int InviteSentFromId { get; set; }
-        public User InviteSentFrom { get; set; }
+        public int InvitationSentFrom { get; set; }
 
-        [ForeignKey("UserId")]
-        public int InviteReceivedId { get; set; }
-        public User InviteReceived { get; set; }
+        [ForeignKey("InvitationId")]
+        public int AssociatedFriend { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
        

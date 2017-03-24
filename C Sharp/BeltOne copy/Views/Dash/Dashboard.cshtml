@@ -18,36 +18,32 @@
         <h2>Your Professional Network:</h2>
         <table class="table table-hover">
         <tbody>
+            { foreach( var user in Viewbagstuff){
             <tr>
-                <th>Name</th>
-            </tr>
-            @{ foreach( var friend in @ViewBag.FriendList){
-            <tr>
-                <td>@friend.FirstName</td>
+                <td>user.UserId</td>
             </tr>
             }}
         </tbody>
     </table>
     </div>
-     <div class="col-lg-12">
+    <div class="col-lg-12">
         <h2>Your Pending Invitations:</h2>
-        <table class="table table-hover">
+         <table class="table table-hover">
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Accept</th>
                 <th>Ignore</th>
             </tr>
+        </thead>
         <tbody>
-            { foreach( var invite in ViewBag.InviteList){
+            @{ foreach( var friend in @ViewBag.AllFriends ){
             <tr>
-                <td>invite.FirstName</td>
-                <td>ACCEPT</td>
+                <td>@friend.FirstName</td>
+                <td><a href="/Profile/iewBag.User.UserId">user.FirstName user.LastName</a></td>
                 <td>IGNORE</td>
             </tr>
             }}
-        </tbody>
-    </table>
-    </div>
 
         </tbody>
     </table>
