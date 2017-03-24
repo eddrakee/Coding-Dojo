@@ -27,12 +27,11 @@ namespace UserDash.Controllers
             List<User> AllUsers = _context.Users
                 .OrderBy(u => u.UserId)
                 .ToList();
-            List<Friend>AllFriends = _context.Friends.Where( f => f.InviteReceivedId == CurrentUser.UserId)
+            List<Friend> AllFriends = _context.Friends.Where(f => f.InviteReceivedId == CurrentUser.UserId)
+                .Include(f => f.InviteSentFrom)
                 .ToList();
-            List<Friend>AllInvites = _context.Friends.Where( f => f.InviteSentFromId != CurrentUser.UserId )
-                .ToList();
-            ViewBag.InviteList =  AllInvites;
-            ViewBag.FriendList =  AllFriends;
+
+            ViewBag.FriendList = AllFriends;
             ViewBag.User = CurrentUser;
             ViewBag.AllUsers = AllUsers;
 
@@ -60,6 +59,27 @@ namespace UserDash.Controllers
             User ProfileUser = _context.Users.SingleOrDefault(u => u.UserId == UserId);
             ViewBag.Profile = ProfileUser;
             return View("Profile");
+        }
+        // ADD FRIEND - GET
+        [HttpGet]
+        [RouteAttribute("AddFriend/{UserId}")]
+        public IActionResult AddFriend(int UserId)
+        {
+            List<string> Errors = new List<string>();
+            try
+            {
+                List<string> Results = HttpContext.Session.GetObjectFromJson<List<string>>("Errors");
+                foreach (object error in Results)
+                {
+                    Errors.Add(error.ToString());
+                }
+            }
+            catch
+            {
+                // We don't want it to do anything if there is something wrong.
+            }
+            ViewBag.AddUser = _context.Users.Where(o => o.UserId == UserId);
+            return RedirectToAction("Dashboard");
         }
         // ADD FRIEND
         [HttpPost]
@@ -90,7 +110,6 @@ namespace UserDash.Controllers
             }
             HttpContext.Session.SetObjectAsJson("Errors", Errors);
             return View("Dashboard");
-            // return RedirectToAction("Profile", new { UserId = New.MessageRecipientId });
         }
     }
 }

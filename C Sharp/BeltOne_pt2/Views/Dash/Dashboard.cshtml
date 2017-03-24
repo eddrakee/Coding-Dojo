@@ -1,15 +1,7 @@
 @{ ViewData["Title"] = "Dashboard"; }
 <div class="container">
     <h1>Hello @ViewBag.User.FirstName @ViewBag.User.LastName</h1>
-    <div class="alert alert-danger">
-        EDITS:
-        <ul>
-            <li>Display Friends list</li>
-            <li>Display Pending Invites list</li>
-            <li>Accept Invite: Should add the person to the Friends table and disappear from Pending Invite list</li>
-            <li>Ignore Inite: Should delete Pending Invite and name will disappear from Pending Invites. Their name should reappear in All Users page</li>
-        </ul>
-    </div>
+  
     <div class="col-lg-10">
         <h2>Your Description:</h2>
         @ViewBag.User.Description
@@ -23,7 +15,7 @@
             </tr>
             @{ foreach( var friend in @ViewBag.FriendList){
             <tr>
-                <td>@friend.FirstName</td>
+                <td>@friend.InviteSentFrom.FirstName @friend.InviteSentFrom.LastName</td>
             </tr>
             }}
         </tbody>
@@ -38,13 +30,13 @@
                 <th>Ignore</th>
             </tr>
         <tbody>
-            { foreach( var invite in ViewBag.InviteList){
+       
             <tr>
-                <td>invite.FirstName</td>
+                <td>Name</td>
                 <td>ACCEPT</td>
                 <td>IGNORE</td>
             </tr>
-            }}
+        
         </tbody>
     </table>
     </div>
