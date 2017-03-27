@@ -23,15 +23,16 @@ namespace UserDash.Controllers
         [Route("Dashboard")]
         public IActionResult Dashboard()
         {
+            
             User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
             List<User> AllUsers = _context.Users
                 .OrderBy(u => u.UserId)
                 .ToList();
-            List<Friend> AllFriends = _context.Friends.Where(f => f.InviteReceivedId == CurrentUser.UserId)
-                .Include(f => f.InviteSentFrom)
+            // Find all invites for a specific user
+            List<Invite> AllPendingInvites = _context.Invites.Where(u => u.InviteReceivedId == CurrentUser.UserId)
+                .Include(u => u.InviteReceived)
                 .ToList();
-
-            ViewBag.FriendList = AllFriends;
+            ViewBag.AllPendingInvites = AllPendingInvites;
             ViewBag.User = CurrentUser;
             ViewBag.AllUsers = AllUsers;
 
@@ -43,11 +44,12 @@ namespace UserDash.Controllers
         public IActionResult AllUsers()
         {
             User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
-            List<User> AllUsers = _context.Users
-                .OrderBy(u => u.UserId)
+            List<User> AllUsersMinusMe = _context.Users.Where(b => b.UserId != CurrentUser.UserId)
+                .Include(u => u.InviteInvitesReceived)
+                .Include(u => u.InviteInvitesSent)
                 .ToList();
             ViewBag.User = CurrentUser;
-            ViewBag.AllUsers = AllUsers;
+            ViewBag.AllUsersMinusMe = AllUsersMinusMe;
             return View("ShowAll");
         }
         // VIEW PROFILE FOR SPECIFIC USER
@@ -60,56 +62,35 @@ namespace UserDash.Controllers
             ViewBag.Profile = ProfileUser;
             return View("Profile");
         }
+        // ADD Invite - GET
+        [HttpGet]
+        [RouteAttribute("AddInvite/{UserId}")]
+        public IActionResult AddInvite(int UserId)
+        {
+            int? getUserId = HttpContext.Session.GetInt32("UserId");
+            Invite newInvite = new Invite(){
+                InviteSentFromId = (int)getUserId,
+                InviteReceivedId = UserId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Accepted = false
+            };
+            _context.Add(newInvite);
+            _context.SaveChanges();
+            return RedirectToAction("AllUsers");
+        }
         // ADD FRIEND - GET
         [HttpGet]
         [RouteAttribute("AddFriend/{UserId}")]
         public IActionResult AddFriend(int UserId)
         {
-            List<string> Errors = new List<string>();
-            try
-            {
-                List<string> Results = HttpContext.Session.GetObjectFromJson<List<string>>("Errors");
-                foreach (object error in Results)
-                {
-                    Errors.Add(error.ToString());
-                }
-            }
-            catch
-            {
-                // We don't want it to do anything if there is something wrong.
-            }
-            ViewBag.AddUser = _context.Users.Where(o => o.UserId == UserId);
+            int? getUserId = HttpContext.Session.GetInt32("UserId");
+            Invite AddConnection = _context.Invites.SingleOrDefault(u => u.InviteReceivedId == getUserId);
+            AddConnection.Accepted = true;
+            _context.SaveChanges();
             return RedirectToAction("Dashboard");
         }
-        // ADD FRIEND
-        [HttpPost]
-        [RouteAttribute("AddFriend")]
-        public IActionResult AddFriend(FriendValidation NewFriend)
-        {
-            List<string> Errors = new List<string>();
-            if (ModelState.IsValid)
-            {
-                Friend Data = NewFriend.ToFriend();
-                Data.CreatedAt = DateTime.Now;
-                Data.UpdatedAt = DateTime.Now;
-                _context.Add(Data);
-                _context.SaveChanges();
-                return View("Dashboard");
-                // return RedirectToAction("Profile", new { UserId = NewFriend.MessageRecipientId});
-            }
-            else
-            {
-                Dictionary<string, string> Error = new Dictionary<string, string>();
-                foreach (string key in ViewData.ModelState.Keys)
-                {
-                    foreach (ModelError error in ViewData.ModelState[key].Errors)
-                    {
-                        Errors.Add(error.ErrorMessage);
-                    }
-                }
-            }
-            HttpContext.Session.SetObjectAsJson("Errors", Errors);
-            return View("Dashboard");
-        }
+       
+        
     }
 }

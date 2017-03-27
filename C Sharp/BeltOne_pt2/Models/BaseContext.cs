@@ -7,7 +7,7 @@ namespace UserDash.Models
         // base() calls the parent class' constructor passing the "options" parameter along
         public BaseContext(DbContextOptions<BaseContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
-        public DbSet<Friend> Friends { get; set; }
+        public DbSet<Invite> Invites { get; set; }
       
 
 

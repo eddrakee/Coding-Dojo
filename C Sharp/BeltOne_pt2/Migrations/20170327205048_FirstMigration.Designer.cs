@@ -8,7 +8,7 @@ using UserDash.Models;
 namespace BeltOne_pt2.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20170324004255_FirstMigration")]
+    [Migration("20170327205048_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -16,10 +16,12 @@ namespace BeltOne_pt2.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
-            modelBuilder.Entity("UserDash.Models.Friend", b =>
+            modelBuilder.Entity("UserDash.Models.Invite", b =>
                 {
-                    b.Property<int>("FriendId")
+                    b.Property<int>("InviteId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Accepted");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -29,17 +31,13 @@ namespace BeltOne_pt2.Migrations
 
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<int?>("UserId");
-
-                    b.HasKey("FriendId");
+                    b.HasKey("InviteId");
 
                     b.HasIndex("InviteReceivedId");
 
                     b.HasIndex("InviteSentFromId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Friends");
+                    b.ToTable("Invites");
                 });
 
             modelBuilder.Entity("UserDash.Models.User", b =>
@@ -66,21 +64,17 @@ namespace BeltOne_pt2.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("UserDash.Models.Friend", b =>
+            modelBuilder.Entity("UserDash.Models.Invite", b =>
                 {
                     b.HasOne("UserDash.Models.User", "InviteReceived")
-                        .WithMany("FriendInvitesReceived")
+                        .WithMany("InviteInvitesReceived")
                         .HasForeignKey("InviteReceivedId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("UserDash.Models.User", "InviteSentFrom")
-                        .WithMany("FriendInvitesSent")
+                        .WithMany("InviteInvitesSent")
                         .HasForeignKey("InviteSentFromId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("UserDash.Models.User")
-                        .WithMany("FriendList")
-                        .HasForeignKey("UserId");
                 });
         }
     }

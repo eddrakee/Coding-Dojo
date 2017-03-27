@@ -15,10 +15,18 @@
                 </tr>
             </thead>
             <tbody>
-                @{ foreach( var user in @ViewBag.AllUsers){
+                @{ foreach( var user in @ViewBag.AllUsersMinusMe){
                 <tr>
+                    @{bool sent = false;} 
+                        @foreach( var a in @user.InviteInvitesReceived){ 
+                            if(@a.InviteSentFromId == @ViewBag.User.UserId){
+                                sent = true;
+                            }
+                            } @if(@sent == false){
                     <td><a href="/Profile/@user.UserId">@user.FirstName @user.LastName</a></td>
-                    <td><a href="/AddFriend/@user.UserId">CONNECT</a></td>
+                    <td><a href="/AddInvite/@user.UserId">CONNECT</a></td>
+                    }
+
                 </tr>
 
                 } }

@@ -28,60 +28,49 @@ namespace BeltOne_pt2.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Friends",
+                name: "Invites",
                 columns: table => new
                 {
-                    FriendId = table.Column<int>(nullable: false)
+                    InviteId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                    Accepted = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     InviteReceivedId = table.Column<int>(nullable: false),
                     InviteSentFromId = table.Column<int>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Friends", x => x.FriendId);
+                    table.PrimaryKey("PK_Invites", x => x.InviteId);
                     table.ForeignKey(
-                        name: "FK_Friends_Users_InviteReceivedId",
+                        name: "FK_Invites_Users_InviteReceivedId",
                         column: x => x.InviteReceivedId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Friends_Users_InviteSentFromId",
+                        name: "FK_Invites_Users_InviteSentFromId",
                         column: x => x.InviteSentFromId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Friends_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Friends_InviteReceivedId",
-                table: "Friends",
+                name: "IX_Invites_InviteReceivedId",
+                table: "Invites",
                 column: "InviteReceivedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Friends_InviteSentFromId",
-                table: "Friends",
+                name: "IX_Invites_InviteSentFromId",
+                table: "Invites",
                 column: "InviteSentFromId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Friends_UserId",
-                table: "Friends",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Friends");
+                name: "Invites");
 
             migrationBuilder.DropTable(
                 name: "Users");

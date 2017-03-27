@@ -19,18 +19,16 @@ namespace UserDash.Models
         public DateTime UpdatedAt { get; set; }
 
         [InverseProperty("InviteSentFrom")]
-        public List<Friend> FriendInvitesSent { get; set; }
+        public List<Invite> InviteInvitesSent { get; set; }
 
         [InverseProperty("InviteReceived")]
-        public List<Friend> FriendInvitesReceived { get; set; }
+        public List<Invite> InviteInvitesReceived { get; set; }
         
-        public List<Friend> FriendList { get; set; }
         
         public User()
         {
-            FriendInvitesSent = new List<Friend>();
-            FriendInvitesReceived = new List<Friend>();
-            FriendList = new List<Friend>();
+            InviteInvitesSent = new List<Invite>();
+            InviteInvitesReceived = new List<Invite>();
         }
     }
 }

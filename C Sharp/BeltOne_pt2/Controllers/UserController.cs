@@ -16,7 +16,7 @@ namespace UserDash.Controllers
         {
             _context = context;
         }
-        // The Get route for Register - renders the correct page
+        // The Get route for Register 
         [HttpGet]
         [Route("Register")]
         public IActionResult RegPage()

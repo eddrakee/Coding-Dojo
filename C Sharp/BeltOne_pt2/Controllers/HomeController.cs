@@ -20,6 +20,7 @@ namespace UserDash.Controllers
         [Route("")]
         public IActionResult Index()
         {
+    
             return View();
         }
     }
