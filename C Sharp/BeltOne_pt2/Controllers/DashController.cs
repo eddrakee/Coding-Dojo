@@ -31,6 +31,7 @@ namespace UserDash.Controllers
             // Find all invites for a specific user
             List<Invite> AllPendingInvites = _context.Invites.Where(u => u.InviteReceivedId == CurrentUser.UserId)
                 .Include(u => u.InviteReceived)
+                .Include(u => u.InviteSentFrom)
                 .ToList();
             ViewBag.AllPendingInvites = AllPendingInvites;
             ViewBag.User = CurrentUser;
@@ -85,12 +86,25 @@ namespace UserDash.Controllers
         public IActionResult AddFriend(int UserId)
         {
             int? getUserId = HttpContext.Session.GetInt32("UserId");
-            Invite AddConnection = _context.Invites.SingleOrDefault(u => u.InviteReceivedId == getUserId);
+            Invite AddConnection = _context.Invites.SingleOrDefault(i => i.InviteId == UserId);
             AddConnection.Accepted = true;
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
         }
+        // DECLINE USER - GET
+        [HttpGet]
+        [RouteAttribute("DeclineUser/{InviteId}")]
+        public IActionResult DeclineUser(int InviteId)
+        {
+            Invite DeclineConnection = _context.Invites.SingleOrDefault(i => i.InviteId == InviteId);
+            _context.Invites.Remove(DeclineConnection);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+            }
+        
+            
+        }
        
         
     }
-}
+

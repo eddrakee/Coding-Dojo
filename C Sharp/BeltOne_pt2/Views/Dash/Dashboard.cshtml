@@ -10,10 +10,15 @@
         <h2>Your Professional Network:</h2>
         <table class="table table-hover">
         <tbody>
-            <tr>
-        
-                <td>NAME</td>
-            </tr>
+            
+                @{ foreach(var friend in @ViewBag.AllPendingInvites){
+                   @if(@friend.Accepted == true || @friend.InviteSentFromId != @ViewBag.User.UserId){
+                       <tr>
+                       <td>@friend.InviteSentFrom.FirstName</td>
+                       </tr>
+                   } 
+               }}
+                
         </tbody>
     </table>
     </div>
@@ -21,18 +26,20 @@
         <h2>Your Pending Invitations:</h2>
         <table class="table table-hover">
             <tr>
-               
                 <th>NAME</th>
                 <th>ACCEPT</th>
                 <th>IGNORE</th>
             </tr>
         <tbody>
         @{ foreach (var invite in @ViewBag.AllPendingInvites){
+                   
+                    @if(@invite.Accepted == false) {
                     <tr>
-                        <td>@invite.InviteSentFrom.FirstName</td>
-                        <td><a href ="/AddFriend/@invite.InviteSentFrom.UserId">ACCEPT</a></td>
-                        <td>IGNORE</td>
+                            <td>@invite.InviteSentFrom.FirstName</td>
+                            <td><a href ="/AddFriend/@invite.InviteId">ACCEPT</a></td>
+                            <td><a href ="/DeclineUser/@invite.InviteId">IGNORE</a></td>
                     </tr>
+                    }
                 }}
           
         
