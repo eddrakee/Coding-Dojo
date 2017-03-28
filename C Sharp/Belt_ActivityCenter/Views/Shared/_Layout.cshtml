@@ -16,7 +16,7 @@
     <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">TestApp</a>
+      <a class="navbar-brand" href="#">The Activity Center</a>
     </div>
     <ul class="nav navbar-nav">
         @{if(@ViewBag.User == null){
@@ -25,18 +25,12 @@
         else{
             <li class="active"><a href="/Dashboard">DASHBOARD</a></li>
         }
-        <!--if(@ViewBag.User == null){
-            <li></li>
-        }
-        else{
-           <li><a href="/MyProfile/@ViewBag.User.UserId">PROFILE</a></li> 
-        }
-        if(@ViewBag.User == null){
-            <li><a href="/Login">SIGN IN</a></li>
-        }
-        else{
-            <li><a href="/Logout">SIGN OUT</a></li>
-        }-->
+           if(@ViewBag.User == null){
+                <li><a href="/Login">SIGN IN</a></li>
+                } else{
+                <li><a href="/Logout">SIGN OUT</a></li>
+                }
+
         }
     </ul>
   </div>

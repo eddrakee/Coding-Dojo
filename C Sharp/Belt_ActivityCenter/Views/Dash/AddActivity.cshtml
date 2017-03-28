@@ -1,0 +1,56 @@
+@{ ViewData["Title"] = "Add Activity"; }
+
+
+<div class="container">
+    <div class="alert alert-danger">
+        <ul>
+            <li>Add Error Messages</li>
+
+        </ul>
+    </div>
+
+    <h1>Create An Activity:</h1>
+    <form class="form-horizontal" action="AddActivity" method="post">
+        <input type="hidden" name="UserId" value="@ViewBag.User.UserId">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ActivityName">Title:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="ActivityName" placeholder="Enter Activty Title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ActivityDate">Date:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" name="ActivityDate" placeholder="Enter Starting Date ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ActivityTime">Time:</label>
+            <div class="col-sm-10">
+                <input type="time" class="form-control" name="ActivityTime" placeholder="Enter Starting Time ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ActivityDuration">Duration:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="ActivityDuration" placeholder="Enter Value in Days, Hours, or Minutes">
+                <select>
+                <option value="DAYS">DAYS</option>
+                <option value="HOURS">HOURS</option>
+                <option value="MINUTES">MINUTES</option>
+            </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="ActivityDescription">Description:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="ActivityDescription" placeholder="Enter Activty Description">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">ADD</button>
+            </div>
+        </div>
+    </form>
+</div>
