@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+
+        const HeadlineComponent = function(props){
+
+            return React.createElement('h1', { style: {color: 'blue'} }, props.title);
+        }
+
+
+        const h = React.createElement(HeadlineComponent, { title: 'goodbye dojo'} );
+
+        console.log(h)
+        ReactDOM.render(h, document.getElementById('app'));
+    </script>
+</body>
+
+</html>

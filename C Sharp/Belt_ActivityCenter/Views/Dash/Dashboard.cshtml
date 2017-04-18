@@ -1,10 +1,6 @@
 @{ ViewData["Title"] = "Dashboard"; }
 <div class="container">
-    <div class="alert alert-danger">
-        <ul>
-            <li>Join Method</li>
-        </ul>
-    </div>
+    
     <h1>Hello @ViewBag.User.FirstName @ViewBag.User.LastName</h1>
   
     <div class="col-lg-12">
@@ -21,25 +17,21 @@
         
             @{ foreach (var act in @ViewBag.AllActivities){
                 <tr>
-                <td><a href="/ShowOne/@act.ActivityId">@act.ActivityName</a></td>
+                <td><a href="/ShowOne/@act.ActivityId/@ViewBag.User.UserId">@act.ActivityName</a></td>
                 <td>@act.ActivityDate.ToString("MMM dd, yyyy")at @act.ActivityTime.ToString("h:mm tt")</td>
                 <td>@act.ActivityDuration</td>
                 <td>@act.ActivityCreator.FirstName</td>
-                <td>PARTICIPANTS</td>
+    
+                <td>@act.ActivityJoiner.FirstName</td>
                 
                     @if( @act.ActivityCreatorId == @ViewBag.User.UserId){
                     <td><a href="/Delete/@act.ActivityId">DELETE</a></td>
                 }
                 else{
-                    <td>JOIN</td>
+                    <td><a href="/Join/@act.ActivityId">JOIN</a></td>
                 }
-                
                 </tr>
-                
-                
             }}
-            
-        
     </table>
     </div>
     <a href="/AddActivity"><button class="btn">ADD ACTIVITY</button></a>

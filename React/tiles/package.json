@@ -1,0 +1,10 @@
+{
+  "name": "react-workshop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}

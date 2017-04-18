@@ -31,6 +31,7 @@ namespace UserDash.Controllers
                 .OrderBy(u => u.UserId)
                 .ToList();
             List<Activity> AllActivities = _context.Activity.ToList();
+            
             ViewBag.AllActivities = AllActivities;
             ViewBag.User = CurrentUser;
             ViewBag.AllUsers = AllUsers;
@@ -42,8 +43,23 @@ namespace UserDash.Controllers
         [RouteAttribute("AddActivity")]
         public IActionResult AddActivity()
         {
-            User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
-            ViewBag.User = CurrentUser;
+            List<string> Errors = new List<string>();
+            try
+            {
+                // When it comes back from session, it will be a list of objects.
+                List<string> Results = HttpContext.Session.GetObjectFromJson<List<string>>("Errors");
+                // to make sure they are strings, cast them as strings and put them in Errors
+                foreach (object error in Results)
+                {
+                    Errors.Add(error.ToString());
+                }
+            }
+            catch
+            {
+                // We don't want it to do anything if there is something wrong.
+            }
+            ViewBag.User = _context.Users.Where(w => w.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
+            ViewBag.Errors = Errors;
             return View("AddActivity");
         }
         // ADD ACTIVITY - POST
@@ -51,9 +67,11 @@ namespace UserDash.Controllers
         [RouteAttribute("AddActivity")]
         public IActionResult AddActivity(Activity NewActivity)
         {
-            User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
+            List<string> Errors = new List<string>();
             if (ModelState.IsValid)
             {
+                User CurrentUser = _context.Users.Where(w => w.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
+                
                 NewActivity.ActivityCreatorId = CurrentUser.UserId;
                 NewActivity.ActivityJoinerId = CurrentUser.UserId;
                 NewActivity.CreatedAt = DateTime.Now;
@@ -61,22 +79,32 @@ namespace UserDash.Controllers
                 _context.Add(NewActivity);
                 _context.SaveChanges();
                 Activity JustAdded = _context.Activity.Where( i => i.ActivityId == NewActivity.ActivityId).SingleOrDefault();  
-                return RedirectToAction("ShowOne", new {ActivityId = NewActivity.ActivityId});
+                return RedirectToAction("ShowOne", new {ActivityId = NewActivity.ActivityId, UserId = CurrentUser.UserId});
             }
             else
             {
-                ViewBag.AllErrors = ModelState.Values;
-                return View("AddActivity");
+                Dictionary<string, string> Error = new Dictionary<string, string>();
+                foreach (string key in ViewData.ModelState.Keys)
+                {
+                    foreach (ModelError error in ViewData.ModelState[key].Errors)
+                    {
+                        Errors.Add(error.ErrorMessage);
+                    }
+                }
             }
+            HttpContext.Session.SetObjectAsJson("Errors", Errors);
+            return View("AddActivity");
         }
+        
+    
         // SHOW ONE ACTIVITY - GET
         [HttpGet]
-        [RouteAttribute("ShowOne/{ActivityId}")]
+        [RouteAttribute("ShowOne/{ActivityId}/{UserId}")]
         public IActionResult ShowOne(int ActivityId)
         {
-            
+            User CurrentUser = _context.Users.Where(w => w.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
+
             Activity ActivityProfile = _context.Activity.SingleOrDefault( i => i.ActivityId == ActivityId);
-            User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId"));
             ViewBag.User = CurrentUser;
             ViewBag.Profile = ActivityProfile;
             return View("ShowOne");
@@ -90,6 +118,19 @@ namespace UserDash.Controllers
             _context.Activity.Remove(DeleteAct);
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
+        }
+        // JOIN ACTIVITY - GET
+        [HttpGet]
+        [RouteAttribute("Join/{ActivityId}")]
+        public IActionResult Join(int ActivityId)
+        {
+            User CurrentUser = _context.Users.Where(u => u.UserId == (int)HttpContext.Session.GetInt32("UserId")).SingleOrDefault();
+            Activity JoinAct = _context.Activity.SingleOrDefault( d => d.ActivityId == ActivityId);
+            JoinAct.ActivityJoinerId = CurrentUser.UserId;
+            
+            // _context.Add(JoinAct);
+            // _context.SaveChanges();
+            return View("Dashboard");
         }
     }
 }

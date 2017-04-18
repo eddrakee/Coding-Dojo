@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Voting App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+</head>
+
+<style="text/css">{
+
+}
+</style>
+
+<body>
+
+    <div id="app"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+    <script type="text/babel">
+         
+            const VotingArray = [
+                {count: 15, name: "React"},
+                {count: 5, name: "Vue"},
+                {count: 12, name: "Angular"},
+                {count: 4, name: "Ember"}
+            ]
+
+            function Loop(props){
+                newArr = []
+                for( var i = 0; i < VotingArray.length; i ++){
+                    newArr.push(React.createElement(VotingTile, VotingArray))
+                }
+            }
+            function App(){
+                return <VotingTile />
+            }
+            function VotingTile(){
+                return(
+                    <div>
+                    <div id="count">`{count}`</div>
+                    <div id="name">React</div>
+                    <div id="add"><button>+</button></div>
+                </div>
+                )
+            }
+                
+            ReactDOM.render(
+                <App/>,
+                document.getElementById('app')
+            );
+        </script>
+
+
+</body>
+
+</html>

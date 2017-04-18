@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        const tileArray = [
+            { backgroundColor: 'slategray', textColor: 'yellow'},
+            { backgroundColor: 'tomato', textColor: 'royalblue'},
+            { backgroundColor: 'teal', textColor: 'papayawhip'}
+        ]
+
+        function Tile(props){
+            const backgroundColor = props.backgroundColor;
+            const textColor = props.textColor;
+            const propsObj = {
+                style: {
+                    backgroundColor: backgroundColor,
+                    color: textColor,
+                    height: 200,
+                    width: 200,
+                    display: 'inline-block',
+                    margin: 3,
+                    
+                },
+                children: `${textColor} on ${backgroundColor}`
+            }
+
+            return React.createElement('div', propsObj);
+        }
+
+        function App(props){
+            newArr = [];
+            for (let i = 0; i < tileArray.length; i ++){
+                newArr.push(React.createElement(Tile, tileArray[i]))
+            };
+            return React.createElement('div', null, newArr)
+                /* YOUR CODE */
+        }
+        ReactDOM.render(
+            React.createElement(App), 
+            document.getElementById('app')
+        );
+
+    </script>
+
+</body>
+
+</html>

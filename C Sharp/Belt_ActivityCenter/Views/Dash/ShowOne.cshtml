@@ -2,17 +2,9 @@
 
 
 <div class="container">
-    <div class="alert alert-danger">
-        <ul>
-            <input type="hidden" name="UserId" value="@ViewBag.User.UserId">
-            <li>Add Participants (minus logged in user)</li>
-            <li>Add Delete Activity Button</li>
-            <li>Add Join Button (for those who did not create it)</li>
-            <li>User is logged out for some reason</li>
-        </ul>
-    </div>
+
     <div class="col-lg-6">
-        <input type="hidden" name="UserId" value="@ViewBag.User.UserId">
+      
         <h1>@ViewBag.Profile.ActivityName</h1>
         <h2>Event Coordinator:</h2>
         <p>@ViewBag.Profile.ActivityCreator.FirstName @ViewBag.Profile.ActivityCreator.LastName</p>
@@ -22,9 +14,8 @@
         <ul>
             <li>@ViewBag.Profile.ActivityJoiner.FirstName @ViewBag.Profile.ActivityJoiner.LastName</li>
         </ul>
-
         <button class="btn">JOIN ACTIVITY</button>
-        <a href="/Delete/@ViewBag.Profile.ActivityId"><button class="btn">DELETE ACTIVITY</button></a>
+        <button class="btn">LEAVE ACTIVITY</button>
     </div>
 
 

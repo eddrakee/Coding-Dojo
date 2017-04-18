@@ -1,17 +1,14 @@
 @{ ViewData["Title"] = "Add Activity"; }
-
+@{ foreach(var error in ViewBag.Errors){
+<div class="alert alert-danger fade in">
+    <p>@error</p>
+</div>
+} }
 
 <div class="container">
-    <div class="alert alert-danger">
-        <ul>
-            <li>Add Error Messages</li>
-
-        </ul>
-    </div>
-
     <h1>Create An Activity:</h1>
     <form class="form-horizontal" action="AddActivity" method="post">
-        <input type="hidden" name="UserId" value="@ViewBag.User.UserId">
+       <input type="hidden" name="UserId" value="@ViewBag.User.UserId">
         <div class="form-group">
             <label class="control-label col-sm-2" for="ActivityName">Title:</label>
             <div class="col-sm-10">
